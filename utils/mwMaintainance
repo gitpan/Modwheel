@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+use strict;
+use Data::Dumper;
+
+BEGIN {
+    use lib '/opt/devel/Modwheel/lib';
+}
+
+use Modwheel::Session;
+use Modwheel::HTML::Tagset;
+our $objcount;
+our $printStatusEvery = 10;
+
+my $modwheel_config =
+{
+    prefix          => '/opt/devel/Modwheel',
+    configfile      => 'config/modwheelconfig.yml',
+    locale          => 'en_EN',
+};
+
+my($modwheel, $user, $db, $object, $repository, $template) =
+    modwheel_session($modwheel_config, qw(db user object template repository));
+
+foreach my $site(keys %{$modwheel->config->{site}})
+{
+    print "Running maintainance for site: $site\n";
+    $modwheel->set_site($site);
+    $db->connect( );
+    $db->maintainance();
+    $db->disconnect( );
+}
+
+my $maintainance_handler = sub
+{
+    my($o, $id, $O, $cur_levels) = @_;
+    $objcount++;
+
+    unless($objcount % $printStatusEvery) {
+        print "Currently at object $objcount. (id: $O->{id}, $O->{type}, parent: $O->{parent})\n";
+    }
+    
+    if($O->{parent} && $O->{parent} > 0)
+    {
+        unless($db->fetch_singlevar($db->build_select_q('object', 'id', {id => '?'}), $O->{parent}))
+        {
+            print STDERR "object (id: $O->{id} $O->{type} parent: $O->{parent}) '$O->{name}' has no parent.".
+                "Moving to NoParent.\n";
+            my $noparent = Modwheel::Object::MW_TREE_NOPARENT();
+            $db->exec_query($db->build_update_q('object', {parent => '?'}, {id=> '?'}), $noparent, $O->{id});
+        }
+    }
+};
+
+$db->connect;
+$object->get_all_children(Modwheel::Object::MW_TREE_ROOT(),
+        {handler => $maintainance_handler},
+        [qw(id parent name type)]
+);
+$db->disconnect;
+
+print "**** A total of $objcount object(s) verified. ****\n";

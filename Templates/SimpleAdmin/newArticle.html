@@ -1,0 +1,16 @@
+[% parent = modwheel.parent() %]
+<br />&nbsp;<br />
+<br />&nbsp;<br />
+<br />&nbsp;<br />
+<br />&nbsp;<br />
+<p style="text-align: left; float: center; display: block; background: #a0c63a">
+    <strong>Enter new article name: </strong>
+    <p style="text-left: center; float: center: display: block;" id="articleTitle">Click here to name your article.</p>
+    <script type="text/javascript">
+        new Ajax.InPlaceEditor('articleTitle', '/ajax/newObjectWithName.html?parent=[% parent %]&type=article',
+            { cols: 50, callback: function(form, value){ return 'name='+escape(value)}});
+    </script>
+</p>
+<p style="text-align: left; float: center; display: block; background: #a0c63a">
+<a href="#" onClick="hideLightbox()">[ Close this window ]</a>
+</p>

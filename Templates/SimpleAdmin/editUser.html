@@ -1,0 +1,77 @@
+[% currentPage = 'editUser.html' %]
+[% currentPageTitle = 'Edit User' %]
+[%
+    execute  = modwheel.getParam('execute')
+    username = modwheel.getParam('username')
+    password = modwheel.getParam('password')
+    realname = modwheel.getParam('realname')
+    email    = modwheel.getParam('email')
+    comment     = modwheel.getParam('comment')
+    confirm  = modwheel.getParam('confirm') %]
+
+[% UNLESS username %]
+  [% username = modwheel.currentUserName() %]
+[% END %]
+
+[% current = modwheel.getUserInfo(username) %]
+[% UNLESS username %][% username = current.username  %][% END %]
+[% UNLESS realname %][% realname = current.real_name %][% END %]
+[% UNLESS comment  %][% comment  = current.comments  %][% END %]
+[% UNLESS email %]   [% email    = current.email     %][% END %]
+
+[% IF execute %]
+
+    [% IF password %]    
+        [% IF password == confirm %]
+            [% id = modwheel.updateUserAndEncipher(
+                username => username,
+                password => password,
+                real_name => realname,
+                email => email,
+                comments => comment)            %]
+        [% ELSE %]
+            [% password = '' %]
+            [% error = "Passwords doesn't match. Please try again." %]
+        [% END %]
+    [% ELSE %]
+        [% password = current.password %]
+        [% id = modwheel.updateUser(
+            username => username,
+            password => password,
+            real_name => realname,
+            email => email,
+            comments => comment)            %]
+    [% END %]
+
+
+    [% UNLESS error %]
+        [% IF id %]
+            [% success = 'User saved!' %]
+        [% ELSE %]
+            [% error = 'An error occured' %]
+        [% END  %]
+    [% END %]
+[% END %]
+[% INCLUDE header.html %]
+
+<h1>Edit user: [% username %]</h1>
+<form name="useredit" action="[% currentPage %]" method="post">
+    <input type="hidden" name="execute" value="yes" />
+    <p><b>Real Name</b><input type:"text" name="realname" value="[% realname %]" i/></p>
+    <p><b>E-mail&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b><input type="text" name="email" value="[% email %]" /><p>
+    <p><b>Change Password</b><input type="password" name="password" autocomplete="off" /></p>
+    <p><b>Confirm Password&nbsp;&nbsp;</b><input type="password" name="confirm" autocomplete="off" /></p>
+    <p><b>Comment</b></p>
+    <p><textarea rows="6" cols="50" name="comment">[% comment %]</textarea></p>
+    
+    <p><input type="submit" value="Save"/></p>
+</form>
+
+[% IF error %]
+    <p class="error">[% error %]</p>
+[% END %]
+[% IF success %]
+    <p class="success">[% success %]</p>
+[% END %]
+
+[% INCLUDE footer.html %]

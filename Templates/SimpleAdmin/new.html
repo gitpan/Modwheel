@@ -1,0 +1,81 @@
+[% currentPage = 'new.html' %]
+[% currentPageTitle = 'New Article' %]
+[%    title = modwheel.getParam('title') 
+    keywords = modwheel.getParam('keywords')
+    summary = modwheel.getParam('summary') 
+    text = modwheel.getParam('text')
+    active = modwheel.getParam('active')
+    parent = modwheel.getParam('parent')
+    sort = modwheel.getParam('sort')
+    template = modwheel.getParam('template')
+    username = modwheel.currentUserName()
+    execute = modwheel.getParam('execute')
+                                                %]
+
+
+[% UNLESS title %]
+    [% error = 'All articles must have a title.' %]
+[% END %]
+[% DEFAULT active = 'on' %]
+[% DEFAULT sort = 10 %]
+
+[% IF execute == 'Yes' %]
+    [% obj = modwheel.createObject(
+        type        => 'article',
+        name        => title,
+        keywords    => keywords,
+        description    => summary,
+        data        => text,
+        active        => active,
+        parent        => parent,
+        sort        => sort,
+        template    => template
+        owner        => username,
+        revised_by    => username)
+    %]
+    [% ret = modwheel.saveObject(obj) %]
+    [% UNLESS ret %]
+        [% error = "Internal Error: Couldn't save object." %]
+    [% END %]
+[% END %]
+
+[% INCLUDE header_start.html %]
+[% IF ret %]
+<script type="text/javascript">
+window.location = "edit.html?id=[% ret %]&parent=[% parent %]";
+</script>
+[% END %]
+[% INCLUDE header_end.html %]
+    
+<h1>New article</h1>
+
+<form name="objectedit" method="post" action="[% currentPage %]">
+[% includeChangePathButton = 'Yes' %]
+[% INCLUDE currentpath.html %]
+<input type="hidden" onChange="refreshEditor()" name="parent" value="[% parent %]" />
+<input type="hidden" name="execute" value="Yes" />
+    <p><b>Title</b></p>
+    <p><input size="83" type="text" name="title" value="[% title %]"/></p>
+    <p><b>Keywords</b></p>
+    <p><input size="83" type="text" name="keywords" value="[% keywords %]"/></p>
+    <p><b>Summary</b></p>
+    <p><textarea rows="5" cols="80" name="summary">[% summary %]</textarea></p>
+    <p><b>Article text</b></p>
+    <p><textarea rows="30" cols="80" name="text">[% text %]</textarea></p>
+    <p>
+        <b>Active: </b> <input type="checkbox" name="active" value="on" [% IF active %]checked="checked"[% END %] /></b>
+        <b>Sort:</b> <input type="text" size="2" name="sort" value="[% sort %]" />
+        <b>Custom template:</b><input type="text" name="template" size="45" value="[% template %]" />
+    </p>
+    <p><input type="submit" value="Save" /></p>
+</form>
+
+[% IF execute == 'Yes' %]
+    [% IF error %]
+        [% error %]
+    [% ELSE %]
+        Artice saved with new id: [% ret %]
+    [% END %]
+[% END %]
+
+[% INCLUDE footer.html %]

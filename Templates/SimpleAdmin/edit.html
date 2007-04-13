@@ -1,0 +1,147 @@
+[%
+    currentPage = 'edit.html'
+    currentPageTitle = 'Edit Article' 
+    id = modwheel.getParam('id')
+    title = modwheel.getParam('title') 
+    keywords = modwheel.getParam('keywords')
+    summary = modwheel.getParam('summary') 
+    text = modwheel.getParam('text')
+    active = modwheel.getParam('active')
+    parent = modwheel.getParam('parent')
+    sort = modwheel.getParam('sort')
+    template = modwheel.getParam('template')
+    username = modwheel.getCurrentUser()
+    execute = modwheel.getParam('execute')
+    executeDeleteFile = modwheel.getParam('executeDeleteFile')
+    deleteFileId = modwheel.getParam('deleteFileId')    
+                                                %]
+
+[% # ######### Fetch the article requested. %]
+
+[% this = modwheel.fetchObject(id => id, type ="'article'") %]
+[% error = 'No such article' UNLESS this%]
+[% id = this.id IF this.id %]
+
+[% # ######### Set default values %]
+
+[% DEFAULT active = 'off' %]
+[% DEFAULT sort = 10 %]
+[% DEFAULT parent = this.parent %]
+
+[% # ############ Save the object. %]
+
+[% IF execute == 'Yes' %]
+    [% error = 'All objects must have a title.' UNLESS title %]
+    [% UNLESS error %]
+        [% ret = this.setObjectValues(
+            type        => 'article',
+            name        => title,
+            keywords    => keywords,
+            description    => summary,
+            data        => text,
+            active        => active,
+            parent        => parent,
+            sort        => sort,
+            template    => template
+            owner        => username,
+            revised_by    => username)
+        %]
+        [% ret = modwheel.saveObject(this) %]
+        [% error = "Internal Error: Couldn't save object." UNLESS ret %]
+    [% END %]
+[% END %]
+
+[% IF executeDeleteFile == 'Yes' and deleteFileId %]
+    [% ret = modwheel.deleteRepositoryFile(deleteFileId) %]
+[% END %]
+
+[% INCLUDE header_start.html %]
+[%# INCLUDE rtef_init.html %]
+<script type="text/javascript">
+<!--//
+    function updateRepositoryFiles()
+    {
+        new Ajax.Updater({success: 'repositoryFiles'}, '/ajax/repositoryFilesByObjectId.html?id=[% id %]', {method: 'get'});
+    }
+    function deleteRepositoryFile(repid)
+    {
+        new Ajax.Request('/ajax/deleteRepositoryFile.html', {method: 'get', parameters: {id: repid}});
+        updateRepositoryFiles();
+    }
+    function updateTags()
+    {
+        new Ajax.PeriodicalUpdater({success: 'objectTags'}, '/ajax/tagsByObjectId.html', {frequency: 3, decay: 2, method: 'get', parameters: {objid: '[% id %]'}});
+    }
+    function disconnectTag(tagid, objid)
+    {
+        new Ajax.Request('/ajax/tagActions.html', {method: 'get', parameters: {tagid: tagid, objid: objid, action: 'disconnect'}});
+        updateTags();
+    }
+    function connectToTagAndFade(htmldivid, tagid)
+    {
+        new Effect.Fade(htmldivid);
+        new Ajax.Request('/ajax/tagActions.html', {method: 'get', parameters: {tagid: tagid, objid: [% id %], action: 'connect'}});
+        updateTags();
+        hideLightbox();
+    }
+    updateRepositoryFiles();
+    updateTags();
+//-->
+</script>
+[% INCLUDE header_end.html %]    
+
+<h1>Edit article: [% this.name %]</h1>
+<form name="objectedit" method="post" action="[% currentPage %]">
+[% includeChangePathButton = 'Yes' %]
+[% INCLUDE currentpath.html %]
+<input type="hidden" onChange="refreshEditor()" name="parent" value="[% parent %]" />
+    <input type="hidden" name="execute" value="Yes" />
+    <input type="hidden" name="executeDeleteFile" value="Yes" />
+    <input type="hidden" name="deleteFileId" value="" />
+    <input type="hidden" name="id" value="[% id %]" />
+    <p><b>Title</b></p>
+    <p><input size="83" type="text" name="title" value="[% this.name %]"/></p>
+    <p><b>Keywords</b></p>
+    <p><input size="83" type="text" name="keywords" value="[% this.keywords %]"/></p>
+    <p><b>Summary</b></p>
+    <p><textarea rows="5" cols="80" name="summary">[% this.description %]</textarea></p>
+    <p><b>Article text</b></p>
+    <!--<p>
+    <script language="javascript" type="text/javascript">
+    writeRichText('text', '[% modwheel.esc1(this.data) %]', '', 800, 300, true, false, false);
+    </script>
+    </p>-->
+    <p><textarea rows="30" cols="80" name="text">[% this.data %]</textarea></p>
+    <p>
+        <b>Active: </b> <input type="checkbox" name="active" value="on" [% IF this.active %]checked="checked"[% END %] /></b>
+        <b>Sort:</b> <input type="text" size="2" name="sort" value="[% this.sort %]" />
+        <b>Custom template:</b><input type="text" name="template" size="45" value="[% this.template %]" />
+    </p>
+    <p><input type="submit" alt="Save object" value="Save" /></p>
+    <p><b>Tags for this object:</b></p>
+    <div id="objectTags">
+    </div>
+    <a href="#objectTags" onclick="lightbox(
+                    '/taglist.html?id=[% object.id %]',
+                    {height:700, width:650, overflow:'top'});">[Add new tags]</a>
+
+    <p><b>Files connected with this object:</b></p>
+    <div id="repositoryFiles">
+    </div>
+    <input type="button" onClick="openUploadWindow('[% id %]')" alt="Upload new files..." value="Upload new files..." />
+
+</form>
+
+[% IF execute == 'Yes' %]
+    [% IF error %]
+        [% error %]
+    [% ELSE %]
+        Artice successfully saved. [% ret %]
+    [% END %]
+[% END %]
+
+<h2>Help</h2>
+You can use basic html tags, also if you want to reference a file that is connected with this object
+you can type: [file:2] where 2 is the id of the file (the number to the left in parantheses in the list of files above).
+
+[% INCLUDE footer.html %]

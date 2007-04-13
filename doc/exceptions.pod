@@ -1,0 +1,207 @@
+=head1
+
+EXCEPTIONS
+
+=head1
+
+modwheel-no-site-selected
+
+=head2
+no site specified when creating Modwheel object.
+
+=head1
+
+object-can-not-get-parent
+
+=head2
+Couldn't fetch parent object for the selected object.
+
+=head1
+
+object-save-missing-field
+
+=head2
+A required field was missing when trying to save object.
+
+=head1
+
+object-tags-missing-field
+
+=head2
+A required field was missing when trying to fetch tags for a object.
+
+=head1
+
+object-parent-loop
+
+=head2
+While iterating over objects we found that a object has itself as parent.
+
+=head1
+
+object-exprbyid-loop
+
+=head2
+exprbyid() has found a potential infinite loop
+
+=head1
+
+object-tag-create-missing-field
+
+=head2
+A required field was missing when trying to create a new tag.
+
+=head1
+
+object-tag-delete-missing-field
+
+=head2
+A required field was missing when trying to create delete a tag.
+
+=head1
+
+object-tag-connect-missing-field
+
+=head2
+A required field was missing when trying to connect a object with a tag.
+
+=head1
+
+object-tag-disconnect-missing-field
+
+=head2
+A required field was missing when trying to disconnect a object from a tag.
+
+=head1
+
+object-tag-no-such-tag
+
+=head2
+No tag with the given name.
+
+=head1
+
+repository-upload-missing-field
+
+=head2
+Missing required argument for repository upload.
+
+=head1
+
+repository-upload-parent-id-not-digit
+
+=head2
+Parent id specified for repository upload was not a digit.
+
+=head1
+
+repository-upload-mkdir-error
+
+=head2
+Couldn't create directory in repository.
+
+=head1
+
+repository-could-not-delete-file
+
+=head2
+Unable to delete the file from repository.
+
+=head1
+
+repository-could-not-delete-entry
+
+=head2
+Unable to delete repository database entry.
+
+=head1
+
+repository-open-file-shell-escape
+
+=head2
+Shell escape poisoning attempt detected.
+
+=head1
+
+repository-open-can-not-stat
+
+=head2
+Could not get stat() for file.
+
+=head1
+
+repository-open-race-condition
+
+=head2
+Possible race condition detected while opening file for writing.
+
+=head1
+
+user-uid-not-digit
+
+=head2
+User id given is not a digit.
+
+=head1
+
+user-no-such-user
+
+=head2
+No such username or no password set for user.
+
+=head1
+
+user-login-failed
+
+=head2
+No such username or password
+
+=head1
+
+user-update-missing-user
+
+=head2
+No username/user-id specified for user update.
+
+=head1
+
+user-missing-field
+
+=head2
+Missing username or password while trying to create, update, delete a user, or get information about user.
+
+=head1
+
+user-create-already-exists
+
+=head2
+A user with that username already exists.
+
+=head1
+
+db-build-query-missing-where
+
+=head2
+Executing a sql delete or update statement without a where clause is rarely what we want,
+so this generates an error.
+
+=head1
+
+db-connection-error
+
+=head2
+Could not connect to database.
+
+=head1
+
+db-prepare-without-query
+
+=head2
+prepare() was called without query.
+
+=head1
+
+db-query-error
+
+=head2
+Something wrong with the given query.

@@ -1,0 +1,11 @@
+[% currentPage = 'confirmDeleteFile.html' %]
+[% id = modwheel.getParam('id') %]
+[% name = modwheel.getParam('name') %]
+[% type = modwheel.getParam('mimetype') %]
+
+<div class="mwLightbox">
+<h1>Delete file "[% name %] with type [% type %]?</h1>
+<h2 class="warning">Do you really want to delete this file? This action cannot be undone.</h2>
+<a href="#" class="lbAction" rel="deactivate"><button>No</button></a>
+<a href="/lb/deleteFile.html?id=[% id %]" class="lbAction" rel="insert"><button>Yes</button></a>
+</div>

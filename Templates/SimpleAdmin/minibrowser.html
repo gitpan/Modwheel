@@ -1,0 +1,62 @@
+[% currentPage = 'minibrowser.html' %]
+[% parent = modwheel.parent() %]
+[% IF parent <= 0 %]
+    [% parent = 1 %]
+[% END %]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>Modwheel - Select new path</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" /> 
+    <script language="javascript">
+    <!--//
+        function setParentParent(id) {
+            if(window.opener && !window.opener.closed) {
+                window.opener.document.objectedit.parent.value = id;
+                window.opener.document.objectedit.execute.value = 'No';
+                window.opener.document.objectedit.submit();
+                window.close();
+            }
+        }
+    //-->
+    </script>
+</head>
+<body>
+
+<h1>Select new path</h1>
+
+[% INCLUDE currentpath.html %]
+
+[% dirs = modwheel.fetchObject(parent => parent, type => "'directory'") %]
+<table width="100%">
+<tr>
+    <th width="30%">Directory</th>
+    <th width="10%">Active</th>
+    <th width="10%">Detached</th>
+</tr>
+[% FOREACH dir = dirs %]
+<tr>
+    <td>
+        <b><a href="[% currentPage %]?parent=[% dir.id %]">[% dir.name %]</a>/</b>
+    </td><td>
+        [% IF dir.active %] Yes [% ELSE %] No [% END %]
+    </td><td>
+        [% IF dir.detached %] Yes [% ELSE %] No [% END %]    
+    </td>
+</tr>
+[% END %]
+</table>
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+    <th width="100%">&nbsp;</th>
+</tr>
+</table>
+<p>
+<form name="selectpath" method="get">
+    <input type="button" onClick="window.close()" value="Cancel" />
+    <input type="button" onClick="setParentParent('[% parent %]')" value="Select" />
+</form>    
+</p>
+</body>
+</html>

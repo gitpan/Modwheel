@@ -1,0 +1,10 @@
+[% currentPage = 'confirmDeleteUser.html' %]
+[% id = modwheel.getParam('id') %]
+[% username = modwheel.getParam('username') %]
+
+<div style="font-size: 24pt;" id="mwlightbox">
+<p style="text-align: center; float: center; display: block; background: #afafaf">Delete user [% username %]?</p>
+<p style="text-align: center;">Do you really want to delete this user? You cannot undo this action.</p>
+<p style="text-align: center;"><a href="#" onClick="hideLightbox()">[ No ]</a>
+<a href="#" onClick="return deleteUser('[% username %]')">[ Yes ]</a></p>
+</div>

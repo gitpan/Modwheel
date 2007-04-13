@@ -1,0 +1,53 @@
+[% currentPage = 'Preview.html' %]
+[% currentPageTitle = 'Preview' %]
+[% parent = modwheel.parent() %]
+
+[% INCLUDE header.html %]
+
+[% this = modwheel.fetchObject(id => parent) %]
+
+<p class="path">
+[% tree = modwheel.fetchObjectTree(parent) %]
+[% FOREACH node = tree %]
+    ::
+    [% IF node.id == parent %]
+        [% node.name %]
+    [% ELSE %]
+        [% IF includeChangePathButton == 'Yes' %]
+            [% node.name %]
+        [% ELSE %]
+            <a href="[% currentPage %]?parent=[% node.id %]">[% node.name %]</a>
+        [% END %]
+    [% END %]
+[% END %]
+
+<h1 id="title">[% this.name %]</h1>
+<h3 id="description">[% this.description %]</h3>
+
+<p id="content">
+[% modwheel.esc2(this.data) %]
+</p>
+
+[% IF this.type == 'directory' %]
+    [% objects = modwheel.fetchObject(parent => parent) %]
+    [% objects = modwheel.postSortDirectoriesFirst(objects) %]
+    [% IF objects %]
+        <table class="objectListEntry">
+        [% FOREACH object = objects %]
+            <tr><td>
+            [% IF object.type == 'directory' %]
+                   <b><a href="[% currentPage %]?parent=[% object.id %]">[% object.name %]</a>/</b>
+            [% ELSIF object.type == 'article' %]
+                <a href="[% currentPage %]?parent=[% object.id %]">[% object.name %]</a>
+            [% END %]
+            </td><td>
+            [% modwheel.abbreviate(object.description, 100) %]
+            </td></tr>
+        [% END %]
+        </table>
+    [% END %]
+[% END %]
+
+
+[% INCLUDE footer.html %]
+

@@ -1,0 +1,50 @@
+[% currentPage = 'index.html';
+   parent =  modwheel.parent();
+   this = modwheel.fetchObject(id => parent);
+   currentPageTitle = this.name;
+ %]
+
+[% INCLUDE header_start.html %]
+<script type="text/javascript">
+    function updateObjectList()
+    {
+        new Ajax.PeriodicalUpdater({success: 'objectList'},
+            'ajax/listObjectsForParent.html?parent=[% parent %]', {frequency: 3, decay: 2, method: 'get'});
+    }
+    function moveObjectToTrash(objid)
+    {
+        new Ajax.Request('ajax/moveObjectToTrash.html', {
+            method: 'get',
+            parameters: {id: objid},
+            onComplete: updateObjectList()
+        });
+        hideLightbox();
+    }
+    updateObjectList();
+</script>
+[% INCLUDE header_end.html %]
+
+<div id="content">
+    <p id="title">[% this.name %]</p>
+    <p id="description">[% this.description %]</p>
+    [% INCLUDE currentpath.html %]
+    <div id="objectList">
+    </div>
+</div>
+
+<div id="search">
+<p>
+    <form id="frmSearch" action="search.html">
+    <input type="text" autocomplete="off" style="Width: 500px" id="txtSearch" name="q" alt="Search Criteria" value="" autocomplete="off" />
+    <input type="submit" id="cmdSearch" name="cmdSearch" value="Search" alt="Run Search" />
+    <br />
+    <div class="autocompleteContainer">
+        <div id="autocomplete" class="autocomplete"></div>
+    </div>
+    </form>
+</p>
+</div>
+
+
+
+[% INCLUDE footer.html %]

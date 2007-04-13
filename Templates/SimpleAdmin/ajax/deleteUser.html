@@ -1,0 +1,8 @@
+[% username = modwheel.getParam('username') %]
+[% IF username %]
+
+    [%    status = modwheel.deleteUser(username) %]
+
+%]
+
+[% END %]

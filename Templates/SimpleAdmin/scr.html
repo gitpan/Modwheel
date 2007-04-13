@@ -1,0 +1,41 @@
+[% id = modwheel.getParam('id') %]
+<html>
+    <head>
+        <title>Test</title>
+        <script type="text/javascript" language="javascript" src="/scriptaculous/prototype.js"></script>
+        <script type="text/javascript" language="javascript" src="/scriptaculous/scriptaculous.js"></script>
+        <script type="text/javascript" language="javascript">
+            // <![CDATA[
+        // ]]>
+        </script>
+        <style type="text/css" media="screen">
+          .inplaceeditor-saving { background: url(/images/spinner.gif) bottom right no-repeat; }
+        </style>
+    </head>
+    <body>
+    
+[% this = modwheel.fetchObject(id => id) %]
+
+<b>Title</b><p id="articleTitle">[% this.name %]</p>
+<script type="text/javascript">
+ new Ajax.InPlaceEditor('articleTitle', 'ajax_objedit.html?id=[% this.id %]&parent=[% this.parent %]',
+    {cols: 80, callback: function(form,value){return 'name='+escape(value)}});
+</script>
+
+<b>Keywords</b><p id="articleKeywords">[% IF this.keywords %][% this.keywords %][% ELSE %]Click here to edit keywords...[% END %]</p>
+<script type="text/javascript">
+ new Ajax.InPlaceEditor('articleKeywords', 'ajax_objedit.html?id=[% this.id %]&parent=[% this.parent %]',
+    {cols: 80, callback: function(form, value){return 'keywords='+escape(value)}});
+</script>
+<b>Description</b><p id="articleSummary">[% IF this.description %][% this.description %][% ELSE %]Click here to edit summary...[% END %]</p>
+<script type="text/javascript">
+ new Ajax.InPlaceEditor('Summary', 'ajax_objedit.html?id=[% this.id %]&parent=[% this.parent %]',
+    {rows: 5, cols: 80, callback: function(form, value){return 'description='+escape(value)}});
+</script>
+<b>Body</b><p id="articleBody">[% IF this.data %][% this.data %][% ELSE %]Click here to edit data...[% END %]</p>
+<script type="text/javascript">
+ new Ajax.InPlaceEditor('articleBody', 'ajax_objedit.html?id=[% this.id %]&parent=[% this.parent %]',
+    {rows: 30, cols: 80, callback: function(form, value){return 'data='+escape(value)}});
+</script>
+
+[% INCLUDE footer.html %]

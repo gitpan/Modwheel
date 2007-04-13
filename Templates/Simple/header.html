@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="no" lang="no">
+<head>
+    <title>Modwheel - [% currentPageTitle %]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" /> 
+    <script language="javascript" type="text/javascript" src="/javascript/suggest.js"></script>
+    <script language="javascript">
+    <!--//
+        function refreshEditor() {
+            document.objectedit.execute.value = 'No';
+            document.objectedit.submit();
+        }
+        function newMiniBrowser(parent) {
+            mode = 'height=600,width=800,scrollbars=1,resizeable=1';
+            page = 'minibrowser.html?orig=' + parent + '&parent=' + parent;
+            mini = window.open(page, 'minime',  mode);
+            mini.focus();
+           }
+        function openUploadWindow(id) {
+            mode = 'height=300, width=400,scrollbars=1,resizeable=1';
+            page = 'upload.html?parent=' + id;
+            uf   = window.open(page, 'uploadFiles', mode);
+            uf.focus();
+        }
+        function confirmDeleteUserWindow(username) {
+            mode = 'height=300,width=400,scrollbars=1,resizeable=1';
+            page = 'confirmDeleteUser.html?username=' + username;
+            cw = window.open(page, 'confirmdeleteuser',  mode);
+            cw.focus();
+        }
+        function confirmDeleteObjectWindow(id, name, type) {
+            mode = 'height=300,width=400,scrollbars=1,resizeable=1';
+            page = 'confirmDeleteObject.html?id=' + id + '&name=' + name + '&type=' + type;
+            cod = window.open(page, 'confirmdeleteobject',  mode);
+            cod.focus();
+        }
+        function confirmDeleteFileWindow(id, name, mimetype) {
+            mode = 'height=300,width=400,scrollbars=1,resizeable=1';
+            page = 'confirmDeleteFile.html?id=' + id + '&name=' + name + '&mimetype=' + mimetype;
+            cf   = window.open(page, 'confirmdeletefile',  mode);
+            cf.focus();
+        }
+    //-->
+    </script>
+</head>
+<body>
+<!--<p id="logo">Modwheel</h1>-->
+[% INCLUDE menu.html %]
+

@@ -1,0 +1,43 @@
+[%
+    id = modwheel.getParam('id')
+    name= modwheel.getParam('name')
+    keywords = modwheel.getParam('keywords')
+    description = modwheel.getParam('description')
+    data = modwheel.getParam('data')
+    active = modwheel.getParam('active')
+    parent = modwheel.getParam('parent')
+    sort = modwheel.getParam('sort')
+    template = modwheel.getParam('template')
+    username = modwheel.getCurrentUser()
+    execute = modwheel.getParam('execute')
+    executeDeleteFile = modwheel.getParam('executeDeleteFile')
+    deleteFileId = modwheel.getParam('deleteFileId')
+                                                %]
+
+[% IF id %]
+    [% this = modwheel.fetchObject(id => id) %]
+    [% ret = this.setObjectValues(
+            type        => 'article',
+            name        => name,
+            keywords    => keywords,
+            description => description,
+            data        => data,
+            active      => active,
+            sort        => sort,
+            template    => template
+            owner       => username)
+       %]                                                                                                          
+    [% ret = modwheel.saveObject(this) %]                                                                       
+       [% UNLESS ret %]
+           Internal Error: Couldn't save object. keywords: [% this. keywords %]
+    [% ELSE %]
+        [% IF name %]
+            [% name %]
+        [% ELSIF keywords %]
+            [% keywords %]
+        [% ELSIF description %]
+            [% description %]
+        [% END %]
+    [% END %]
+[% END %]    
+

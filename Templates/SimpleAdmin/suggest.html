@@ -1,0 +1,22 @@
+[% currentPage = 'suggest.html' %]
+[% currentPageTitle = 'ModWHeel - Suggest' %]
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="no" lang="no">
+<head>
+    <title>Modwheel - [% currentPageTitle %]</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" /> 
+    <script language="javascript" type="text/javascript" src="/javascript/suggest.js"></script>
+</head>
+<body>
+
+
+<form id="frmSearch" action="http://www.DynamicAJAX.com/search.php">
+<input type="text" style="Width: 500px" id="txtSearch" name="txtSearch" alt="Search Criteria" value="" autocomplete="off" />
+<input type="submit" id="cmdSearch" name="cmdSearch" value="Search" alt="Run Search" />
+<br />
+<div class="autocompleteContainer">
+    <div id="autocomplete" class="autocomplete"></div>
+</div>
+</form>
+
+[% INCLUDE footer.html %]

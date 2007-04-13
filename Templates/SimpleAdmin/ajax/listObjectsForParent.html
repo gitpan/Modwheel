@@ -1,0 +1,72 @@
+[% currentPage = modwheel.getParam('currentPage') %]
+[% parent =  modwheel.parent() %]
+
+[% objects = modwheel.fetchObject(parent => parent) %]
+[% objects = modwheel.postSortDirectoriesFirst(objects) %]
+[% IF objects %]
+<table cellspacing="0" cellpadding="0" width="100%" border="0">
+<tr>
+    <th width="30%">Name</th>
+    <th width="10%">Type</th>
+    <th width="20%">Action</th>
+    <th width="20%">Changed</th>
+    <th width="20%">Created</th>
+</tr>
+    [% FOREACH object = objects %]
+    <tr>
+        <td width="30">
+            [% IF object.type == 'directory' %]
+                <b><a href="[% currentPage %]?parent=[% object.id %]">[% object.name %]</a>/</b>
+            [% ELSIF object.type == 'article' %]
+                <a href="edit.html?id=[% object.id %]&parent=[% object.parent %]">[% object.name %]</a>
+            [% END %]
+        </td>
+        <td width="15">[% object.type FILTER ucfirst %]</td>
+        <td width="15">
+                [<a href="Preview.html?parent=[% object.id %]">Preview</a>]
+            [% IF object.type    == 'article' %]
+                [<a href="edit.html?id=[% object.id %]&parent=[% object.parent %]">Edit</a>]
+            [% ELSIF object.type == 'directory' %]
+                [<a href="editDir.html?id=[% object.id %]">Edit</a>]
+            [% END %]
+                [% UNLESS currentPage == 'trash.html' %]
+                [<a href="#objectList" onclick="lightbox(
+                    '/confirmDeleteObject.html?id=[% object.id %]&name=[% object.name %]&type=[% object.type %]',
+                    {height:380, width:500, overflow:'hidden'});">Delete</a>]
+                [% END %]
+        </td>
+        <td width="15">[% object.changed %] by [% modwheel.nameByUid(object.revised_by) FILTER ucfirst %]</td>
+        <td width="15">[% object.created %] by [% modwheel.nameByUid(object.owner) FILTER ucfirst %] </td>
+    </tr>
+[% END %]
+<tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+</tr>
+[% ELSE %]
+    <p class="info">
+        [% IF currentPage == 'trash.html' %]
+            The trash is empty.
+        [% ELSE %]
+            No nodes in this directory. Be free to create some new ones :-)
+        [% END %]
+    </p>
+    <!--<div id="shortcuts">
+    <p id="articleTitle">[Create new article.]</p>
+        <script type="text/javascript">
+            new Ajax.InPlaceEditor('articleTitle', '/ajax/newObjectWithName.html?parent=[% parent %]&type=article',
+                { cols: 15, callback: function(form, value){ return 'name='+escape(value)}});
+       </script>
+    </p><nobr />
+    <p id="directoryTitle">[Create new directory.]</p>
+        <script type="text/javascript">
+            new Ajax.InPlaceEditor('directoryTitle', '/ajax/newObjectWithName.html?parent=[% parent %]&type=directory',
+                { cols: 15, callback: function(form, value){ return 'name='+escape(value)}});
+       </script>
+    </p>
+    </div>-->
+[% END %]
+</table>

@@ -1,0 +1,45 @@
+--- 
+abstract: Very extensible publishing system.
+author: Ask Solem Hoel <ask@0x61736b.net>
+build_requires: 
+  File::Spec: 0
+  Test::Harness: 2.03
+  Test::More: 0.42
+distribution_type: module
+generated_by: Module::Install version 0.65
+installdirs: site
+license: perl
+meta-spec: 
+  url: http://www.0x61736b.net/Modwheel/index.html
+  version: 0.01
+name: Modwheel
+no_index: 
+  directory: 
+    - Templates/
+    - inc
+    - t
+    - devel
+    - sql
+    - svn
+requires: 
+  Carp: 0
+  POSIX: 0
+  FileHandle: 0
+  Fcntl: 0
+  Scalar::Util: 0
+  Class::Struct: 0
+  Data::Dumper: 0
+  YAML: 0.39
+  DBI: 1.51
+  Crypt::Eksblowfish: 0.001
+  perl: 5.008
+  HTML::Tagset: 3.10
+  HTML::Parser: 3.48
+  URI::Escape: 3.28
+  AppConfig: 1.56
+  Template: 2.18
+  Template::Context: 2.98
+  Template::Stash::XS: 0
+  Template::Plugin: 2.70
+  Term::ReadKey: 2.30
+version: 0.01

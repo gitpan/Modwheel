@@ -1,0 +1,35 @@
+[% currentPage = 'upload.html' %]
+[% currentPageTitle = 'Upload Files' %]
+[% parent = modwheel.parent() %]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title>Modwheel - Select new path</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link href="/css/main.css" rel="stylesheet" type="text/css" /> 
+    <script language="javascript">
+    <!--//
+        function windowCloseAndParentSubmit() {
+            if(window.opener && !window.opener.closed) {
+                window.opener.document.objectedit.submit();
+                window.close();
+            }
+        }
+    //-->
+    </script>
+</head>
+<body>
+
+<h1>Upload new files<h1>
+
+<form enctype="multipart/form-data" method="post" name="files" action="[% currentPage %]">
+<input type="hidden" name="parent" value="[% parent %]" />
+File 1 <input type="file" name="file1" /><br />
+File 2 <input type="file" name="file2" /><br />
+File 3 <input type="file" name="file3" /><br /><br />
+<input type="submit" name="submit" value="Upload these files..." />
+<input type="button" alt="I'm finished!" onClick="windowCloseAndParentSubmit()" value="I'm finished!" />
+</form>
+
+[% INCLUDE footer.html %]
+

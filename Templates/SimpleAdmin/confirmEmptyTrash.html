@@ -1,0 +1,11 @@
+[% currentPage = 'confirmDeleteObject.html' %]
+[% id = modwheel.getParam('id') %]
+[% name = modwheel.getParam('name') %]
+[% type = modwheel.getParam('type') %]
+
+<div style="font-size: 24pt;" id="mwlightbox">
+<p style="text-align: center; float: center; display: block; background: #afafaf">Are you sure you want to empty the trash?</p>
+<p style="text-align: center;">You cannot undo this action. Are you really sure?</p>
+<p style="text-align: center;"><a href="#" onClick="hideLightbox()">[ No ]</a>
+<a href="#" onClick="return emptyTrash()">[ Yes ]</a></p>
+</div>

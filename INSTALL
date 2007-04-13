@@ -1,0 +1,137 @@
+
+                        M O D W H E E L
+
+AUTOMATIC INSTALLATION
+
+Installation should be easy, just follow these steps:
+
+    perl Makefile.pl
+    make
+    make test
+    make install
+    bash bin/install.sh
+
+Most of the time the default values are OK to choose, but read the on-screen instructions
+carefully and think before you hit enter.
+
+If the installation was successful you can stop reading this document and go
+on to play with Modwheel. However if you don't want to do a automatic
+installation, it doesn't work properly or you are just interested in
+the installation process; read on.
+
+MANUAL INSTALLATION
+
+First you have to create the Modwheel installation directory, in this example
+it is /opt/modwheel, you can change this to whatever location you want as long
+as you specify it in the configuration files.
+
+    mkdir -p /opt/modwheel
+    mkdir /opt/modwheel/config
+    mkdir /opt/modwheel/bin
+    mkdir /opt/modwheel/Templates
+    mkdir /opt/modwheel/Repository
+
+The repository directory must be owned by the same user that the Apache
+server runs as, so users are able to i.e upload files with their browser.
+To find out which user runs the Apache server you can look for the 'User'
+configuration directive in httpd.conf, or type the following command
+  grep '^\s*User ' /opt/apache/conf/httpd.conf | awk '{print $2}'.
+For vanillla installations of most linux distributions and FreeBSD this
+is usally 'nobody' and for Mac OS X it is 'daemon'. For security reasons
+there is good reason to create a seperate user for the Apache server so 
+that if another daemon running as the nobody user is compromised it would not
+affect the web server (unless the attacker gains root access ofcourse).
+
+    sudo chown nobody /opt/modwheel/Repository
+
+Now it's time to copy some files, modwheel command line utilities goes to bin/
+and the templates goes to templates/.
+
+    cp utils/* /opt/modwheel/bin
+    cp -r ./Templates/* "$templates"
+   
+Now the installation is finished, all that is left to do is to create a
+configuration file for Modwheel and to create the database.
+
+AUTOMATIC CONFIGURATION AND DATABASE CREATION
+
+There's a script that both creates the configuration file and sets up a
+modwheel MySQL database for you, if you already installed with automatic
+installation, you might already have created the configuration and databases.
+
+To run the automatic configuration script, run the following command:
+
+    perl mwconfig.pl /opt/modwheel
+
+Where /opt/modwheel is the modwheel installation directory you created
+earlier.
+
+NOTE: Only MySQL is supported at this time, other database systems are planned
+for the future.
+
+MANUAL CONFIGURATION
+
+If for some reason the configuration script doesn't work for you, you can
+copy the example configuration file in config/modwheelconfig.yml to the
+config/ directory in the modwheel installation path.
+The configuration file is in the YAML format and it is essential that you
+learn how to write in this format before you start hacking away, it is a very
+simple format and you should be able to learn the syntax in less than an hour.
+For good information on the YAML file format please point your web-browser to:
+  http://www.yaml.org/
+No documentation for the configuration file is available yet, but most of
+the directives are self explanatory. Now on to create the database.
+
+MANUAL DATABASE CREATION
+
+The database templates is in sql/, these files describes the object, user, tags
+and repository tables for MySQL. In the future this directory will have
+templates for more databases.
+
+To create a new modwheel database with MySQL you can use the commands:
+
+    echo "CREATE DATABASE IF NOT EXISTS modwheel" | mysql -u root
+
+In this example the database name is 'modwheel' but you can change the
+database name to your liking.
+
+Then you need to create the modwheel database user that has access to this
+database. In this example the username will be modwheel_user and password will
+be 'definityinfinity'. It is important that you use a good custom password,
+using the default password in this document is a security risk.
+
+    echo "CREATE USER modwheel_user IDENTIFIED BY 'definityinfinity'" | mysql -u root
+    echo "GRANT ALL PRIVILEGES ON modwheel.* TO 'modwheel_user'@'localhost'"\
+        "IDENTIFIED BY 'definityinfinity'"| mysql -u root
+
+Now you have to apply the templates in the sql/ directory to the database, you
+can do this by cutting and pasting into the mysql console or by using the
+command line. You must start with the file 01- and then iterate through each
+file alphabetically. You can do this with the command:
+
+    for file in sql/*.sql; do
+        mysql modwheel -u modwheel_user --password=definityinfinity < $file;
+    done
+
+Now that the database is created you have to update the modwheel configuration
+file to use this database. You can edit the configuration file with any text
+editor like vi, emacs, bbedit, textedit or notepad, just ensure that it is
+saved as plain text when you are done. The configuration directives related to
+databases is:
+    
+    database:
+        name: modwheel
+        host: localhost
+        type: MySQL
+        username: modwheel_user
+        password: definityinfinity
+
+You have to change the database for each Site configured. Only two sites are
+set up by default; Admin, for administration with the SimpleAdmin template,
+and Simple, for user access with the Simple template.
+
+That's it for configuring the Modwheel base distribution.
+Now you might want to download and install Modwheel-Apache2 to use Modwheel
+with Apache.
+
+(c) 2007 Ask Solem Hoel <ask@0x61736b.net>

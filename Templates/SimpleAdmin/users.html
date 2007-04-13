@@ -1,0 +1,29 @@
+[% currentPage = 'users.html' %]
+[% currentPageTitle = 'Users' %]
+
+[% INCLUDE header_start.html %]
+<script type="text/javascript" language="javascript">
+   function updateUserList()
+    {
+        new Ajax.PeriodicalUpdater({success: 'userlist'},
+            'ajax/listUsers.html', {frequency: 8, decay: 2, method: 'get'});
+    }
+    function deleteUser(username)
+    {
+        new Ajax.Request('ajax/deleteUser.html', {
+            method: 'get',
+            parameters: {username: username}
+        });
+        updateUserList();
+        hideLightbox();
+    }
+    updateUserList();
+</script>
+[% INCLUDE header_end.html %]
+
+<h1>Users</h1>
+
+<div id="userlist">
+</div>
+
+[% INCLUDE footer.html %]

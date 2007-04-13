@@ -1,0 +1,25 @@
+    <table cellspacing="0" cellpadding="0" width="100%" border="0">
+    <tr>
+        <th align="left" width="30%" bgcolor="#6f6f6f">Username</th>
+        <th width="10%" bgcolor="#6f6f6f">Action</th>
+        <th width="15%" bgcolor="#6f6f6f">Real Name</th>
+        <th width="15%" bgcolor="#6f6f6f">E-Mail</th>
+        <th width="15%" bgcolor="#6f6f6f">Last login from IP</th>
+    </tr>
+    [% users = modwheel.getAllUsers() %]
+    [% FOREACH user = users %]
+        <tr>
+            <td width="15">
+                <a href="editUser.html?username=[% user.username %]">[% user.username %]</a>
+            </td>
+            <td width="15">
+                [<a href="editUser.html?username=[% user.username %]">Edit</a>]                                     
+                [<a href="#objectList" onclick="lightbox(                                                           
+                    '/confirmDeleteUser.html?id=[% user.id %]&username=[% user.username %]',                        
+                    {height:380, width:500, overflow:'hidden'});">Delete</a>]                                       
+            <td width="15">[% user.real_name %]</td>                                                                
+            <td width="15">[% user.email %]</td>                                                                    
+            <td width="15">[% user.last_ip %]</td>                                                                  
+        </tr>                                                                                                       
+    [% END %]                                                                                                       
+    </table>

@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+use strict;
+use Data::Dumper;
+
+use Modwheel::Session;
+use Modwheel::HTML::Tagset;
+our $objcount;
+our $printStatusEvery = 10;
+
+my $modwheel_config =
+{
+    prefix          => '/opt/modwheel',
+    configfile      => 'config/modwheelconfig.yml',
+    locale          => 'en_EN',
+};
+
+my($modwheel, $user, $db, $object, $repository, $template) =
+    modwheel_session($modwheel_config, qw(db user object template repository));
+
+$db->connect;
+
+print "New username: ";
+my $username = <STDIN>;
+chomp $username;
+die unless $username;
+
+print "New password for $username: ";
+my $password = <STDIN>;
+chomp $password;
+die unless $password;
+
+print "Confirm new password for $username: ";
+my $password_confirm = <STDIN>;
+chomp $password_confirm;
+unless ($password eq $password_confirm) {
+    die "Password's doesn't match.\n";
+}
+
+$user->create(username => $username, password => $password);
+unless ($modwheel->error) {
+   print "OK!\n";
+} 
+
+$db->disconnect;
+

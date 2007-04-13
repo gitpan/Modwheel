@@ -1,0 +1,17 @@
+#!/usr/bin/perl -w
+use strict;
+
+BEGIN {
+    use lib '/opt/devel/Modwheel/lib';
+}
+
+use Modwheel::Session;
+
+my $pwd = shift @ARGV;
+unless($pwd)
+{
+    print STDERR "Usage: $0 [password]\n";
+    exit;
+}
+
+print Modwheel::User::hashcookie_encipher($pwd), "\n";

@@ -1,0 +1,11 @@
+[% currentPage = 'confirmDeleteObject.html' %]
+[% id = modwheel.getParam('id') %]
+[% name = modwheel.getParam('name') %]
+[% type = modwheel.getParam('type') %]
+
+<div class="mvLightbox">
+<h1>Move [% type %] "[% name %]" to trash?</h1>
+<h2 class="warning">Do you really want to move this [% type %] to the Trash?</h2>
+<a href="#" class="lbAction" rel="deactivate"><button>No</button></a>
+<a href="/lb/deleteObject.html?id=[% id %]" class="lbAction" rel="insert"><button>Yes</button></a>
+</div>

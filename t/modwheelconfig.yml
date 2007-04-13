@@ -1,0 +1,63 @@
+# ####
+# Modwheel configuration file for the modwheel test suite.
+#
+global:
+  title: Modwheel
+  defaultsite: modwheeltest
+  templatedir: /opt/devel/modwheel/Templates/
+  directoryindex: index.html
+  templatedriver: TT
+  debug: 1
+default:
+  active: 1
+  groupo: 100
+  inherit: 1
+  owner: 100
+  parent: 1
+shortcuts:
+  http: <a href="[type]:[content]">[name]</a>
+  https: <a href="[type]:[content]">[name]</a>
+  ftp: <a href="[type]:[content]">[name]</a>
+  mail: <a href="mailto:[content]">[name]</a>
+  cpan: <a href="http://search.cpan.org?query=[:content]&amp;mode=All">[name]</a>
+  perldoc: <a href="http://perldoc.com/cgi-bin/htsearch?words=[:content]">[name]</a>
+  google: <a href="http://google.startsiden.no/?q=[:content]">[name]</a> 
+  cpanauthor: <a href="http://search.cpan.org/~[:content]">[name]</a>
+site:
+  modwheeltest:
+    database:
+      name: modwheel
+      host: localhost
+      type: MySQL
+      username: modwheel
+      password: torskd0rsk
+    templatedir: /opt/devel/modwheel/Templates
+    repository: /opt/devel/modwheel/Repository
+    repositoryurl: /rep
+    templatedriver: TT
+    directoryindex: index.html
+    TT:
+      plugins:
+        Filter: Template::Plugin::Filter 
+        CGI: Template::Plugin::CGI
+        Date: Template::Plugin::Date
+        File: Template::Plugin::File
+        HTML: Template::Plugin::HTML
+        Image: Template::Plugin::Image
+        Iterator: Template::Plugin::Iterator
+        String: Template::Plugin::String
+        URL: Template::Plugin::URL
+        Wrap: Template::Plugin::Wrap
+    locale: en_EN
+    uniqueidfortest: SITEID0001
+  modwheeltest2:
+    database:
+      name: modwheel
+      host: localhost
+      type: MySQL
+      username: modwheel
+      password: torskd0rsk
+    templatedir: /opt/devel/modwheel/Templates
+    templatedriver: TT
+    locale: en_EN
+    uniqueidfortest: SITEID0002

@@ -1,0 +1,10 @@
+(Presentation Engine)
+Rename Modwheel::Apache2 to Apache2::Modwheel?
+Move most of the functionality in Modwheel::Template::TT::Plugin Into Modwheel::Template::Generic
+Installer !!
+Finish the Simple template. !!
+More tests, Apache::Test !!
+Nicer design (hallvard is the key:).
+mwMaintainance: Should remove stale tags and tagmaps.
+Object cache.
+Expand the Module::Install framework instead of using our lame install script.

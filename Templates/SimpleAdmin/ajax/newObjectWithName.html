@@ -1,0 +1,13 @@
+[% parent = modwheel.parent() %]
+[% name = modwheel.getParam('name') %]
+[% type = modwheel.getParam('type') %]
+[% IF name %]
+    [% obj = modwheel.createObject(
+            type => type,
+            name => name,
+            parent => parent
+        )
+    %]
+    [% ret = modwheel.saveObject(obj) %]
+[% END %]
+        

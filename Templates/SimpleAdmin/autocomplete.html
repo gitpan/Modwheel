@@ -1,0 +1,11 @@
+[% query = modwheel.getParam('query') %]
+[% lineFeed = "\n" %]
+[% IF query %]
+    [% results = modwheel.search(query) %]
+<ul>
+    [% FOREACH result = results %]
+    <li>[% modwheel.abbreviate(result.name) %]</li>
+    [% END %]
+</ul>
+[% END %]
+
