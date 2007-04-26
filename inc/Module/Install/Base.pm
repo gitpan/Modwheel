@@ -1,12 +1,12 @@
 #line 1
 package Module::Install::Base;
 
-$VERSION = '0.65';
+$VERSION = '0.64';
 
 # Suspend handler for "redefined" warnings
 BEGIN {
-    my $w = $SIG{__WARN__};
-    $SIG{__WARN__} = sub { $w };
+	my $w = $SIG{__WARN__};
+	$SIG{__WARN__} = sub { $w };
 }
 
 ### This is the ONLY module that shouldn't have strict on
@@ -62,7 +62,7 @@ sub DESTROY {}
 
 # Restore warning handler
 BEGIN {
-    $SIG{__WARN__} = $SIG{__WARN__}->();
+	$SIG{__WARN__} = $SIG{__WARN__}->();
 }
 
 1;

@@ -54,6 +54,7 @@ my %default_default = (
     inherit            => 1,
     owner            => 100,
     parent            => 1,
+    detach           => 0,
 );    
 
 my %default_global = (
@@ -282,9 +283,9 @@ sub prepare_db_mysql
 
     my $mysql_console = `which mysql`;
     chomp $mysql_console;
-    unless($mysql_console) {
+    if (! $mysql_console) {
         $mysql_console = ask($ASK_TEXTDEF, "mysql console is not in PATH, can you locate it for me?", '/usr/local/mysql/bin/mysql');
-        unless(-f $mysql_console) {
+        if (! -f $mysql_console) {
             print "There was no mysql console at $mysql_console. Cancelling.\n\n";
             return;
         }
@@ -324,21 +325,21 @@ sub prepare_db_mysql
     $sysret = `$syscmd`;
     
     my $sqldist = './sql';
-    unless(-f "$sqldist/01-Users.sql") {
+    if (! -f "$sqldist/MySQL/01-Users.sql") {
         print "Can't find sql template files. Are you running this program from the Modwheel distribution directory?\n";
         print "Please locate the directory containing the SQL files. (Usually Modwheel-0.1/sql/)\n";
         $sqldist = ask($ASK_TEXTDEF, "Enter the directory containing the modwheel SQL templates", "./sql");
-        unless(-f "$sqldist/01-Users.sql") {
+        if (! -f "$sqldist/01-Users.sql") {
             print "Couldn't find the sql files at the directory you specified. Please run this script from the same place you ran 'perl Makefile.pl'\n";
             return undef;
         }
     }
 
     $M .= " $site_name";
-    foreach my $sqlfile (qw(01-Users.sql 02-Tags.sql 03-Object.sql 04-Repository.sql mytags.sql))
+    foreach my $sqlfile (qw(01-Users.sql 02-Tags.sql 03-Object.sql 04-Repository.sql 05-Prototype.sql mytags.sql))
     {
         print "Creating table $sqlfile...\n";
-        $syscmd = "$M < $sqldist/$sqlfile";
+        $syscmd = "$M < $sqldist/MySQL/$sqlfile";
         print "% $syscmd\n";
         $sysret = `$syscmd`;
     }
@@ -347,11 +348,13 @@ sub prepare_db_mysql
 sub ask
 {
     my($t, $question, $default_answer, @suggestions) = @_;
-    return undef unless $question;
+    return undef if not $question;
     unshift @suggestions, $default_answer if $default_answer;
     my $complete = [ ];
     if($t == $ASK_LISTDEF || $t == $ASK_LIST) {
-        @suggestions    = ('Yes', 'No') unless scalar @suggestions;
+        if (! scalar @suggestions) {
+            @suggestions    = ('Yes', 'No');
+        }
         $default_answer ||= 'Yes';
 
         for(my $i=0; $i < @suggestions; $i++) {
@@ -364,7 +367,7 @@ sub ask
         }
     }
     
-    my $suggest = join('/', @suggestions);
+    my $suggest = join '/', @suggestions;
     my $answer;
     while(1) {
         my $prompt = "$Bold$question$Reset";
@@ -388,18 +391,18 @@ sub ask
             return $answer ? $answer : $default_answer;
         }
         elsif($t == $ASK_LISTDEF) {
-            return $default_answer unless $answer;
+            return $default_answer if not $answer;
             if(grep /$answer/i, @$complete) {
                 return $answer;
             } else {
-                print "Please enter one of the following: ", join(", ", @suggestions), ". Or just hit enter for $default_answer\n";
+                print "Please enter one of the following: ", join(qq{, }, @suggestions), ". Or just hit enter for $default_answer\n";
             }
         }    
         elsif($t == $ASK_LIST) {
             if(grep /$answer/i, @$complete) {
                 return $answer
             } else {
-                print "Please enter one of the following: ", join(", ", @suggestions), ".\n";
+                print "Please enter one of the following: ", join(qq{, }, @suggestions), ".\n";
             }
         }
         elsif($t == $ASK_NUMBER) {
@@ -449,8 +452,8 @@ print APCONF qq{
     ErrorLog logs/error_log
     <Location />
         SetHandler perl-script                                                                                                            
-        PerlAuthenHandler   Modwheel::Apache2::Authen                                                                                     
-        PerlResponseHandler Modwheel::Apache2                                                                                             
+        PerlAuthenHandler   Apache2::Modwheel::Authen                                                                                     
+        PerlResponseHandler Apache2::Modwheel                                                                                             
         PerlSetVar ModwheelPrefix       $prefix
         PerlSetVar ModwheelConfigFile   config/modwheelconfig.yml                                                                         
         PerlSetVar ModwheelSite         $adminSiteName
@@ -480,7 +483,7 @@ print APCONF qq{
     ErrorLog logs/error_log                                                                                                               
     <Location />                                                                                                                          
         SetHandler perl-script                                                                                                            
-        PerlResponseHandler Modwheel::Apache2                                                                                             
+        PerlResponseHandler Apache2::Modwheel                                                                                             
         PerlSetVar ModwheelPrefix       $prefix
         PerlSetVar ModwheelConfigFile   config/modwheelconfig.yml                                                                         
         PerlSetVar ModwheelSite         $userSiteName

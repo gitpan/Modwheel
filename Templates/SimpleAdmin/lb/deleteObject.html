@@ -1,7 +1,0 @@
-[% id = modwheel.getParam('id') %]
-[% IF id %]
-    [% status = modwheel.trashObject(id) %]
-    <h1><a href="#" class="lbAction" rel="deactivate">Object moved to trash! Click to close.</a></h1>
-[% ELSE %]
-    <h1><a href="#" class="lbAction" rel="deactivate">Missing Object Id.</a></h1>
-[% END %]

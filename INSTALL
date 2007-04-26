@@ -104,12 +104,12 @@ using the default password in this document is a security risk.
     echo "GRANT ALL PRIVILEGES ON modwheel.* TO 'modwheel_user'@'localhost'"\
         "IDENTIFIED BY 'definityinfinity'"| mysql -u root
 
-Now you have to apply the templates in the sql/ directory to the database, you
+Now you have to apply the templates in the sql/MySQL directory to the database, you
 can do this by cutting and pasting into the mysql console or by using the
 command line. You must start with the file 01- and then iterate through each
 file alphabetically. You can do this with the command:
 
-    for file in sql/*.sql; do
+    for file in sql/MySQL/*.sql; do
         mysql modwheel -u modwheel_user --password=definityinfinity < $file;
     done
 
@@ -131,7 +131,7 @@ set up by default; Admin, for administration with the SimpleAdmin template,
 and Simple, for user access with the Simple template.
 
 That's it for configuring the Modwheel base distribution.
-Now you might want to download and install Modwheel-Apache2 to use Modwheel
+Now you might want to download and install Apache2-Modwheel to use Modwheel
 with Apache.
 
-(c) 2007 Ask Solem Hoel <ask@0x61736b.net>
+(c) 2007 Ask Solem <ask@0x61736b.net>

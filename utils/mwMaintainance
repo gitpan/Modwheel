@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/local/bin/perl
 use strict;
 use Data::Dumper;
 
@@ -35,13 +35,13 @@ my $maintainance_handler = sub
     my($o, $id, $O, $cur_levels) = @_;
     $objcount++;
 
-    unless($objcount % $printStatusEvery) {
+    if(! $objcount % $printStatusEvery) {
         print "Currently at object $objcount. (id: $O->{id}, $O->{type}, parent: $O->{parent})\n";
     }
     
     if($O->{parent} && $O->{parent} > 0)
     {
-        unless($db->fetch_singlevar($db->build_select_q('object', 'id', {id => '?'}), $O->{parent}))
+        if(! $db->fetch_singlevar($db->build_select_q('object', 'id', {id => '?'}), $O->{parent}))
         {
             print STDERR "object (id: $O->{id} $O->{type} parent: $O->{parent}) '$O->{name}' has no parent.".
                 "Moving to NoParent.\n";
@@ -52,7 +52,7 @@ my $maintainance_handler = sub
 };
 
 $db->connect;
-$object->get_all_children(Modwheel::Object::MW_TREE_ROOT(),
+$object->traverse(Modwheel::Object::MW_TREE_ROOT(),
         {handler => $maintainance_handler},
         [qw(id parent name type)]
 );

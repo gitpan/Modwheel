@@ -27,16 +27,16 @@ my($modwheel, $user, $db, $object, $repository, $template) =
 #foreach(($modwheel, $user, $db, $object, $repository, $template)) {
 #    Devel::Leak::Object::track($_);
 #}
-$modwheel->debug(0);
+$modwheel->set_debug(0);
 $db->connect();
 
 print $db->build_delete_q('object', {parent => Modwheel::Object::MW_TREE_TRASH}), "\n";
 
-foreach(($modwheel, $user, $db, $object, $repository, $template)) {
-    if(has_circular_ref($_)) {
-        print "HAS CIRCULAR REF: ", ref $_, "\n";
-    }
-}
+#foreach(($modwheel, $user, $db, $object, $repository, $template)) {
+#    if(has_circular_ref($_)) {
+#        print "HAS CIRCULAR REF: ", ref $_, "\n";
+#    }
+#}
 
 print $db->create_dsn, "\n";
 
@@ -70,7 +70,7 @@ print "NAME: $oname\n";
 
 #print $db->build_update_q('user', {username => 'ask'});
 
-#$user->create(username => 'ask', password => 'fiskfisk', email => 'ask@0x61736b.net', real_name => 'Ask Solem Hoel');
+#$user->create(username => 'ask', password => 'fiskfisk', email => 'ask@0x61736b.net', real_name => 'Ask Solem');
 #print($modwheel->error, "\n") if $modwheel->error;
 #my $u = $user->get('ask');
 #print($modwheel->error, "\n") if $modwheel->error;

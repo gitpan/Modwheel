@@ -6,9 +6,9 @@ use Module::Install::Base;
 
 use vars qw{$VERSION $ISCORE @ISA};
 BEGIN {
-    $VERSION = '0.65';
-    $ISCORE  = 1;
-    @ISA     = qw{Module::Install::Base};
+	$VERSION = '0.64';
+	$ISCORE  = 1;
+	@ISA     = qw{Module::Install::Base};
 }
 
 sub WriteAll {
@@ -30,7 +30,7 @@ sub WriteAll {
     } else {
         $self->check_nmake if $args{check_nmake};
         unless ( $self->makemaker_args->{'PL_FILES'} ) {
-            $self->makemaker_args( PL_FILES => {} );
+        	$self->makemaker_args( PL_FILES => {} );
         }
         if ($args{inline}) {
             $self->Inline->write;

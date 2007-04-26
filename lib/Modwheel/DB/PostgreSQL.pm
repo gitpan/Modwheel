@@ -1,78 +1,97 @@
-package Modwheel::DB::MySQL;
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel/DB/PostgreSQL.pm - Modwheel database driver for PostgreSQL.
-# (c) 2007 Ask Solem Hoel <ask@0x61736b.net>
+# (c) 2007 Ask Solem <ask@0x61736b.net>
 #
 # See the file LICENSE in the Modwheel top source distribution tree for
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-use Modwheel::DB::Generic;
-our @ISA = qw(Modwheel::DB::Generic);
-
-sub create_dsn
+# $Id: PostgreSQL.pm,v 1.5 2007/04/25 18:49:15 ask Exp $
+# $Source: /opt/CVS/Modwheel/lib/Modwheel/DB/PostgreSQL.pm,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.5 $
+# $Date: 2007/04/25 18:49:15 $
+#####
+package Modwheel::DB::PostgreSQL;
+use strict;
+use warnings;
+use Class::InsideOut::Policy::Modwheel qw( :std );
+use base 'Modwheel::DB::Base';
+use version; our $VERSION = qv('0.2.1');
 {
-    my $self = shift;
-    my $c = $self->modwheel->siteconfig->{database};
+    
+    use Readonly;
 
-    my $dsn   = 'dbi:Pg:';
-    if ($c->name}) {
-        $dsn .= "dbname=$c->{name};"
-    }
-    if ($c->{host}) {
-        $dsn .= "host=$c->{host};"
-    }
-    if ($c->{port}) {
-        $dsn .= "port=$c->{port};"
-    }
-    if ($c->{options}) {
-        $dsn .= "options=$c->{options};"
-    }
-    if ($c->{tty}) {
-        $dsn .= "tty=$c->{tty};"
-    }
+    Readonly my @DRIVER_REQUIRES  => qw( DBD::Pg );
 
-    chop $dsn;
-    return $dsn;
-}
-
-sub create_timestamp
-{
-    my($self, %time) = @_;
-
-    $time{timezone} ||= 1;
-    $time{hour}     ||= 0;
-    $time{minute}   ||= 0;
-    $time{second}   ||= 0;
-
-    for (keys %time) {
-        $time{$_} =~ s/\D*//g;
-    }
-
-    my $timestamp = sprintf("%.4d-%.2d-%.2d %.2d:%.2d:%.2d+%.2d",
-        $time{year}, $time{month}, $time{day},
-        $time{hour}, $time{minute}, $time{second}, $time{timezone}
+    Readonly my @POSTGRES_OPTIONS => qw(
+        host
+        port
+        options
+        tty
     );
 
-    return $timestamp;
-}
+    sub create_dsn {
+        my $self = shift;
+        my $c = $self->modwheel->siteconfig->{database};
+    
+        my $dsn   = 'dbi:Pg:';
 
-# use sql sequences
-sub fetch_next_id
-{
-    my ($self, $table) = @_;
+        $dsn .= "dbname=$c->{name}";
 
-    return $self->fetch_singlevar("SELECT nextval('${table}_seq')");
-}
+        foreach my $option (@POSTGRES_OPTIONS) {
+            if (defined $c->{$option}) {
+                $dsn .= "$option=$c->{$option};";
+            }
+        }
+        chop $dsn;
 
-sub maintainance
-{
-    my ($self) = @_;
+        return $dsn;
+    }
 
-    $self->exec_query("VACUUM");
-    $self->exec_query("VACUUM_ANALYZE");
+    sub driver_requires {
+        return @DRIVER_REQUIRES;
+    }
 
-    return 1;
+    sub create_timestamp {
+        my($self, %time) = @_;
+    
+        $time{timezone} ||= 1;
+        $time{hour}     ||= 0;
+        $time{minute}   ||= 0;
+        $time{second}   ||= 0;
+
+        foreach my $time_value (keys %time) {
+            $time{$time_value} =~ s/\D*//xmsg;
+        }
+
+        my $timestamp = sprintf '%.4d-%.2d-%.2d %.2d:%.2d:%.2d+%.2d',
+            $time{year}, $time{month}, $time{day},
+            $time{hour}, $time{minute}, $time{second}, $time{timezone}
+        ;
+
+        return $timestamp;
+    }
+
+    # use sql sequences
+    sub fetch_next_id {
+        my ($self, $table) = @_;
+         my $table_seq = $table . '_seq';
+         my $new_id = $self->fetch_singlevar(qq{ SELECT nextval('$table_seq') });
+        return;
+    }
+
+    sub maintainance {
+        my ($self) = @_;
+
+        $self->exec_query('VACUUM');
+        $self->exec_query('VACUUM_ANALYZE');
+
+        return 1;
+    }
+
 }
 
 1;
+__END__

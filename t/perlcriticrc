@@ -1,0 +1,4 @@
+#theme     = (pbp + security) * bugs 
+
+severity  = brutal
+exclude   = RequireTidyCode ProhibitMultiplePackages ProhibitPackageVars ProhibitMixedCaseSubs ProhibitBuiltinHomonyms

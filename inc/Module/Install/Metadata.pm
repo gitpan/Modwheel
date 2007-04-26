@@ -6,14 +6,14 @@ use Module::Install::Base;
 
 use vars qw{$VERSION $ISCORE @ISA};
 BEGIN {
-    $VERSION = '0.65';
-    $ISCORE  = 1;
-    @ISA     = qw{Module::Install::Base};
+	$VERSION = '0.64';
+	$ISCORE  = 1;
+	@ISA     = qw{Module::Install::Base};
 }
 
 my @scalar_keys = qw{
     name module_name abstract author version license
-    distribution_type perl_version tests installdirs
+    distribution_type perl_version tests
 };
 
 my @tuple_keys = qw{
@@ -56,11 +56,6 @@ foreach my $key (@tuple_keys) {
     };
 }
 
-sub install_as_core   { $_[0]->installdirs('perl')   }
-sub install_as_cpan   { $_[0]->installdirs('site')   }
-sub install_as_site   { $_[0]->installdirs('site')   }
-sub install_as_vendor { $_[0]->installdirs('vendor') }
-
 sub sign {
     my $self = shift;
     return $self->{'values'}{'sign'} if defined wantarray and !@_;
@@ -69,13 +64,13 @@ sub sign {
 }
 
 sub dynamic_config {
-    my $self = shift;
-    unless ( @_ ) {
-        warn "You MUST provide an explicit true/false value to dynamic_config, skipping\n";
-        return $self;
-    }
-    $self->{'values'}{'dynamic_config'} = $_[0] ? 1 : 0;
-    return $self;
+	my $self = shift;
+	unless ( @_ ) {
+		warn "You MUST provide an explicit true/false value to dynamic_config, skipping\n";
+		return $self;
+	}
+	$self->{'values'}{'dynamic_config'} = $_[0] ? 1 : 0;
+	return $self;
 }
 
 sub all_from {
@@ -170,8 +165,8 @@ sub features {
         $self->feature( $name, @$mods );
     }
     return $self->{values}->{features}
-        ? @{ $self->{values}->{features} }
-        : ();
+    	? @{ $self->{values}->{features} }
+    	: ();
 }
 
 sub no_index {
@@ -284,11 +279,9 @@ sub license_from {
 
     if (
         $self->_slurp($file) =~ m/
-        (
-            =head \d \s+
-            (?:licen[cs]e|licensing|copyright|legal)\b
-            .*?
-        )
+        =head \d \s+
+        (?:licen[cs]e|licensing|copyright|legal)\b
+        (.*?)
         (=head\\d.*|=cut.*|)
         \z
     /ixms
@@ -305,7 +298,6 @@ sub license_from {
             'LGPL'                                            => 'lgpl',
             'BSD'                                             => 'bsd',
             'Artistic'                                        => 'artistic',
-            'MIT'                                             => 'MIT',
         );
         while ( my ( $pattern, $license ) = splice( @phrases, 0, 2 ) ) {
             $pattern =~ s{\s+}{\\s+}g;

@@ -1,5 +1,0 @@
-[% query = modwheel.getParam('query') %]
-[% IF query %]
-[% results = modwheel.search(query) %]
-{"result":[[% FOREACH result = results %]["[% modwheel.abbreviate(result.name) %]", "[% modwheel.abbreviate(result.keywords) %]", "[% modwheel.abbreviate(result.description) %]"],[% END %][]]}[% END %]
-

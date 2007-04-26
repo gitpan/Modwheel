@@ -1,123 +1,183 @@
-package Modwheel::Template;
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel/Template.pm - Abstract class for using Template drivers.
-# (c) 2007 Ask Solem Hoel <ask@0x61736b.net>
+# (c) 2007 Ask Solem <ask@0x61736b.net>
 #
 # See the file LICENSE in the Modwheel top source distribution tree for
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-use Modwheel::Instance;
-our @ISA = qw(Modwheel::Instance);
-
-# ####### CONSTRUCTOR
-# This is an abstract factory class for the database backend.
-# The database type is selected from the configuration entry
-# <database><type>.
-# 
-# This way we can support different database types for each session.
-sub new
+# $Id: Template.pm,v 1.5 2007/04/25 18:49:14 ask Exp $
+# $Source: /opt/CVS/Modwheel/lib/Modwheel/Template.pm,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.5 $
+# $Date: 2007/04/25 18:49:14 $
+#####
+package Modwheel::Template;
+use strict;
+use warnings;
+use Params::Util ('_CLASS');
+use version; our $VERSION = qv('0.2.1');
 {
-    my ($class, %argv) = @_;
-    $class = ref $class || $class;
 
-    my $modwheel = $argv{modwheel};
-    my $user     = $argv{user};
-    my $driver   = $modwheel->siteconfig->{templatedriver};
-    unless ($driver) {
-        $driver  = $modwheel->config->{templatedriver};
+    #------------------------------------------------------------------------
+    # ->new( \%arguments )
+    #
+    # This is an abstract factory class for representation engines.
+    # The representation engine is selected from the configuration entry
+    #   Site:
+    #     $MySiteName:
+    #       templatedriver:
+    #
+    # Or if no template driver configured for the site, it looks in the
+    # global directive:
+    #
+    #   global:
+    #     templatedriver:
+    #
+    # This way we can support different database types for each instance.
+    #------------------------------------------------------------------------
+    sub new {
+        my ($class, $arg_ref) = @_;
+
+        my $modwheel = $arg_ref->{modwheel};
+        my $user     = $arg_ref->{user};
+        my $driver   = $modwheel->siteconfig->{templatedriver};
+
+        # User can select the full class name or just the name
+        # of the database.
+        if ($driver !~ m/ :: /xms) {
+            $driver = 'Modwheel::Template::' . $driver;
+        }
+
+        # Check the class name.
+        if (!_CLASS($driver)) {
+            $modwheel->logerror(
+                "Template: $driver is not a valid class name."
+            );
+            return;
+        }
+
+        # we just include the database we need by require(),
+        # create a new instance and return it.
+        my $file = $driver . q{.pm};
+        $file =~ s{::}{/}xmsg;
+        require $file;    ## no critic
+        my $obj = $driver->new($arg_ref);
+
+        return $obj;
     }
 
-    # User can select the full class name or just the name
-    # of the database.
-    unless ($driver =~ m/::/) {
-        $driver = 'Modwheel::Template::' . $driver;
-    }
-
-    # we just include the database we need by require(),
-    # create a new instance and return it.
-    (my $file = $driver) =~ s#::#/#g;
-    require "$file.pm";
-    my $obj = $driver->new(%argv);
-
-    return $obj;
 }
 
-# ###### ACCESSORS
-
-# ###### INSTANCE METHODS
-
-# ###### CLASS METHODS
-
-1
+1;
 
 __END__
 
 =head1 NAME
 
-Modwheel::Template - Abstract factory class for Modwheel template support.
+Modwheel::Template - Abstract factory class for Modwheel presentation engine
+drivers.
+
+=head1 VERSION
+
+v0.2.1
 
 =head1 SYNOPSIS
 
-    my $templatesystem = $modwheel->siteconfig->{templatedriver};
-    my $template   = Modwheel::Template->new(
+    my $template   = Modwheel::Template->new({
         modwheel   => $modwheel,
         db         => $db,
         user       => $user,
         repository => $repository,
         object     => $object
-    );
-    $db->connect or die("Couldn't connect to database: ". $db->errstr);
+    });
+    $db->connect or die "Couldn't connect to database: ". $db->errstr;
    
     $template->init(input => 'myfile.html');
+
     print $template->process();
  
     $db->disconnect if $db->connected;
 
-See individual template system support classes for more information. (i.e Template::Plugin::TT)
+=head1 DESCRIPTION
 
-=head1 CONSTRUCTOR
+Abstract loading of template drivers.
+
+=head1 MORE INFORMATIOAN
+
+Please see L<Modwheel::Template::Base>
+
+If you're using Template Toolkit as representation engine, see:
 
 =over 4
 
-=item C<Modwheel::Template-E<gt>new(modwheel =E<gt> $modwheel [...])>
+=item * L<Modwheel::Template::TT::Plugin>
+
+   This is the plugin you use in your Template Toolkit templates.
+
+=item * L<Modwheel::Template::TT>
+
+  This is the driver that sets up and loads the Template Toolkit.
+
+=back
+
+=head1 SUBROUTINES/METHODS
+
+=head2 CONSTRUCTOR
+
+=over 4
+
+=item C<Modwheel::Template-E<gt>new({modwheel =E<gt> $modwheel [...]})>
 
 This function creates a Template class based on the current template driver in
 the configuration. Either a templatedriver configured for the current site, or a
 templatedriver defined in the global configuration directive.
 
-This way we can support different templating systems.
-
 =back
 
-=head1 EXPORT
+
+=head1 DIAGNOSTICS
+
+Be sure that the module specified in the templatedriver: section of the
+coniguration file is installed and is loadable.
+
+If the module name includes the characters '::', it will use the full
+module name, if it doesn't it will add Modwheel::Template:: to the front of 
+the name. So if the module name is:
+
+MyCompany::OurRepresentationEngine::ModwheelSupport
+
+it will load that module. If the name is Mason however, it will
+load:
+
+Modwheel::Template::Mason
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+See the templatedriver section of L<Modwheel::Manual::Config>
+
+=head1 DEPENDENCIES
+
+Requires the module specified in the templatedriver: directive in the
+configuration to be installed.
+
+=head1 INCOMPATIBILITIES
 
 None.
 
-=head1 HISTORY
+=head1 BUGS AND LIMITATIONS
 
-=over 8
+If you have a module that doesn't include '::' in the name, it will
+add Modwheel::Template:: to the name.
 
-=item 0.01
+=head1 AUTHOR
 
-Initial version.
+Ask Solem, F<< ask@0x61736b.net >>.
 
-=back
+=head1 LICENSE AND COPYRIGHT
 
-=head1 SEE ALSO
-
-The README included in the Modwheel distribution.
-
-The Modwheel website: http://www.0x61736b.net/Modwheel/
-
-=head1 AUTHORS
-
-Ask Solem Hoel, F<< ask@0x61736b.net >>.
-
-=head1 COPYRIGHT, LICENSE
-
-Copyright (C) 2007 by Ask Solem Hoel C<< ask@0x61736b.net >>.
+Copyright (C) 2007 by Ask Solem C<< ask@0x61736b.net >>.
 
 All rights reserved.
 

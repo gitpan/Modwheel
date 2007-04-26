@@ -14,6 +14,7 @@ default:
   inherit: 1
   owner: 100
   parent: 1
+  detach: 0
 shortcuts:
   http: <a href="[type]:[content]">[name]</a>
   https: <a href="[type]:[content]">[name]</a>

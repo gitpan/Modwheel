@@ -1,45 +1,113 @@
---- 
-abstract: Very extensible publishing system.
-author: Ask Solem Hoel <ask@0x61736b.net>
-build_requires: 
-  File::Spec: 0
-  Test::Harness: 2.03
-  Test::More: 0.42
-distribution_type: module
-generated_by: Module::Install version 0.65
-installdirs: site
-license: perl
-meta-spec: 
-  url: http://www.0x61736b.net/Modwheel/index.html
-  version: 0.01
+---
 name: Modwheel
-no_index: 
-  directory: 
-    - Templates/
-    - inc
-    - t
-    - devel
-    - sql
-    - svn
-requires: 
-  Carp: 0
-  POSIX: 0
-  FileHandle: 0
-  Fcntl: 0
-  Scalar::Util: 0
-  Class::Struct: 0
-  Data::Dumper: 0
-  YAML: 0.39
-  DBI: 1.51
-  Crypt::Eksblowfish: 0.001
-  perl: 5.008
-  HTML::Tagset: 3.10
-  HTML::Parser: 3.48
-  URI::Escape: 3.28
+version: 0.2.1
+author:
+  - 'Ask Solem <ASKSH@cpan.org>'
+abstract: Web framework.
+license: perl
+resources:
+  cpan: http://search.cpan.org/~asksh/Modwheel-0.02/
+  homepage: http://www.0x61736b.net/Modwheel
+  license: http://dev.perl.org/licenses/
+requires:
   AppConfig: 1.56
+  Carp: 0
+  Crypt::Eksblowfish: 0.001
+  DBI: 1.51
+  Data::Dumper: 0
+  Fcntl: 0
+  FileHandle: 0
+  Getopt::Euclid: 0.001
+  HTML::Parser: 3.48
+  HTML::Tagset: 3.1
+  IO::Prompt: 0.099004
+  List::MoreUtils: 0
+  List::Util: 0
+  POSIX: 0
+  Params::Util: 0.23
+  Perl6::Export: 0.07
+  Perl6::Export::Attrs: 0
+  Perl6::Form: 0.04
+  Readonly: 1
+  Scalar::Util: 1.14
+  Sub::Install: 0
   Template: 2.18
   Template::Context: 2.98
+  Template::Plugin: 2.7
   Template::Stash::XS: 0
-  Template::Plugin: 2.70
-  Term::ReadKey: 2.30
-version: 0.01
+  Term::ReadKey: 2.3
+  URI::Escape: 3.28
+  YAML: 0.39
+  YAML::Syck: 0.84
+  namespace::clean: 0
+  version: 0
+build_requires:
+  Test::More: 0.42
+recommends:
+  Perl::Critic: 1.051
+  Pod::Coverage: 0
+  Readonly::XS: 1
+  Test::Exception: 0
+  Test::Perl::Critic: 1
+  Test::Pod: 0
+  Test::Pod::Coverage: 0
+  Test::YAML::Valid: 0
+dynamic_config: 0
+provides:
+  Class::InsideOut::Policy::Modwheel:
+    file: lib/Class/InsideOut/Policy/Modwheel.pm
+    version: 1.06
+  Modwheel:
+    file: lib/Modwheel.pm
+    version: 0.2.1
+  Modwheel::DB:
+    file: lib/Modwheel/DB.pm
+    version: 0.2.1
+  Modwheel::DB::Base:
+    file: lib/Modwheel/DB/Base.pm
+    version: 0.2.1
+  Modwheel::DB::MySQL:
+    file: lib/Modwheel/DB/MySQL.pm
+    version: 0.2.1
+  Modwheel::DB::PostgreSQL:
+    file: lib/Modwheel/DB/PostgreSQL.pm
+    version: 0.2.1
+  Modwheel::HTML::Tagset:
+    file: lib/Modwheel/HTML/Tagset.pm
+    version: 1.0.0
+  Modwheel::Instance:
+    file: lib/Modwheel/Instance.pm
+    version: 0.2.1
+  Modwheel::Object:
+    file: lib/Modwheel/Object.pm
+    version: 0.2.1
+  Modwheel::Repository:
+    file: lib/Modwheel/Repository.pm
+    version: 0.2.1
+  Modwheel::Session:
+    file: lib/Modwheel/Session.pm
+    version: 0.2.1
+  Modwheel::Template:
+    file: lib/Modwheel/Template.pm
+    version: 0.2.1
+  Modwheel::Template::ObjectProxy:
+    file: lib/Modwheel/Template/ObjectProxy.pm
+    version: 0.2.1
+  Modwheel::Template::Shortcuts:
+    file: lib/Modwheel/Template/Shortcuts.pm
+    version: 0.2.1
+  Modwheel::Template::TT:
+    file: lib/Modwheel/Template/TT.pm
+    version: 0.2.1
+  Modwheel::Template::TT::Plugin:
+    file: lib/Modwheel/Template/TT/Plugin.pm
+    version: 0.2.1
+  Modwheel::User:
+    file: lib/Modwheel/User.pm
+    version: 0.2.1
+generated_by: Module::Build version 0.2807
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
+uses:
+  scriptaculous: http://script.aculo.us/

@@ -1,10 +1,25 @@
-(Presentation Engine)
-Rename Modwheel::Apache2 to Apache2::Modwheel?
-Move most of the functionality in Modwheel::Template::TT::Plugin Into Modwheel::Template::Generic
+Build.PL (maybe Makefile.pl too?) installs bin/install.sh, it shouldn't.
+Module::Build::Modwheel MUST NOT USE SUPER!!
+build_select_q( id => $id ); Edit so that the id will be ? (bind variable)
+Tar+Gzip Templates/*
+Text::Diff
+CSS::Tiny
+PPI::HTML
+Modwheel::Constants qw( :config ) ?
+Class::Singleton
+Test::Object
+Params::Coerce
+Test::LongString
+Test::Exception
+Learn more about Class::DBI and DBIx::Class
+Check out Module::Starter
+Make use of IO::Prompt for installation script.
+Replace Crypt::Eksblowfish with Digest::SHA?
+Move interleaved POD sections to the bottom of source code files.
+Move most of the functionality in Modwheel::Template::TT::Plugin Into Modwheel::Template::Base
 Installer !!
 Finish the Simple template. !!
 More tests, Apache::Test !!
 Nicer design (hallvard is the key:).
 mwMaintainance: Should remove stale tags and tagmaps.
 Object cache.
-Expand the Module::Install framework instead of using our lame install script.

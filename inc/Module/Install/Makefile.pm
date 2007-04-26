@@ -7,9 +7,9 @@ use ExtUtils::MakeMaker ();
 
 use vars qw{$VERSION $ISCORE @ISA};
 BEGIN {
-    $VERSION = '0.65';
-    $ISCORE  = 1;
-    @ISA     = qw{Module::Install::Base};
+	$VERSION = '0.64';
+	$ISCORE  = 1;
+	@ISA     = qw{Module::Install::Base};
 }
 
 sub Makefile { $_[0] }
@@ -48,8 +48,8 @@ sub makemaker_append {
     my $name = shift;
     my $args = $self->makemaker_args;
     $args->{name} = defined $args->{$name}
-        ? join( ' ', $args->{name}, @_ )
-        : join( ' ', @_ );
+    	? join( ' ', $args->{name}, @_ )
+    	: join( ' ', @_ );
 }
 
 sub build_subdirs {
@@ -136,13 +136,9 @@ sub write {
                 . "but we need version >= $perl_version";
     }
 
-    $args->{INSTALLDIRS} = $self->installdirs;
-
     my %args = map { ( $_ => $args->{$_} ) } grep {defined($args->{$_})} keys %$args;
-
-    my $user_preop = delete $args{dist}->{PREOP};
-    if (my $preop = $self->admin->preop($user_preop)) {
-        $args{dist} = $preop;
+    if ($self->admin->preop) {
+        $args{dist} = $self->admin->preop;
     }
 
     my $mm = ExtUtils::MakeMaker::WriteMakefile(%args);
@@ -209,4 +205,4 @@ sub postamble {
 
 __END__
 
-#line 338
+#line 334

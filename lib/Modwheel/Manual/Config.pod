@@ -1,0 +1,322 @@
+#==================================================================================
+# 
+# Modwheel::Manual::Config
+#
+# AUTHOR
+#   Ask Solem <ask@0x61736b.net>
+#
+# COPYRIGHT, LICENSE
+#   Copyright (C) 2007 by Ask Solem C<< ask@0x61736b.net >>.
+#   All rights reserved.
+#
+#   This documentation is free; you can redistribute it and/or modify
+#   it under the same terms as Perl itself, either Perl version 5.8.6 or,
+#   at your option, any later version of Perl 5 you may have available.
+#
+#===================================================================================
+
+=head1 NAME
+
+Modwheel::Manual::Config - Modwheel configuration.
+
+=head1 DESCRIPTION
+
+This is a reference on the directives available in the Modwheel
+configuration file.
+
+
+=head1 GLOBAL CONFIGURATION
+
+=over 4
+
+=item debug
+
+Turn debug messages on or off.
+
+Example:
+
+    debug: 1
+
+=item defaultsite
+
+The site to use if no site is specified.
+
+Example:
+
+    defaultsite: Simple
+
+=item directoryindex
+
+This is the default file to use for directories when no filename is specified.
+
+Example:
+
+    directoryindex: index.html
+
+
+=item templatedriver
+
+Default representation engine.
+
+Example (for Template Toolkit):
+
+   templatedriver: TT 
+
+=item locale
+
+Global locale setting.
+This setting is used for all sites with no locale setting.
+See: L<locale.1>
+
+    Example: no_NO
+
+=back
+
+=head1 SITES
+
+=over 4
+
+=item directoryindex
+
+This is the default file to use for directories when no filename is specified.
+
+Example:
+
+    directoryindex: index.html
+
+=item locale
+
+Locale setting for this site.
+See: L<locale.1>
+
+Example:
+
+    locale: en_EN
+
+=item repository
+
+The directory for the repository system to upload files in.
+
+Example:
+
+   repository: /opt/modwheel/Repository 
+
+If used with Apache, this directory has to be writable by the user Apache
+is running as.
+
+=item repositoryurl
+
+This is the URL location users can access the repository directory from
+using the web-server.
+
+Example:
+
+In httpd.conf:
+
+    Alias /rep  /opt/modwheel/Repository
+    <Directory  /opt/modwheel/Repository/*/*>
+        Order Deny, Allow
+        Allow from all
+    </Directory>
+
+in modwheelconfig.yml:
+
+    repositoryurl: /rep 
+
+=item NeverDetach
+
+Never detach objects from the tree.
+This is useful for admin sites, where you don't want objects with the detach
+flag set to detach from the tree.
+
+Example:
+
+    NeverDetach: Yes
+
+=item templatedir
+
+The location of the template for this site.
+
+Example:
+
+    templatedir: /opt/modwheel/Template/Simple
+
+=item templatedriver
+
+The representation engine to use.
+Only TT supported at this time (Template Toolkit).
+
+Example:
+
+    templatedriver: TT
+
+=back
+
+=head2 database
+
+Database configuration.
+
+=over 4
+
+=item type
+
+Type of database server to use.
+Only MySQL supported at this time.
+
+Example:
+
+    type: MySQL
+
+=item name
+
+Name of the database to use.
+
+Example:
+
+    name: modwheel
+
+=item host
+
+Hostname the database server is running on.
+By IP-address or DNS name.
+
+Example:
+
+    host: localhost
+
+Or:
+
+    host: 127.0.0.1
+
+=item username
+
+Username to log into the database with.
+
+Example:
+
+    username: modwheel_user
+
+=item password
+
+Password for the username above.
+
+    password: definityinfinity
+
+=item port
+
+TCP Port on the hostname the server is running on.
+
+Example:
+
+    port: 3306
+
+=back
+
+
+=head1 TT
+
+Template Toolkit configuration.
+
+=over 8
+
+=item plugins
+
+A list of plugins to preload into Template Toolkit.
+(like [% USE ... %])
+
+Example:
+
+    plugins:
+        HTML: Template::Plugin::HTML
+        Date: Template::Plugin::Date
+        URL:  Template::Plugin::URL
+
+=back
+
+
+=head1 OBJECT DEFAULTS
+
+=over 4
+
+=item inherit
+
+If set to true new objects will inherit active flag, owner, sort priority, and custom
+template from their parent object.
+
+Example:
+
+    inherit: 1
+
+=item active
+
+If set to true new objects are active by default.
+
+Example:
+    active: 1
+
+=item owner
+
+New objects are owned by this user-id by default.
+You can list users and their id with the command line utility mwuser.
+
+    /opt/modwheel/bin/mwuser -list
+
+Example:
+
+    owner: 100
+
+=item groupo
+
+New objects are owned by this group-id by default.
+No
+
+=item parent
+
+Default parent for new objects. (1 is probably a good choice).
+
+=back
+
+=head1 SHORTCUTS
+
+Write something about shortcuts here.
+
+=head1 MORE INFORMATION
+
+=over 4
+
+=item * L<Modwheel::Manual::Installation>
+
+Help on installing Modwheel.
+
+=item * L<Modwheel::Manual::Intro>
+
+Introduction on how to use Modwheel with the Template Toolkit.
+
+=item * L<Apache2::Modwheel>
+
+Information on using Modwheel with Apache2.
+You have to install the Apache2::Modwheel module from CPAN.
+
+=item * L<Modwheel::Manual::Plugins>
+
+Tutorial on how to extend Modwheel with plugins.
+
+=item * L<Modwheel::Manual::DB>
+
+Information on how to use the Modwheel $db object to operate on databases.
+
+=back
+
+=head1 AUTHOR
+
+Ask Solem E<lt>ask@0x61736b.netE<gt> L<http://www.0x61736b.net>
+
+=head1 COPYRIGHT, LICENSE
+
+Copyright (C) 2007 by Ask Solem C<< ask@0x61736b.net >>.
+
+All rights reserved.
+
+This documentation is free; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.6 or,
+at your option, any later version of Perl 5 you may have available.

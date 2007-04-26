@@ -19,7 +19,7 @@ systems. shouldn't be much work.
 * Optional extensions.
 
     For CGI/mod_perl:
-        Modwheel::Apache2           -    [....]
+        Apache2::Modwheel           -    [....]
         Apache v2.x                 -    http://httpd.apache.org/
         mod_perl 2.x                -    http://perl.apache.org/
 
@@ -86,7 +86,7 @@ successfully tested on the following operating systems:
 * Copyright, contact and licensing information.
 
 Copyright 2007 by
-    Ask Solem Hoel <ask@0x61736b.net>
+    Ask Solem <ask@0x61736b.net>
 
 All rights reserved.  You can redistribute and/or modify
 this bundle under the same terms as Perl itself.

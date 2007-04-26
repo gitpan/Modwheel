@@ -1,0 +1,320 @@
+#!/usr/local/bin/perl
+# $Id: mwuser,v 1.1 2007/04/23 19:28:52 ask Exp $
+# $Source: /opt/CVS/Modwheel/utils/mwuser,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.1 $
+# $Date: 2007/04/23 19:28:52 $
+use strict;
+use warnings;
+use Data::Dumper;
+use Getopt::Euclid;
+use Perl6::Form;
+use Params::Util ('_ARRAY', '_HASH');
+use IO::Prompt;
+use Modwheel::Session;
+use version; our $VERSION = qv('0.2.1');
+
+my $prefix     = $ARGV{-prefix};
+my $configfile = $ARGV{-config};
+my $site       = $ARGV{-site};
+$prefix      ||= '/opt/modwheel';
+$configfile  ||= 'config/modwheelconfig.yml';
+
+my $modwheel_config = {
+    prefix          => $prefix,
+    configfile      => $configfile,
+    debug           => 0,
+};
+if ($site) {
+    $modwheel_config->{site} = $site;
+}
+
+my($modwheel, $user, $db, $object, $repository, $template)
+    = modwheel_session($modwheel_config,
+    qw(db user object template repository));
+
+$db->connect( );
+
+if ($ARGV{-list}) {
+    $db->connect( );
+    list_users( $user );
+    $db->disconnect( );
+    exit;
+}
+if ($ARGV{'-n'}) {
+    $db->connect( );
+    create_user($user, $ARGV{-new});
+    $db->disconnect( );
+    exit;
+}
+if ($ARGV{-mkpasswd}) {
+    print $user->mkpasswd( ), qq{\n};
+    exit;
+}
+if ($ARGV{-hash}) {
+    print Modwheel::User::hashcookie_encipher($ARGV{-hash}), qq{\n};
+    exit;
+}
+
+print <<'EOF'
+Usage: mwuser [-list|-new user|-delete user|-mkpasswd|-hash passwd]
+EOF
+;
+
+sub create_user {
+    my ($user, $username) = @_;
+
+    my($password, $confirm);
+
+    USERNAME:
+    while (1) {
+        $username = prompt(q{-t}, 'New username: ');
+        $username = trim($username);
+        # I don't know what it is, but prompt makes it true
+        # even when lenght is 0. So we do it explcitly.
+        last USERNAME if length $username > 0;
+        warn "Need: username\n";
+    }
+
+    PASSWORD:
+    while (1) {
+        $password = prompt(q{-t},
+            -echo => q{*},
+            "New password for $username: "
+        );
+        $password = trim($password);
+        last PASSWORD if length $password > 0;
+        warn "Need: password.\n";
+    }
+
+    CONFIRM:
+    while (1) {
+        $confirm = prompt(q{-t},
+            -echo => q{*},
+            "Confirm new password for $username: "
+        );
+        last CONFIRM if $password eq $confirm;
+        warn "Password's doesn't match.\n";
+    }
+
+    $user->create(username => $username, password => $password);
+
+    if (!$modwheel->error) {
+        print "OK!\n";
+    }
+
+    return;
+}
+
+
+sub list_users {
+    my ($user) = @_;
+
+    my $users = $user->list( );
+    if (!_ARRAY($users)) {
+        print "No users created yet. You should atleast create one user.\n";
+        return;
+    }
+
+    print form {bullet => q{*}},
+        '.========================================================================================.',
+        '| Id | Username           | Real name              | E-Mail            | Last IP-Address |',
+        '|========================================================================================|',
+    ;
+    foreach my $u (@{ $users }) {
+        $u->{realname}  ||= q{-};
+        $u->{email}     ||= q{-};
+        $u->{last_ip}   ||= 'Never logged in';
+    print form { bullet =>  q{*} },
+        '| {[[[}* {[[[[[[[[[[[[[[} | {||||||||||||||||||||} | {]]]]]]]]]]]]]]]} | {>>>>>>>>>>>>>} |',
+            $u->{id},    $u->{username},         $u->{realname},             $u->{email},        $u->{last_ip},
+        ;
+    }
+    print form { bullet => q{*} },
+       q{`========================================================================================'}
+    ;
+
+    return;
+}
+
+sub trim {
+    my ($string) = @_;
+    $string =~ s/^\s+//xmsg;
+    $string =~ s/\s+$//xmsg;
+    return $string;
+}
+
+__END__
+
+=pod
+
+=head1 NAME
+
+mwuser - Modwheel user management.
+
+=head1 VERSION
+
+This documentation refers to Modwheel version 0.2.1
+
+=head1 USAGE
+
+    mwuser [options] [-l[ist]|-new|-d[elete]|-m[kpasswd]
+
+=head1 REQUIRED ARGUMENTS
+
+One of the COMMANDS listed below.
+
+=head1 OPTIONS
+
+=head2 COMMANDS
+
+=over
+
+=item   -l[ist]
+
+List users in the system.
+
+=item   -n <username>
+
+Create a new user
+
+=item   -d[elete] <username>
+
+Delete a user
+
+=item   -m[kpasswd] 
+
+Create a strong password.
+
+=item   -h[ash] <password>
+
+Create a hash for <password>
+
+=head2 OPTIONAL SETTINGS
+
+=item -p[refix] <prefix>
+
+Set the prefix for Modwheel.
+Default: /opt/modwheel
+
+=item -c[onfig] <configfile>
+
+Use a different modwheel configfile than the default.
+Default: $PREFIX/config/modwheelconfig.yml
+
+=item -s[ite] <site>
+
+Use a different modwheel site than the default.
+Default: defaultsite set in the config file.
+
+=item -logmode <logmode>
+
+Use a logging mode other than stderr. (i.e off)
+Default: stderr
+
+=back
+
+=head1 DESCRIPTION
+
+Manage and list users in Modwheel systems.
+
+=head1 DIAGNOSTICS
+
+
+Check that mwuser is using the right configuration file, and the right prefix.
+Set them manually with -prefix and -configfile.
+
+=head1 CONFIGURATION 
+
+mwuser is dependant on a Modwheel configuration file and database.
+See L<Modwheel::Manual::Config> and L<Modwheel::Manual> for more information.
+
+=head1 EXIT STATUS
+
+As the program is interactive, you should not depend on the exit statis
+of this application in any script.
+
+=head1 DEPENDENCIES
+
+=over 4
+
+=item Modwheel
+
+=item Getopt::Euclid
+
+=item IO::Prompt
+
+=item Params::Util
+
+=item Perl6::Form
+
+=back
+
+=head1 INCOMPATIBILITIES
+
+None known.
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests to
+C<bug-modwheel@rt.cpan.org>, or through the web interface at
+
+=head1 SEE ALSO
+
+=over 4
+
+=item * L<Modwheel::Manual>
+
+The Modwheel manual.
+
+=item * L<http://www.0x61736b.net/Modwheel/>
+
+The Modwheel website.
+
+=back
+
+=head1 VERSION
+
+v0.2.1
+
+=head1 AUTHOR
+
+Ask Solem, C<< ask@0x61736b.net >>.
+
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (c), 2007 Ask Solem C<< ask@0x61736b.net >>.
+
+All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.6 or,
+at your option, any later version of Perl 5 you may have available.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE
+SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE
+STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE
+SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND
+PERFORMANCE OF THE SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY
+COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE
+SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE TO YOU FOR DAMAGES,
+INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING
+OUT OF THE USE OR INABILITY TO USE THE SOFTWARE (INCLUDING BUT NOT LIMITED TO
+LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER
+SOFTWARE), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
+=cut
+

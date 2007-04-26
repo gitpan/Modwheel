@@ -1,20 +1,33 @@
+# $Id: Repository.pm,v 1.4 2007/04/25 18:49:14 ask Exp $
+# $Source: /opt/CVS/Modwheel/lib/Modwheel/Repository.pm,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.4 $
+# $Date: 2007/04/25 18:49:14 $
+#####
 package Modwheel::Repository;
 use strict;
 use warnings;
-use Fcntl      ();
-use FileHandle ();
-our @ISA = qw(Modwheel::Instance);
-
-sub get
+use utf8;
+use Class::InsideOut::Policy::Modwheel qw(:std);
+use base 'Modwheel::Instance';
+use version; our $VERSION = qv('0.2.1');
 {
-    my ($self, $parent, $active_only) = @_;
+
+    use English      qw( -no_match_vars );
+    use Scalar::Util qw( blessed );
+    use Fcntl        ( );
+    use FileHandle   ( );
+    use File::Spec   ( );
+
+sub get_file {
+    my ($self, $parent, $bool_active_only) = @_;
     my $modwheel = $self->modwheel;
     my $db       = $self->db;
+    $bool_active_only ||= 0;
 
-    my $fetch = {
-        parentobj => '?',
-    };
-    $fetch->{active} = 1 if $active_only;
+    my $fetch = { parentobj => q{?}, };
+    $fetch->{active} = int $bool_active_only;
     my $query = $db->build_select_q('repository',
         [qw(id name mimetype created changed path)],
         $fetch
@@ -38,62 +51,84 @@ sub get
     return \@repository
 }
 
-sub uriForId
-{
+sub uri_for_id {
     my ($self, $id) = @_;
     my $modwheel    = $self->modwheel;
     my $db          = $self->db;
-    return undef unless $id;
+    return if not defined $id;
 
     my $query = $db->build_select_q('repository',
         [ qw(name parentobj) ],
-        { id=>'?' }
+        [ 'id' ]
     );
     my $entry = $db->fetchonerow_hash($query, $id);
-    my $uri   = $modwheel->siteconfig->{repositoryurl}. '/'. $entry->{parentobj}. '/'. $entry->{name};
+    my $uri   = join q{/}, ($modwheel->siteconfig->{repositoryurl},
+                            $entry->{parentobj},
+                            $entry->{name}
+    );
     
     return $uri;
 }
 
-sub upload
-{
+sub _check_filename {
+    my ($self, $filename, $bool_rel) = @_;
+    return if not defined $filename;
+
+    if ($bool_rel) {
+        return $filename =~ m/^
+([\s\w\d\.\-\(\)\_\+\#\,\&\[\]\=\:\'\~\*\!\"\>\<\^\%\`]+)   $/xms ? $filename : 0;
+    }
+    else {
+        return $filename =~ m/^
+([\/\s\w\d\.\-\(\)\_\+\#\,\&\[\]\=\:\'\~\*\!\"\>\<\^\%\`]+) $/xms ? $filename : 0;
+    }
+}
+
+sub upload_file {
     my ($self, $infh, %argv) = @_;
     my $modwheel = $self->modwheel;
     my $db = $self->db;
 
-    foreach (qw(filename mimetype parent)) {
-        unless ($argv{$_}) {
+    foreach my $required_argument (qw(filename mimetype parent)) {
+        if (! $argv{$required_argument}) {
             $modwheel->throw('repository-upload-missing-argument');
-            return $modwheel->logerror('Repository upload: Missing argument: $_');
+            $modwheel->logerror(
+                'Repository upload: Missing argument:',
+                $required_argument
+            );
+            return;
         }
     }
 
-    unless ($argv{parent} =~ m/^\d+$/) {
+    if ($argv{parent} !~ m/^\d+$/xms) {
         $modwheel->throw('repository-upload-parent-id-not-digit');
         return $modwheel->logerror('Repository upload: Parent for upload must be a digit.');
     }
 
     # untaint user input:    
-    my ($filename) = $argv{filename} =~ m/^([ \w\d\.\-\(\)\_\+\#\,]+)$/;
-    return undef unless $filename;
-    my ($parent)   = $argv{parent}   =~ m/^(\d+)$/;
-    return undef unless $parent;
+    my $filename   = $self->check_filename($argv{filename}, 1);
+    return if not $filename;
+    my ($parent)   = $argv{parent}   =~ m/^(\d+)$/xms;
+    return if not $parent;
 
     my $repository = $modwheel->siteconfig->{repository};
-    my $dir        = $repository. '/'. $parent;
-    my $filepath   = $dir. '/'. $filename;
-    unless (-d $dir) {
-        unless (mkdir $dir, 0755) {
+    my $dir        = File::Spec->catdir($repository, $parent);
+    my $filepath   = File::Spec->catfile($dir, $filename);
+    if (! -d $dir) {
+        if (! mkdir $dir, oct 755) {
             $modwheel->throw('repository-upload-mkdir-error');
-            return $modwheel->logerror("Repository upload: Couldn't create directory '$dir': $!");
+            return $modwheel->logerror(
+                "Repository upload: Couldn't create directory '$dir':",
+                $OS_ERROR,
+            );
         }
     }
 
-    my $outfh = $self->safeopen($filepath, Fcntl::O_WRONLY|Fcntl::O_CREAT);    
-    return undef unless $outfh;
+    my $outfh = $self->safeopen($filepath, Fcntl::O_WRONLY|Fcntl::O_CREAT);
+    return if not $outfh;
     binmode $outfh;
     while (<$infh>) {
-        print $outfh $_;
+        print {$outfh} $_;
     }
 
     my $id        = $db->fetch_next_id('repository');
@@ -108,94 +143,107 @@ sub upload
         parentobj   => qw{%d},
         path        => qw{%s},
     });
-    $db->exec_query($query, 1, $timestamp, $timestamp, $id, $argv{mimetype}, $filename, $parent, $filepath);
+    $db->exec_query($query, 1, $timestamp, $timestamp, $id,
+        $argv{mimetype}, $filename, $parent, $filepath
+    );
 
     return $id;
 }
 
-sub delete
-{
+sub delete_file {
     my ($self, $id) = @_;
     my $modwheel = $self->modwheel;
     my $db       = $self->db;
-    return undef unless $id;
+    return if not defined $id;
 
     my $getpathq = $db->build_select_q('repository',
-        [ qw(path) ], { id => '?', }
+        ['path'], ['id']
     );
     my $path     = $db->fetch_singlevar($getpathq, $id);
 
     if (-f $path) {
-        unless (unlink($path)) {
+        if (! unlink $path) {
             $modwheel->throw('repository-could-not-delete-file');
-            $modwheel->logerror("Repository Delete: Couldn't delete file (rep id: $id, filepath: $path): $!");
-            return undef;
+            $modwheel->logerror(
+                'Repository Delete: Could not delete file',
+                "(rep id: $id, filepath: $path):",
+                $OS_ERROR,
+            );
+            return;
         }
     }
 
-    my $deleteq = $db->build_delete_q('repository', {
-        id => '?',
-    });
-    unless ($db->exec_query($deleteq, $id)) {
+    my $deleteq = $db->build_delete_q('repository', ['id']);
+    if (! $db->exec_query($deleteq, $id)) {
         $modwheel->throw('repository-could-not-delete-entry');
         $modwheel->logerror("Couldn't delete repository id $id: ", $db->errstr);
-        return undef;
+        return;
     }
     else {
         return 1;
     }
 }
 
-sub safeopen
-{
+sub safeopen {
     my ($self, $fname, $flags) = @_;
-    return undef unless $fname;
+    return if not defined $fname;
     my $fh = new FileHandle;
     my ($fdev, $fino, $hdev, $hino);
 
-    my ($filename) = $fname =~  m/^([\/ \w\d\.\-\(\)\_\+\#\,]+)$/;
 
+    # Untaint.
+    my $filename = $self->_check_filename($fname, 0);
     # Clean up bogus bits.
     $flags &= (
-        Fcntl::O_RDONLY | Fcntl::O_WRONLY | Fcntl::O_RDWR | Fcntl::O_CREAT | Fcntl::O_APPEND | Fcntl::O_TRUNC
+        Fcntl::O_RDONLY | Fcntl::O_WRONLY | Fcntl::O_RDWR |
+        Fcntl::O_CREAT  | Fcntl::O_APPEND | Fcntl::O_TRUNC
     );
 
-    if ($filename =~ m/(\.\.|\||;)/) {
+    if ($filename =~ m/(\.\.|\||;)/xms) {
         $self->modwheel->throw('repository-open-file-shell-escape');
         $self->modwheel->logerror('User tries to shell escape or get parent directory!');
         $self->modwheel->logerror('SHELL ESCAPE POISONING ATTEMPT!');
-        return undef;
+        return;
     }
 
     if (-f $filename) {
-        unless (($fdev, $fino) = stat $filename) {
+        ($fdev, $fino) = stat $filename;
+        if (! $fdev || ! $fino) {
             $self->modwheel->throw('repository-open-can-not-stat');
-            $self->modwheel->logerror("Couldn't stat file $filename: $!");
-            return undef;
+            $self->modwheel->logerror("Couldn't stat file $filename: $OS_ERROR");
+            return;
         }
     }
 
-    unless (sysopen $fh, $filename, $flags) {
-        $self->modwheel->logerror("$! ($filename)");
-        return undef;
+
+    if (! sysopen $fh, $filename, $flags) {
+        $self->modwheel->logerror("Couldn't open $filename: $flags: $OS_ERROR");
+        return;
     }
 
     if (-f $filename and $hdev and $hino) {
-        unless (($hdev, $hino) = stat $fh) {
+        ($hdev, $hino) = stat $fh;
+        if (! $hdev || ! $hino) {
             $self->modwheel->throw('repository-open-can-not-stat');
-            $self->modwheel->logerror("Couldn't stat filehandle for $filename: $!");
-            return undef;
+            $self->modwheel->logerror(
+                "Couldn't stat filehandle for $filename:",
+                $OS_ERROR,
+            );
+            return;
         }
-        unless (($fdev == $hdev) || ($fino == $hino)) {
+        if (! ($fdev == $hdev) || ($fino == $hino)) {
             $self->modwheel->throw('repository-open-race-condition');
             $self->modwheel->logerror(
-                "POSSIBLE RACE ATTEMP. STAT DOESN'T MATCH FOR FILE $filename: ($fdev|$hdev, $fino|$hino)"
+                'POSSIBLE RACE ATTEMP. STAT DOES NOT MATCH FOR FILE',
+                "$filename: ($fdev|$hdev, $fino|$hino)"
             );
-            return undef;
+            return;
         }
     }
 
     return $fh;
-}    
+}
 
-1
+}
+
+1;

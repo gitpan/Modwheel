@@ -1,192 +1,216 @@
-package Modwheel::Template::TT;
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel/Template/TT.pm - Create and init the Modwheel Template Toolkit wrapper.
-# (c) 2007 Ask Solem Hoel <ask@0x61736b.net>
+# (c) 2007 Ask Solem <ask@0x61736b.net>
 #
 # See the file LICENSE in the Modwheel top source distribution tree for
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+# $Id: TT.pm,v 1.6 2007/04/25 18:49:16 ask Exp $
+# $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/TT.pm,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.6 $
+# $Date: 2007/04/25 18:49:16 $
 #####
+package Modwheel::Template::TT;
 use strict;
-
-use Template::Stash::XS;
-use Template::Context;
-use Template::Plugin;
-use Modwheel::Template::TT::Plugin;
-use Modwheel::Template::Shortcuts;
-use URI::Escape ();
-our @ISA = qw(Modwheel::Instance);
-
-sub init
+use warnings;
+use Class::InsideOut::Policy::Modwheel qw(:std);
+use base 'Modwheel::Instance';
+use version; our $VERSION = qv('0.2.1');
 {
-    my ($self, %argv) = @_;
-    my $modwheel = $self->modwheel;
-    my $user     = $self->user;
-    my $db       = $self->db;
-    my $object   = $self->object;
+    use Template::Stash::XS;
+    use Template::Context;
+    use Template::Plugin;
+    use Modwheel::Template::TT::Plugin;
+    use Modwheel::Template::Shortcuts;
+    use URI::Escape  qw( );
+    use Scalar::Util qw(blessed);
+    use Params::Util ('_HASH', '_ARRAY', '_CODELIKE');
+    use Carp         qw(carp croak cluck confess);
 
-    # load user plugins from config...
-    my $plugins = $self->get_user_plugins();
+    #========================================================================
+    #                     -- OBJECT ATTRIBUTES --
+    #========================================================================
 
-    # ..and always make sure to include our Modwheel plugin.
-    $plugins->{Modwheel} = 'Modwheel::Template::TT::Plugin';
+    public errstr      => my %errstr_for,      {is => 'rw'};
+    public input       => my %input_for,       {is => 'rw'};
+    public context     => my %context_for,     {is => 'rw'};
+    public stash       => my %stash_for,       {is => 'rw'};
+    public plugins     => my %plugins_for,     {is => 'rw'};
+    public param       => my %param_for,       {is => 'rw'};
+    public shortcuts   => my %shortcuts_for,   {is => 'rw'};
+    public parent      => my %parent,          {is => 'rw'};
+    public tkmodwheel  => my %tkmodwheel_for,  {is => 'rw'};
+    public objectproxy => my %objectproxy_for, {is => 'rw'};
 
-    # save the list of plugins for later use.
-    $self->plugins($plugins);
+    sub new {
+        my ($class, $arg_ref) = @_;
 
-    my $stash = Template::Stash::XS->new();
-    my $config = {
-        INCLUDE_PATH     => $modwheel->siteconfig->{templatedir},
-        INTERPOLATE      => 0,               # expand "$var" in plain text
-        POST_CHOMP       => 1,               # cleanup whitespace
-        RELATIVE         => 1,
-        ABSOLUTE         => 1,
-        STASH            => $stash,
-        PLUGINS          => $plugins,
-    };
+        my $self = $class->SUPER::new($arg_ref);
 
-    my $context = Template::Context->new($config);
-    return $self->set_errstr($Template::Context::ERROR) unless $context;
+        $self->init($arg_ref);
 
-    # create and load new Modwheel::Template::TT::Plugin template toolkit
-    # plugin object with our current Modwheel instance.
-    my $tkmodwheel = $context->plugin('Modwheel', [$modwheel, $user, $db, $object, $self]);
-    $self->tkmodwheel($tkmodwheel);
-
-    # save the object as a template toolkit variable so the user doesn't need to load the instance explicitly.
-    unless ($argv{DontCreateInitialModwheelObject}) {
-        $stash->set('modwheel', $tkmodwheel);
-        $stash->set('mw', $tkmodwheel);
+        return $self;
     }
-    $stash->set('MODWHEEL_VERSION', $Modwheel::VERSION);
 
-    # Param is a object handling arguments from the request. (i.e from Apache2::Request or CGI).
-    $self->set_param( $argv{param} )    if $argv{param};
-    # Parent is the current directory object.
-    $self->parent( $argv{parent} )      if $argv{parent};
-    # input is the template to process..
-    $self->input( $argv{input} )        if $argv{input};
+    #========================================================================
+    #                     -- PUBLIC INSTANCE METHODS --
+    #========================================================================
 
-    # save context and stash for later use.
-    $self->context($context);
-    $self->stash($stash);
+    #------------------------------------------------------------------------
+    # ->init({ input => 'mytemplate.html', parent => 1, param => $r })
+    #
+    # Initialize template for processing.
+    # input is the template file to process, parent is the Modwheel object
+    # to process the template for, and param is a object that has a param
+    # method for accessing variables (i.e Apache2::Request or CGI).
+    #------------------------------------------------------------------------
+    sub init {
+        my ($self, $arg_ref) = @_;
+        my $modwheel = $self->modwheel;
+        my $user     = $self->user;
+        my $db       = $self->db;
+        my $object   = $self->object;
 
-    my $shortcuts = Modwheel::Template::Shortcuts->new($self);
-    $self->set_shortcuts($shortcuts);
+        # load user plugins from config...
+        my $plugins = $self->get_user_plugins();
 
-    return 1;
-}
+        # ..and always make sure to include our Modwheel plugin.
+        $plugins->{Modwheel} = 'Modwheel::Template::TT::Plugin';
 
-# ## ACCESSORS
+        # save the list of plugins for later use.
+        $self->set_plugins($plugins);
 
-sub errstr
-{
-    return $_[0]->{_ERRSTR_}
-}
+        # Get compile-dir from config.
+        my $tt_conf = $modwheel->siteconfig->{TT};
+    
+        my ($compile_dir, $interpolate, $post_chomp, $relative, $absolute);
+        if (_HASH($tt_conf)) {
+            $compile_dir = $tt_conf->{COMPILE_DIR};
+            $interpolate = $tt_conf->{INTERPOLATE};
+            $post_chomp  = $tt_conf->{POST_CHOMP};
+            $relative    = $tt_conf->{RELATIVE};
+            $absolute    = $tt_conf->{ABSOLUTE};
+        }
 
-sub set_errstr
-{
-    $_[0]->{_ERRSTR_} = $_[1];
-    return undef
-}
+        my $stash  = Template::Stash::XS->new();
+        my $config = {
+            INCLUDE_PATH     => $modwheel->siteconfig->{templatedir},
+            INTERPOLATE      => $interpolate  || 0, # expand "$var" in plain text
+            POST_CHOMP       => $post_chomp   || 1,  # cleanup whitespace
+            RELATIVE         => $relative     || 1,
+            ABSOLUTE         => $absolute     || 1,
+            COMPILE_DIR      => $compile_dir,
+            STASH            => $stash,
+            PLUGINS          => $plugins,
+        };
 
-sub input
-{
-    my ($self, $input) = @_;
-    $self->{_INPUT_}   = $input if $input;
-    return $self->{_INPUT_};
-}
+        my $context = Template::Context->new($config);
+        return $self->set_errstr($Template::Context::ERROR) if not $context;
 
-sub context
-{
-    my ($self, $context)  = @_;
-    $self->{_TT_CONTEXT_} = $context if ref $context;
-    return $self->{_TT_CONTEXT_};
-}
+        # create and load new Modwheel::Template::TT::Plugin template toolkit
+        # plugin object with our current Modwheel instance.
 
-sub stash
-{
-    my ($self, $stash)  = @_;
-    $self->{_TT_STASH_} = $stash if ref $stash;
-    return $self->{_TT_STASH_};
-}
+        # save the object as a template toolkit variable so the user
+        # doesn't need to load the instance explicitly.
+        if (!$arg_ref->{DontCreateInitialModwheelObject}) {
+            my $tkmodwheel = $context->plugin('Modwheel',
+                [$modwheel, $user, $db, $object, $self]);
+            $self->set_tkmodwheel($tkmodwheel);
+            $stash->set('modwheel', $tkmodwheel);
+            $stash->set('mw', $tkmodwheel);
 
-sub plugins
-{
-    my ($self, $plugins)  = @_;
-    $self->{_TT_PLUGINS_} = $plugins if ref $plugins;
-    return $self->{_TT_PLUGINS_};
-}
+        }
+        $stash->set('MODWHEEL_VERSION', $Modwheel::VERSION);
 
-sub param
-{
-    return $_[0]->{_TEMPLATE_PARAM_};
-}
+        # Param is a object handling arguments from the request.
+        #   (i.e from Apache2::Request or CGI).
+        # Parent is the current directory object.
+        # input is the template to process..
+        if ($arg_ref->{param}) {
+            $self->set_param(  $arg_ref->{param}  );
+        }
+        if ($arg_ref->{parent}) {
+            $self->set_parent( $arg_ref->{parent} );
+        }
+        if ($arg_ref->{input}) {
+            $self->set_input(  $arg_ref->{input}  );
+        }
 
-sub set_param
-{
-    my ($self, $param) = @_;
-    $self->{_TEMPLATE_PARAM_} = $param if ref $param;
-}
+        # save context and stash for later use.
+        $self->set_context($context);
+        $self->set_stash($stash);
 
-sub shortcuts
-{
-    return $_[0]->{_TEMPLATE_SHORTCUTS_};
-}
+        my $shortcuts = Modwheel::Template::Shortcuts->new({
+            modwheel => $modwheel,
+            template => $self
+        });
+        $self->set_shortcuts($shortcuts);
 
-sub set_shortcuts
-{
-    my ($self, $shortcuts) = @_;
-    $self->{_TEMPLATE_SHORTCUTS_} = $shortcuts if ref $shortcuts;
-}
+        return 1;
+    }
 
-sub parent
-{
-    my ($self, $parent) = @_;
-    $self->{_SELECTED_PARENT_OBJ_} = $parent if $parent;
-    return $self->{_SELECTED_PARENT_OBJ_}
-}
+    #------------------------------------------------------------------------
+    # ->process(\%additional_args)
+    #
+    # Process the template, returning text string.
+    #------------------------------------------------------------------------
+    sub process {
+        my ($self, $additional_args) = @_;
+        my $context = $self->context;
+        return $context->process($self->input, $additional_args);
+    }
 
-sub tkmodwheel
-{
-    my ($self, $tkmodwheel) = @_;
-    $self->{_TTMODWHEEL_} = $tkmodwheel if $tkmodwheel;
-    return $self->{_TTMODWHEEL_}
-}
+    #------------------------------------------------------------------------
+    # ->get_user_plugins()
+    #
+    # Find and install plug-ins to the Template-Toolkit that the user
+    # has listed in modwheelconfig.yml's TT:Plugin: sections.
+    #
+    # It finds plugins listed in both global and site configuration context.
+    #------------------------------------------------------------------------
+    sub get_user_plugins {
+        my ($self)   = @_;
+        my $modwheel = $self->modwheel;
 
-# ### METHODS
+        my $plugins;
+        my $global_user_plugins;
+        my $site_user_plugins;
+        if (_HASH($modwheel->config->{global}{TT})) {
+            $global_user_plugins = $modwheel->config->{global}{TT}{plugins};
+        }
+        if (_HASH($modwheel->siteconfig->{TT}{plugins})) {
+            $site_user_plugins = $modwheel->siteconfig->{TT}{plugins};
+        }
 
-sub process
-{
-    my ($self, $args) = @_;
-    return $self->context->process($self->input, $args);
-}
-
-
-sub get_user_plugins
-{
-    my $self     = shift;
-    my $modwheel = $self->modwheel;
-
-    my $plugins;
-    my $globalUserPlugins = $modwheel->siteconfig->{TT}{plugins}{plugin};
-    my $siteUserPlugins   = $modwheel->siteconfig->{TT}{plugins}{plugin};
-    foreach my $currentPluginListRef ($globalUserPlugins, $siteUserPlugins) {
-        if (UNIVERSAL::isa($currentPluginListRef, 'HASH')) {
-            while (my($alias, $pconfig) = each %$currentPluginListRef) {
-                $plugins->{$alias} = $pconfig->{class};
+        foreach my $current_plugin_list_ref (
+            ($global_user_plugins, $site_user_plugins))
+        {
+            if (_HASH($current_plugin_list_ref)) {
+                while (my ($alias, $pconfig)
+                    = each %{$current_plugin_list_ref})
+                {
+                    $plugins->{$alias} = $pconfig;
+                }
             }
         }
+
+        return $plugins;
     }
-    
-    return $plugins;
-}
 
-sub uri_escape
-{
-    my ($self, $string) = @_;
-    return URI::Escape::uri_escape($string, "^A-Za-z0-9");
-}
+    #------------------------------------------------------------------------
+    # ->uri_escape($uri)
+    #
+    # Escape unsafe characters in a string to be used in a URI.
+    #------------------------------------------------------------------------
+    sub uri_escape {
+        my ($self, $uri) = @_;
+        return URI::Escape::uri_escape($uri, '^A-Za-z0-9');
+    }
 
-1
+};
+
+1;
+__END__

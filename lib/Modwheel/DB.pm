@@ -1,91 +1,144 @@
-package Modwheel::DB;
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel/DB.pm - Abstract class for loading database drivers.
-# (c) 2007 Ask Solem Hoel <ask@0x61736b.net>
+# (c) 2007 Ask Solem <ask@0x61736b.net>
 #
 # See the file LICENSE in the Modwheel top source distribution tree for
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #####
-use Modwheel::Instance;
-our @ISA = qw(Modwheel::Instance);
-
-# This is an abstract factory class for the database backend.
-# The database type is selected from the configuration entry
-# <database><type>.
-# 
-# This way we can support different database types for each session.
-sub new
+# $Id: DB.pm,v 1.4 2007/04/25 18:49:14 ask Exp $
+# $Source: /opt/CVS/Modwheel/lib/Modwheel/DB.pm,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.4 $
+# $Date: 2007/04/25 18:49:14 $
+#####
+package Modwheel::DB;
+use strict;
+use warnings;
+use Params::Util ('_CLASS');
+use version; our $VERSION = qv('0.2.1');
 {
-    my ($class, %argv) = @_;
-    $class = ref $class || $class;
 
-    my $modwheel = $argv{modwheel};
-    my $backend  = $modwheel->siteconfig->{database}{type};
-    $backend     = 'Modwheel::DB::Generic' unless $backend;
+    #------------------------------------------------------------------------
+    # ->new( \%arguments )
+    #
+    # This is an abstract factory class for the database backend.
+    # The database type is selected from the configuration entry:
+    #   Site:
+    #     $MySiteName:
+    #       database:
+    #         type: MySQL
+    #
+    # In this example the type is MySQL, so the final database object
+    # returned by this function will be Modwheel::DB::MySQL.
+    #
+    # This way we can support different database types for each session.
+    #------------------------------------------------------------------------
+    sub new {
+        my ($class, $arg_ref) = @_;
 
-    # User can select the full class name or just the name
-    # of the database.
-    unless ($backend =~ m/::/) {
-        $backend = 'Modwheel::DB::' . $backend;
+        my $modwheel = $arg_ref->{modwheel};
+        my $backend  = $modwheel->siteconfig->{database}{type};
+        $backend ||= 'Modwheel::DB::Base';
+
+
+
+        # User can select the full class name or just the name
+        # of the database.
+        if ($backend !~ m/::/xms) {
+            $backend = 'Modwheel::DB::' . $backend;
+        }
+
+        # Check the class name. 
+        if (!_CLASS($backend)) {
+            $modwheel->logerror(
+                "DB: $backend is not a valid class name."
+            );
+            return;
+        };
+
+        # we just include the database we need by require(),
+        # create a new instance and return it.
+        my $file = $backend . q{.pm};
+        $file =~ s{ :: }{/}xmsg;
+        require $file;    ## no critic
+        my $obj = $backend->new($arg_ref);
+
+        return $obj;
     }
 
-    # we just include the database we need by require(),
-    # create a new instance and return it.
-    (my $file = $backend) =~ s#::#/#g;
-    require "$file.pm";
-    my $obj = $backend->new(%argv);
+};
 
-    return $obj;
-}
-
-
-1
+1;
 __END__
 
 =head1 NAME
 
-Modwheel::DB - Abstract factory class for Modwheel database interfaces.
+Modwheel::DB - Abstract factory class for Modwheel database drivers.
+
+=head1 VERSION
+
+v0.2.1
 
 =head1 SYNOPSIS
 
-    my $db = Modwheel::DB->new(modwheel => $modwheel);
-    $db->connect or die("Couldn't connect to database: ". $db->errstr);
-    
+    my $db = Modwheel::DB->new({ modwheel => $modwheel });
+    $db->connect or die "Couldn't connect to database: " . $db->errstr;
+
+    # [ ...do something with the database here...  ]
+
     $db->disconnect if $db->connected;
+
+=head1 DESCRIPTION
+
+This class is just a wrapper for database driver classes.
 
 =head1 MORE INFORMATION
 
-See L<Modwheel::DB::Generic> for more information.
+See L<Modwheel::DB::Base> instead.
 
-=head1 CONSTRUCTOR
+=head1 SUBROUTINES/METHODS
+
+=head2 CONSTRUCTOR
 
 =over 4
 
-=item C<Modwheel::DB-E<gt>new(modwheel =E<gt> $modwheel)>
+=item C<Modwheel::DB-E<gt>new({modwheel =E<gt> $modwheel})>
 
 This function creates a DB class based on the current database type.
 The database type is selected from the configuration entry
-<database><type>.
 
-This way we can support different database types for each session.
+    Site:
+        $MySiteName:
+            database:
+                type: $MyDatabaseType
 
-=back
+So if C<$MyDatabaseType> is MySQL, the object returned by C<-E<gt>new( )>
+is actually a Modwheel::DB::MySQL object.
 
-=head1 EXPORT
-
-None.
-
-=head1 HISTORY
-
-=over 8
-
-=item 0.01
-
-Initial version.
+This way we can support different database systems for each instance.
 
 =back
+
+=head1 CONFIGURATION AND ENVIRONMENT
+
+See the C<database> directive in L<Modwheel::Manual::Config>
+
+=head1 DEPENDENCIES
+
+It requires the module you have specified as database type in the
+configuration.
+
+=head1 INCOMPATIBILITIES
+
+None known at this moment.
+
+=head1 BUGS AND LIMITATIONS
+                                                                                                                            
+If you have a module that doesn't include '::' in the name, it will
+add Modwheel::Template:: to the name.
 
 =head1 SEE ALSO
 
@@ -93,13 +146,29 @@ The README included in the Modwheel distribution.
 
 The Modwheel website: http://www.0x61736b.net/Modwheel/
 
-=head1 AUTHORS
+=head1 DIAGNOSTICS
 
-Ask Solem Hoel, F<< ask@0x61736b.net >>.
+Be sure that the module specified in the database:type: section of the
+coniguration file is installed and is loadable.
 
-=head1 COPYRIGHT, LICENSE
+If the module name includes the characters '::', it will use the full
+module name, if it doesn't it will add Modwheel::DB:: to the front of 
+the name. So if the module name is:
 
-Copyright (C) 2007 by Ask Solem Hoel C<< ask@0x61736b.net >>.
+MyCompany::OurDB::ModwheelSupport
+
+it will load that module. If the name is PostgreSQL however, it will
+load:
+
+Modwheel::DB::PostgreSQL
+
+=head1 AUTHOR
+
+Ask Solem, F<< ask@0x61736b.net >>.
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2007 by Ask Solem C<< ask@0x61736b.net >>.
 
 All rights reserved.
 

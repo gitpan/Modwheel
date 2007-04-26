@@ -1,6 +1,0 @@
-#!/usr/bin/perl
-use strict;
-
-use lib qw(/opt/devel/Modwheel/lib);
-use Modwheel::User;
-print Modwheel::User::mkpasswd(), "\n";

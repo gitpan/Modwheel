@@ -1,285 +1,215 @@
-package Modwheel::Instance;
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel/Instance.pm
 # - The base of every Modwheel component, ensures communication between objects.
 #   XXX: (This design should change in the near future, maybe Mediator?)
-# (c) 2007 Ask Solem Hoel <ask@0x61736b.net>
+# (c) 2007 Ask Solem <ask@0x61736b.net>
 #
 # See the file LICENSE in the Modwheel top source distribution tree for
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #####
+# $Id: Instance.pm,v 1.4 2007/04/24 16:22:24 ask Exp $
+# $Source: /opt/CVS/Modwheel/lib/Modwheel/Instance.pm,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.4 $
+# $Date: 2007/04/24 16:22:24 $
+#####
+
+package Modwheel::Instance;
+use strict;
+use warnings;
+use version; our $VERSION = qv('0.2.1');
+use Class::InsideOut::Policy::Modwheel qw(:std);
+use Scalar::Util qw(weaken);
+use namespace::clean;
+{
+
+    public modwheel   => my %modwheel_for,   { is => 'rw' };
+    public db         => my %db_for,         { is => 'rw' };
+    public user       => my %user_for,       { is => 'rw' };
+    public object     => my %object_for,     { is => 'rw' };
+    public repository => my %repository_for, { is => 'rw' };
+    public template   => my %template_for,   { is => 'rw' };
+
+    sub new {
+        my ($class, $arg_ref ) = @_;
+
+        my $self = register($class);
+
+        # Save modwheel object and delete the argument for modwheel.
+        $modwheel_for{ident $self} = $arg_ref->{modwheel};
+        delete $arg_ref->{modwheel};
+
+    # so if there's still any arguments left, we pass them on to setup_instance.
+        if (scalar keys %{ $arg_ref } ) {
+            $self->setup_instance($arg_ref);
+        }
+
+        return $self;
+    }
+
+    sub setup_instance {
+        my ($self, $use ) = @_;
+        $db_for{ident $self}         = $use->{db};
+        $user_for{ident $self}       = $use->{user};
+        $object_for{ident $self}     = $use->{object};
+        $template_for{ident $self}   = $use->{template};
+        $repository_for{ident $self} = $use->{repository};
+
+        return 1;
+    }
+
+}
+
+1;
+
+__END__
 
 =head1 NAME
 
 Modwheel::Instance - Base class for modwheel application components.
 
+=head1 VERSION
+
+v0.2.1
+
 =head1 SYNOPSIS
 
     package Modwheel::MyPackage;
-    use Modwheel::Instance;
-    our @ISA = qw(Modwheel::Instance);
+    use strict;
+    use warnings;
+    use version; our $VERSION = qv('1.0.0');
+    use Class::InsideOut::Policy::Modwheel qw( :std );
+    use base qw( Modwheel::Instance );
+    {
+        sub hello_world {
+            my ($self) = @_;
+            my $modwheel = $self->modwheel;
+            $modwheel->loginform("Hello World!");
+        } 
+    }
 
     package main;
-    my $pkg = Modwheel::MyPackage->new(
+    use strict;
+    use warnings;
+    my $pkg = Modwheel::MyPackage->new({
         modwheel   => $modwheel,
         db         => $db,
         user       => $user,
         object     => $object,
         repository => $repository,
         template   => $template,
-    );
+    });
 
-=head1 CONSTRUCTOR
+=head1 DESCRIPTION
+
+This is the base class for Modwheel applications. It ensures communication
+between the Modwheel components.
+
+=head1 SUBROUTINES/METHODS
+
+=head2 CONSTRUCTOR
+
 
 =over 4
 
-=item C<Modwheel::*E-<gt>new(%argv)>
+=item C<-Egt>new(\%args)>
 
 Inherited method for creating a modwheel instance class.
 
-=cut
-sub new
-{
-    my ($class, %argv) = @_;
-    $class = ref $class || $class;
-    my $self = { };
-    bless $self, $class;
-
-    # delete also returns the object it deletes,
-    # so this will both set the modweel var and delete the hash key.
-    $self->set_modwheel( delete $argv{modwheel} );
-
-    # so if there's still any arguments left, we pass them on to setup_instance.
-    if (%argv) {
-        $self->setup_instance(\%argv);
-    }
-    
-    return $self;
-}
-
 =back
 
-=head1 ACCESSORS
+
+=head2 ATTRIBUTES
 
 =over 4
 
 =item C<$self-E<gt>modwheel()>
 
-Access the Modwheel object,
-
-=cut
-sub modwheel
-{
-    return $_[0]->{_MODWHEEL_};
-}
-
-
 =item C<$self-E<gt>set_modwheel($modwheel)>
 
-Set the current Modwheel object to use.
-
-=cut
-sub set_modwheel
-{
-    my ($self, $modwheel) = @_;
-
-    if (ref $self) {
-        $self->{_MODWHEEL_} = $modwheel
-    }
-}
+The Modwheel object,
 
 =item C<$self-E<gt>user()>
 
-Access the current object for working with users and authentication.
-
-=cut
-sub user
-{
-    return $_[0]->{_MODWHEEL_USER_};
-}
-
 =item C<$self-E<gt>set_user($user)>
 
-Set the current object for working with users and authentication.
-
-=cut
-sub set_user
-{
-    my ($self, $db) = @_;
-
-    if (ref $db) {
-        $self->{_MODWHEEL_USER_} = $db
-    }
-}
+Access/set the current object for working with users and authentication.
 
 =item C<$self-E<gt>db()>
 
-Access the current object for working with databases.
-
-=cut
-sub db
-{
-    return $_[0]->{_MODWHEEL_DB_};
-}
-
 =item C<$self-E<gt>set_db($db)>
 
-Set the current object for working with databases.
-
-=cut
-sub set_db
-{
-    my ($self, $db) = @_;
-
-    if (ref $db) {
-        $self->{_MODWHEEL_DB_} = $db
-    }
-}
+Access/set the current object for working with databases.
 
 =item C<$self-E<gt>object()>
 
-Access the current object for working with Modwheel data objects.
-
-=cut
-sub object
-{
-    return $_[0]->{_MODWHEEL_OBJECT_};
-}
-
 =item C<$self-E<gt>set_object($object)>
 
-Set the current object for working with Modwheel data objects.
+Access/set the current object for working with Modwheel data objects.
 
-=cut
-sub set_object
-{
-    my ($self, $object) = @_;
-
-    if (ref $object) {
-        $self->{_MODWHEEL_OBJECT_} = $object
-    }
-}
 
 =item C<$self-E<gt>template()>
 
-Access the current object for working with templates.
-
-=cut
-sub template
-{
-    return $_[0]->{_MODWHEEL_TEMPLATE_};
-}
-
-
 =item C<$self-E<gt>set_template($template)>
 
-Set the current object for working with templates.
-
-=cut
-sub set_template
-{
-    my ($self, $template) = @_;
-
-    if (ref $template) {
-        $self->{_MODWHEEL_TEMPLATE_} = $template;
-    }
-}
+Access/set the current object for working with templates.
 
 =item C<$self-E<gt>repository()>
 
-Access the current object for working with file repositories.
-
-=cut
-sub repository
-{
-    return $_[0]->{_MODWHEEL_REPOSITORY_};
-}
-
 =item C<$self-E<gt>set_repository()>
 
-Set the current object for working with file repositories.
-
-=cut
-sub set_repository
-{
-    my ($self, $repository) = @_;
-
-    if (ref $repository) {
-        $self->{_MODWHEEL_REPOSITORY_} = $repository;
-    }
-}
+Access/set the current object for working with file repositories.
 
 =back
 
-=head1 INSTANCE METHODS
+=head2 INSTANCE METHODS
 
 =over 4
 
-=item C<$self-E<gt>setup_instance({modwheel => $modwheel ...})>
+=item C<$self-E<gt>setup_instance({db => $db, user => $user ...})>
 
-Private method used by new().
+Shortcut for set_db, set_user, set_template, set_object, set_repository.
 
-=cut
-sub setup_instance
-{
-    my ($self, $use) = @_;
-    $self->set_db( $use->{db} )                 if $use->{db};
-    $self->set_user( $use->{user} )             if $use->{user};
-    $self->set_object( $use->{object} )         if $use->{object};
-    $self->set_template( $use->{template} )     if $use->{template};
-    $self->set_repository( $use->{repository})  if $use->{repository};
-}
-
-=item C<$self-E<gt>explicit_free()>
-
-Explicitly destroy allocated objects.
-
-=cut
-sub explicit_free
-{
-    my $self = shift;
-    foreach my $instancevar
-        (qw(_MODWHEEL_ _MODWHEEL_DB_ _MODWHEEL_USER_ _MODWHEEL_TEMPLATE_ _MODWHEEL_OBJECT))
-    {
-        undef $self->{$instancevar};
-    }
-}
-
-1;
-
-__END__
 =back
 
-=head1 EXPORT
+=head1 DIAGNOSTICS
 
 None.
 
-=head1 HISTORY
+=head1 CONFIGURATION AND ENVIRONMENT
 
-=over 8
+Nothing configurable.
 
-=item 0.01
+=head1 DEPENDENCIES
 
-Initial version.
+=over 4
+
+=item L<namespace::clean>
+
+=item L<version>
+
+=item L<Class::InsideOut::Policy::Modwheel>
 
 =back
 
-=head1 SEE ALSO
+=head1 INCOMPATIBILITIES
 
-The README included in the Modwheel distribution.
+None.
 
-The Modwheel website: http://www.0x61736b.net/Modwheel/
+=head1 BUGS AND LIMITATIONS
 
+None.
 
-=head1 AUTHORS
+=head1 AUTHOR
 
-Ask Solem Hoel, F<< ask@0x61736b.net >>.
+Ask Solem, F<< ask@0x61736b.net >>.
 
-=head1 COPYRIGHT, LICENSE
+=head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2007 by Ask Solem Hoel C<< ask@0x61736b.net >>.
+Copyright (C) 2007 by Ask Solem C<< ask@0x61736b.net >>.
 
 All rights reserved.
 
