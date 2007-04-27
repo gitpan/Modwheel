@@ -38,7 +38,7 @@ use inc::Module::Install;
 
 # Define metadata
 name            'Modwheel';
-version         '0.2.1';
+version         '0.2.2';
 all_from        'lib/Modwheel.pm';
 author          'Ask Solem <ask@0x61736b.net>';
 license         'perl';
@@ -78,6 +78,7 @@ requires        'Getopt::Euclid'        => 0.001000;
 requires        'Perl6::Export'         => 0.07;
 requires        'Perl6::Form'           => 0.04;
 requires        'IO::Prompt'            => '0.099004';
+requires        'Digest::SHA1'          => 2.11;
 
 build_requires  'Test::More'            => 0.42;
 recommends      'Test::Pod'             => 1.26;

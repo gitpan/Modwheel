@@ -1,6 +1,6 @@
 ---
 name: Modwheel
-version: 0.2.1
+version: 0.2.2
 author:
   - 'Ask Solem <ASKSH@cpan.org>'
 abstract: Web framework.
@@ -15,6 +15,7 @@ requires:
   Crypt::Eksblowfish: 0.001
   DBI: 1.51
   Data::Dumper: 0
+  Digest::SHA1: 2.11
   Fcntl: 0
   FileHandle: 0
   Getopt::Euclid: 0.001
@@ -59,52 +60,52 @@ provides:
     version: 1.06
   Modwheel:
     file: lib/Modwheel.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::DB:
     file: lib/Modwheel/DB.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::DB::Base:
     file: lib/Modwheel/DB/Base.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::DB::MySQL:
     file: lib/Modwheel/DB/MySQL.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::DB::PostgreSQL:
     file: lib/Modwheel/DB/PostgreSQL.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::HTML::Tagset:
     file: lib/Modwheel/HTML/Tagset.pm
     version: 1.0.0
   Modwheel::Instance:
     file: lib/Modwheel/Instance.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Object:
     file: lib/Modwheel/Object.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Repository:
     file: lib/Modwheel/Repository.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Session:
     file: lib/Modwheel/Session.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Template:
     file: lib/Modwheel/Template.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Template::ObjectProxy:
     file: lib/Modwheel/Template/ObjectProxy.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Template::Shortcuts:
     file: lib/Modwheel/Template/Shortcuts.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Template::TT:
     file: lib/Modwheel/Template/TT.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::Template::TT::Plugin:
     file: lib/Modwheel/Template/TT/Plugin.pm
-    version: 0.2.1
+    version: 0.2.2
   Modwheel::User:
     file: lib/Modwheel/User.pm
-    version: 0.2.1
+    version: 0.2.2
 generated_by: Module::Build version 0.2807
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

@@ -1,10 +1,10 @@
 #!/usr/local/bin/perl
-# $Id: mwuser,v 1.1 2007/04/23 19:28:52 ask Exp $
+# $Id: mwuser,v 1.3 2007/04/27 19:58:05 ask Exp $
 # $Source: /opt/CVS/Modwheel/utils/mwuser,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.1 $
-# $Date: 2007/04/23 19:28:52 $
+# $Revision: 1.3 $
+# $Date: 2007/04/27 19:58:05 $
 use strict;
 use warnings;
 use Data::Dumper;
@@ -13,7 +13,7 @@ use Perl6::Form;
 use Params::Util ('_ARRAY', '_HASH');
 use IO::Prompt;
 use Modwheel::Session;
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 
 my $prefix     = $ARGV{-prefix};
 my $configfile = $ARGV{-config};
@@ -49,7 +49,7 @@ if ($ARGV{'-n'}) {
     exit;
 }
 if ($ARGV{-mkpasswd}) {
-    print $user->mkpasswd( ), qq{\n};
+    print Modwheel::User::mkpasswd( ), qq{\n};
     exit;
 }
 if ($ARGV{-hash}) {
@@ -155,7 +155,7 @@ mwuser - Modwheel user management.
 
 =head1 VERSION
 
-This documentation refers to Modwheel version 0.2.1
+This documentation refers to Modwheel version 0.2.2
 
 =head1 USAGE
 
@@ -278,7 +278,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.2.1
+v0.2.2
 
 =head1 AUTHOR
 

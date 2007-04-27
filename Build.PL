@@ -16,7 +16,7 @@ my $builder = Module::Build->new(
     dist_author          => 'Ask Solem <ASKSH@cpan.org>',
     dist_version_from    => 'lib/Modwheel.pm',
     dynamic_config       => NO,
-    sign                 => YES,
+    sign                 => NO, # asksh: have to find out why my signature fails.
     recursive_test_files => YES,
     config_module        => 'Modwheel::BuildConfig',
     config_questions     => [
@@ -61,6 +61,7 @@ my $builder = Module::Build->new(
         'Perl6::Export'         => 0.07,
         'Perl6::Form'           => 0.04,
         'IO::Prompt'            => 0.099004,
+        'Digest::SHA1'          => 2.11,
     },
     recommends           => {
         'Test::Pod'             => 0,

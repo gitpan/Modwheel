@@ -8,19 +8,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: ObjectProxy.pm,v 1.3 2007/04/23 07:09:41 ask Exp $
+# $Id: ObjectProxy.pm,v 1.4 2007/04/27 10:57:42 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/ObjectProxy.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.3 $
-# $Date: 2007/04/23 07:09:41 $
+# $Revision: 1.4 $
+# $Date: 2007/04/27 10:57:42 $
 #####
 
 package Modwheel::Template::ObjectProxy;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw( :std );
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 {
     
     use Sub::Install;
@@ -171,7 +171,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.2.1
+v0.2.2
 
 =head1 AUTHOR
 

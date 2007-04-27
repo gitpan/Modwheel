@@ -1,15 +1,15 @@
-# $Id: Shortcuts.pm,v 1.5 2007/04/24 16:22:25 ask Exp $
+# $Id: Shortcuts.pm,v 1.6 2007/04/27 10:57:42 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/Shortcuts.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.5 $
-# $Date: 2007/04/24 16:22:25 $
+# $Revision: 1.6 $
+# $Date: 2007/04/27 10:57:42 $
 #####
 package Modwheel::Template::Shortcuts;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 {
     use URI::Escape  ();
     use Params::Util ('_HASH');
@@ -154,7 +154,7 @@ Class for expanding shortcut abbreviations in strings.
 
 =head1 VERSION
 
-v0.2.1
+v0.2.2
 
 =head1 SYNOPSIS
 
@@ -177,12 +177,12 @@ An example of an abbreviation with the name CPAN, could be defined like this:
        shortcuts:
          cpan:  <a href="http://search.cpan.org?query=[:content]">[name]</a>
 
-Now, if you have a string that contains [cpan:Carp|The Carp Module] and send it to
+Now, if you have a string that contains C<[cpan:Carp|The Carp Module]> and send it to
 C<$shortcuts-E<gt>parse> it will replace it with C<E<lt>a
 href="http://search.cpan.org?query=Carp"E<gt>The Carp ModuleE<lt>/aE<gt>>
 
 The syntax for resolving an abbreviation in text is:
-[I<type>:I<content>E<verbar>I<name>]
+C<[I<type>:I<content>E<verbar>I<name>]>
 The type is the name of the shortcut in the configuration file.
 
         <a href="http://search.cpan.org?query=
@@ -242,7 +242,7 @@ Set or get the current resolvers hash.
 
 =over 4
 
-=item B<private:> C<$shortcuts-E<gt>init_resolvers()>
+=item C<$shortcuts-E<gt>init_resolvers()>
 
 Initialize the resolvers hash using the modwheel configuration file.
 Used by new().
@@ -266,8 +266,8 @@ used as an URI.
 
 =item * If the [file:] type does not work:
 
-Remember that the file type needs access to the template object.
-Are you sure you passed the template object when calling C<-E<gt>new()>?
+Remember that the file type needs access to the Repository object.
+Are you sure you passed the repository object when calling C<-E<gt>new()>?
 
 =back
 

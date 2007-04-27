@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 171;
+use Test::More tests => 194;
 use strict;
 use warnings;
 
@@ -59,18 +59,18 @@ my $object      = Modwheel::Object->new(
     }
 );
 
-ok( $object->_try_to_find_bool_value(1),       'find bool value: 1'       );
-ok( $object->_try_to_find_bool_value('yes'),   'find bool value: yes'     );
-ok( $object->_try_to_find_bool_value('true'),  'find bool value: true'    );
-ok( $object->_try_to_find_bool_value('Inf'),   'find bool value: Inf'     );
-ok( $object->_try_to_find_bool_value('on'),    'find bool value: on'      );
-ok(!$object->_try_to_find_bool_value(0),       'find bool value: 0'       );
-ok(!$object->_try_to_find_bool_value('no'),    'find bool value: no'      );
-ok(!$object->_try_to_find_bool_value('false'), 'find bool value: false'   );
-ok(!$object->_try_to_find_bool_value('off'),   'find bool value: off'     );
-ok( $object->_try_to_find_bool_value(100),
+ok( Modwheel::Object::_find_bool_value(1),       'find bool value: 1'       );
+ok( Modwheel::Object::_find_bool_value('yes'),   'find bool value: yes'     );
+ok( Modwheel::Object::_find_bool_value('true'),  'find bool value: true'    );
+ok( Modwheel::Object::_find_bool_value('Inf'),   'find bool value: Inf'     );
+ok( Modwheel::Object::_find_bool_value('on'),    'find bool value: on'      );
+ok(!Modwheel::Object::_find_bool_value(0),       'find bool value: 0'       );
+ok(!Modwheel::Object::_find_bool_value('no'),    'find bool value: no'      );
+ok(!Modwheel::Object::_find_bool_value('false'), 'find bool value: false'   );
+ok(!Modwheel::Object::_find_bool_value('off'),   'find bool value: off'     );
+ok( Modwheel::Object::_find_bool_value(100),
     'find bool value: positive integer');
-ok(!$object->_try_to_find_bool_value('The quick brown fox...'),
+ok(!Modwheel::Object::_find_bool_value('The quick brown fox...'),
     'Find bool value bogus');
 
 foreach my $method (keys %Modwheel::Object::attributes) {
@@ -200,6 +200,8 @@ SKIP:
     my $z = $object->fetch(
         { id => Modwheel::Object::MW_TREE_ROOT }, ['type'], undef, 'object'
     );
+
+
     ok( $z->type );
     ok(!$z->name );
 
@@ -341,6 +343,71 @@ SKIP:
 
     # get the root name
     my $o_root = $owp->fetch({id => Modwheel::Object::MW_TREE_ROOT });
+
+    # ### Test Serialization.
+    my $textual = $o_root->serialize;
+    
+    ok( $o_root->serialize );
+    ok( $o_root->serialize( $o_root ) );
+    ok( $o_root->serialize( $o_root, { DummyPlaceHolder => 'Bogus' } ) );
+    $textual = $o_root->serialize( $o_root, { sign => 0 } );
+    isnt($textual, qr/^_CHECKSUM:/xms );
+
+    # ### Test Deserialization
+    
+    my $oo = Modwheel::Object->new({
+        modwheel => $modwheel,
+        db       => $db,
+        user     => $user,
+    });
+    $oo->set_name('Testing Serialization');
+    $oo->set_parent(1);
+    $oo->set_type('testobject');
+    $oo->set_description('The quick brown fox jumps over the lazy dog.');
+    $oo->set_data('.god yzal eht revo spmuj xof nworb kciuq ehT');
+    $textual = $oo->serialize( );
+    my $oo2 = Modwheel::Object->new({
+        modwheel => $modwheel,
+        db       => $db,
+        user     => $user,
+    });
+    $oo2->deserialize($textual);
+
+    is( $oo2->name, 'Testing Serialization', 'deserialize');
+    is( $oo2->parent, 1 );
+    is( $oo2->type, 'testobject' );
+    is( $oo2->description, 'The quick brown fox jumps over the lazy dog.' );
+    is( $oo2->data, '.god yzal eht revo spmuj xof nworb kciuq ehT' );
+
+    my $oo3 = Modwheel::Object->new({
+        modwheel => $modwheel,
+        db       => $db,
+        user     => $user,
+    });
+    $oo2->deserialize($textual, $oo3);
+    is( $oo3->name, 'Testing Serialization', 'deserialize');
+    is( $oo3->parent, 1 );
+    is( $oo3->type, 'testobject' );
+    is( $oo3->description, 'The quick brown fox jumps over the lazy dog.' );
+    is( $oo3->data, '.god yzal eht revo spmuj xof nworb kciuq ehT' );
+
+    # ### Test diff
+    $oo3->set_data('The data field has now changed');
+    $oo3->set_description();
+    $oo3->set_parent(9999);
+    $oo3->set_detach(1);
+    my %diff = $oo2->diff($oo2, $oo3);
+    ok( scalar keys %diff, 'diff' );
+    ok( exists $diff{data} );
+    ok( exists $diff{parent} );
+    ok( exists $diff{detach} );
+    ok( exists $diff{description} );
+    ok( defined $diff{data} );
+    ok( defined $diff{parent} );
+    ok( defined $diff{detach} );
+    is($diff{description}, q{} );
+    
+
     my $root_name = $o_root->name;
 
     # create a new directory under root.
@@ -607,7 +674,7 @@ SKIP:
 
     # Do not save when parent is itself.
     $savetest->set_parent($savetest_id);
-    ok( !$savetest->save, 'Do not save then parent is itself' );
+    ok( !$savetest->save, 'Do not save if has itself as parent' );
     ok( $modwheel->catch('object-parent-loop') );
     $savetest->set_parent(Modwheel::Object::MW_TREE_ROOT);
 

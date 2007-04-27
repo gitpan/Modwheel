@@ -1,5 +1,5 @@
 # TESTS FOR Modwheel.pm
-use Test::More tests => 115;
+use Test::More tests => 114;
 
 BEGIN {
     use lib '/opt/devel/Modwheel/lib';
@@ -238,14 +238,14 @@ exception') );
         logmode            => '',
     }), 'Create another Modwheel root object instance, without locale. is this ok?');
 
-    my $pwd = $ENV{PWD};
-    ok( my $mwX = Modwheel->new({
-        prefix             => $TEST_PREFIX,
-        configfile         => "/$pwd/t/config_wo_global_locale.yml",
-        site               => 'modwheeltest2',
-        logmode            => '',
-    }), 'Create another Modwheel object without any locale in either args or
-config.');
+    #my $pwd = $ENV{PWD};
+    #ok( my $mwX = Modwheel->new({
+    #    prefix             => $TEST_PREFIX,
+    #    configfile         => "/$pwd/t/config_wo_global_locale.yml",
+    #    site               => 'modwheeltest2',
+    #    logmode            => '',
+    #}), 'Create another Modwheel object without any locale in either args or
+#config.');
     is( $mw2->siteconfig->{uniqueidfortest}, 'SITEID0002' );
     ok( my $mwA = Modwheel->new({
         prefix             => "$TEST_PREFIX/t",

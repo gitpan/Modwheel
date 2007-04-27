@@ -7,26 +7,29 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Object.pm,v 1.6 2007/04/25 18:49:14 ask Exp $
+# $Id: Object.pm,v 1.8 2007/04/27 19:58:02 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Object.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.6 $
-# $Date: 2007/04/25 18:49:14 $
+# $Revision: 1.8 $
+# $Date: 2007/04/27 19:58:02 $
 #####
 package Modwheel::Object;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 use base 'Modwheel::Instance';
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
     use Carp qw(carp croak confess cluck);
-    use Params::Util ('_HASH', '_CODELIKE');
+    use Params::Util ('_HASH', '_ARRAY', '_CODELIKE', '_INSTANCE');
     use Readonly;
     use Data::Dumper;
     use Scalar::Util qw(blessed weaken);
     use Perl6::Export::Attrs;
+    use Digest::SHA1;
+    use YAML::Syck;
+    use namespace::clean;
 
     # #####################
     # MW_TREE_ROOT      Root node of the tree.
@@ -211,8 +214,8 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             : \@objects;
     }
 
-    sub _try_to_find_bool_value {
-        my ($self, $string) = @_;
+    sub _find_bool_value {
+        my ($string) = @_;
         return if !defined $string;
 
         return 0 if $string eq '0';
@@ -259,7 +262,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         #$self->set_revised_by($user->uid) if defined $user->uid;
 
-        $self->set_active( $self->_try_to_find_bool_value( $self->active ) );
+        $self->set_active( _find_bool_value( $self->active ) );
 
         if (!defined $self->detach) {
             $self->set_detach(0);
@@ -319,7 +322,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         my @names = ();
 
         # If the NeverDetach option is set, we don't stop
-        my $opt_never_detach = $self->_try_to_find_bool_value(
+        my $opt_never_detach = _find_bool_value(
             $modwheel->siteconfig->{NeverDetach});
 
     NODE:
@@ -830,6 +833,141 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             : \@out;
     }
 
+    sub serialize {
+        my ($self, $the_object, $options_ref) = @_;
+        my $textual;
+        my $checksum;
+        $the_object          ||= $self;
+        $options_ref         ||= { };
+        $options_ref->{sign} ||=  1;
+
+        if (_INSTANCE($the_object, 'Modwheel::Object')) {
+            my %hash_copy_of_the_object;
+            for my $attribute (keys %objstruct) {
+                if ($the_object->can($attribute)) {
+                    my $attribute_value = $the_object->$attribute;
+                    if (defined $attribute_value) {
+                        $hash_copy_of_the_object{$attribute}
+                            = $attribute_value;
+                    }
+                }
+            }
+            if (_find_bool_value($options_ref->{sign})) {
+                my $sum = join q{}, values %hash_copy_of_the_object;
+                $checksum = Digest::SHA1::sha1_hex($sum);
+                $hash_copy_of_the_object{_CHECKSUM} = $checksum;
+            }
+                            
+            local $YAML::Syck::ImplicitBinary = 1;
+            $textual = YAML::Syck::Dump(\%hash_copy_of_the_object);
+        }
+       
+        return wantarray    ? ($textual, $checksum)
+                            : $textual;
+    }
+
+    sub deserialize {
+        my ($self, $textual, $target) = @_;
+        my $modwheel = $self->modwheel;
+        $target    ||= $self;
+
+        my $freezed_ref = YAML::Syck::Load($textual);
+        if (!_HASH($freezed_ref)) {
+           $modwheel->throw('object-deserialize-parse-error');
+           $modwheel->logerror('Object deserialize: Invalid YAML');
+           return;
+        }
+        my $checksum = delete $freezed_ref->{_CHECKSUM};
+        my $sum      = join q{}, values %{ $freezed_ref };
+        if ($checksum ne $sum) {
+            $modwheel->throw('object-deserialize-checksum-error');
+            $modwheel->logerror('Object deserialize: Checksum mismatch');
+        }
+        
+        for my $attr (keys %objstruct) {
+            if (defined $freezed_ref->{$attr} && $target->can($attr)) {
+                my $set_attr = 'set_' . $attr;
+                $target->$set_attr( $freezed_ref->{$attr} );
+            }
+        }
+
+        return $target if defined wantarray;
+        return;
+                
+    }
+
+    sub diff {
+        my ($self, $old, $new) = @_;
+        my $modwheel = $self->modwheel;
+        
+        my %diff = ( );
+
+        ATTRIBUTE:
+        while (my($attr, $data_type) = each %objstruct) {
+            if ($new->can($attr)) {
+                # if the old object does not implement this method, it's a
+                # difference.
+                if (! $old->can($attr)) {
+                    $diff{$attr} = $new->$attr;
+                    next ATTRIBUTE;
+                }
+
+                # Check if any of the attributes are undefined.
+                # This will foremost spare us for a lot of warnings. :-)
+                if (! defined $old->$attr) {
+                    if (defined $new->$attr) {
+                        $diff{$attr} = $new->$attr;
+                    }
+                    next ATTRIBUTE;
+                }
+                if (! defined $new->$attr) {
+                    if (defined $old->$attr) {
+                        $diff{$attr} = q{};
+                    }
+                    next ATTRIBUTE;
+                }
+                        
+            }
+
+            # Choose how to compare based on the type of data this attribute
+            # holds.
+            if ($data_type eq '%d') {
+                if ($new->$attr != $old->$attr) {
+                    $diff{$attr} = $new->$attr;
+                }
+            }
+            elsif ($data_type eq q{'%s'}) {
+                if ($new->$attr ne $old->$attr) {
+                    $diff{$attr} = $new->$attr;
+                }
+            }
+            else {
+               $modwheel->logwarn(
+                    'No datatype defined for object attribute:', $attr,
+                    'Please contact a Modwheel developer.'
+                );
+            }
+        }
+
+        if (wantarray) {
+            return %diff;
+        }
+        elsif (defined wantarray) {
+            my $sum      = join q{}, values %diff;
+            my $checksum = Digest::SHA1::sha1_hex($sum);
+            $diff{_CHECKSUM} = $checksum;
+            return YAML::Syck::Dump(\%diff);
+        }
+    }
+
+    sub apply_patch {
+        my ($self, $diff) = @_;
+
+        $self->deserialize($diff);
+    
+        return $self->save( );
+    }
+
 }
 
 1;
@@ -998,7 +1136,7 @@ Modwheel::Object inherits from Modwheel::Instance.
 
 =over 4
 
-=item C<-E<gt>_try_to_find_bool_value()>
+=item C<-E<gt>_find_bool_value()>
 
 =back
 
@@ -1072,7 +1210,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.2.1
+v0.2.2
 
 
 =head1 AUTHOR

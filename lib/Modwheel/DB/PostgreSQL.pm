@@ -6,19 +6,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: PostgreSQL.pm,v 1.5 2007/04/25 18:49:15 ask Exp $
+# $Id: PostgreSQL.pm,v 1.6 2007/04/27 10:57:40 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/DB/PostgreSQL.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.5 $
-# $Date: 2007/04/25 18:49:15 $
+# $Revision: 1.6 $
+# $Date: 2007/04/27 10:57:40 $
 #####
 package Modwheel::DB::PostgreSQL;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw( :std );
 use base 'Modwheel::DB::Base';
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 {
     
     use Readonly;

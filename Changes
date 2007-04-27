@@ -1,2 +1,39 @@
-0.1 Mon Apr 2 18:51:00 2007
+0.2.2 Fri Apr 27 21:41:51 PM 2007 [ASKSH@cpan.org]
+    - > From: Josts Smokehouse
+      > Date: April 27, 2007 08:02
+      > Subject: FAIL Modwheel-0.2.1 sun4-solaris-thread-multi 2.9
+      > [ERROR] [Fri Apr 27 17:01:54 2007] Signature check failed for module
+      > 'Modwheel' -- Not trusting this module, aborting install
+
+      Have to find out why my signature failes. in the mean time the dist is
+      not signed.
+0.2.2 Fri Apr 27 21:35:23 PM 2007 [ASKSH@cpan.org]
+    - > From: chris
+      > Date: April 26, 2007 20:41
+      > Subject: FAIL Modwheel-0.2.1 i386-freebsd-thread-multi-64int 5.3-release
+      > 
+      > t/01-ModWheel.........Fatal error: Could not open configuration file
+      > (//home/cwill1is/smoke/new/jail/t/config_wo_global_locale.yml): No such file
+      > or directory at t/01-ModWheel.t line 242
+      > # Looks like you planned 115 tests but only ran 91.
+      > # Looks like your test died just after 91.
+      > dubious
+
+      We used $ENV{CWD} to test if parseconfig managed to load absolute config
+      file path names, but until we have a good way to make sure where the
+      absolute path for the configfile will be on any system, we have to
+      comment it out. So fixed for now.
+
+0.2.2 Fri Apr 27 12:23:03 PM 2007 [ASKSH@cpan.org]
+    - Object serialization & deserialization with checksum checking.
+    - Object compare differences. ($object->diff( ) ).
+
+0.2.1 Tue Apr 26 16:13:03 PM 2007 [ASKSH@cpan.org]
+    - Object prototypes
+    - Coheres to Perl::Critic
+    - A lot more tests (Now 70% Devel::Cover'age)
+    - Now using inside-out objects (Using the helper class
+      Class::InsideOut::Policy::Modwheel)
+
+0.1 Mon Apr 2 18:51:00 2007 [ASKSH@cpan.org]
     - Initial version

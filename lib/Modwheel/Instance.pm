@@ -9,18 +9,18 @@
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #####
-# $Id: Instance.pm,v 1.4 2007/04/24 16:22:24 ask Exp $
+# $Id: Instance.pm,v 1.5 2007/04/27 10:57:38 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Instance.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.4 $
-# $Date: 2007/04/24 16:22:24 $
+# $Revision: 1.5 $
+# $Date: 2007/04/27 10:57:38 $
 #####
 
 package Modwheel::Instance;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use Scalar::Util qw(weaken);
 use namespace::clean;
@@ -73,7 +73,7 @@ Modwheel::Instance - Base class for modwheel application components.
 
 =head1 VERSION
 
-v0.2.1
+v0.2.2
 
 =head1 SYNOPSIS
 

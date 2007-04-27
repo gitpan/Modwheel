@@ -1,9 +1,9 @@
-# $Id: Modwheel.pm,v 1.6 2007/04/25 18:49:13 ask Exp $
+# $Id: Modwheel.pm,v 1.8 2007/04/27 19:58:01 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.6 $
-# $Date: 2007/04/25 18:49:13 $
+# $Revision: 1.8 $
+# $Date: 2007/04/27 19:58:01 $
 #
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel.pm - Web framework.
@@ -19,7 +19,7 @@ package Modwheel;
 use strict;
 use warnings;
 use 5.00800;
-use version; our $VERSION = qv('0.2.1');
+use version; our $VERSION = qv('0.2.2');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
 
@@ -488,7 +488,7 @@ Modwheel - Web framework.
 
 =head1 VERSION
 
-This document describes Modwheel version 0.2.1
+This document describes Modwheel version 0.2.2
 
 =head1 DESCRIPTION
 
@@ -858,6 +858,40 @@ None known at the moment.
 =head1 BUGS AND LIMITATIONS
 
 None known at the moment.
+
+=head1 COVERAGE
+
+Devel::Cover does not tell us anything about the quality of our code,
+tests or documentation, but it's a good way to spot critical areas that needs
+attention. The goal is to get atleast 90% coverage for all classes. As you can
+see POD-documentation is not entirely covered yet, but documentation for all methods is
+beeing written and the goal for 90% coverage should be met in the nearest
+future.
+
+This is the current output from L<Devel::Cover>:
+
+    ---------------------------- ------ ------ ------ ------ ------ ------ ------
+    File                           stmt   bran   cond    sub    pod   time  total
+    ---------------------------- ------ ------ ------ ------ ------ ------ ------
+    ...ideOut/Policy/Modwheel.pm   45.2   20.2   20.7   58.8    0.0    5.3   39.0
+    lib/Modwheel.pm               100.0   95.7   75.0  100.0  100.0    1.3   97.8
+    lib/Modwheel/DB.pm            100.0  100.0  100.0  100.0  100.0    0.1  100.0
+    lib/Modwheel/DB/Base.pm        82.9   68.4   57.1   80.9   93.9    5.3   79.2
+    lib/Modwheel/DB/MySQL.pm      100.0  100.0    n/a  100.0  100.0    0.1  100.0
+    ...Modwheel/DB/PostgreSQL.pm   40.0    0.0    0.0   54.5   80.0    0.0   39.4
+    lib/Modwheel/HTML/Tagset.pm    99.1   97.1  100.0  100.0  100.0    0.4   98.8
+    lib/Modwheel/Instance.pm      100.0  100.0    n/a  100.0   50.0    0.2   97.8
+    lib/Modwheel/Object.pm         96.1   88.0   83.3   97.9   82.1    2.4   93.0
+    lib/Modwheel/Repository.pm     36.2   22.9   17.6   76.5    0.0    0.6   34.2
+    lib/Modwheel/Session.pm       100.0   60.0   40.0  100.0    n/a    0.1   84.9
+    lib/Modwheel/Template.pm      100.0  100.0    n/a  100.0  100.0    0.1  100.0
+    ...l/Template/ObjectProxy.pm  100.0  100.0  100.0  100.0  100.0    0.1  100.0
+    ...eel/Template/Shortcuts.pm   92.2   88.5   66.7  100.0  100.0    0.2   91.8
+    lib/Modwheel/Template/TT.pm   100.0   94.4   62.5  100.0    0.0    0.3   94.1
+    ...eel/Template/TT/Plugin.pm   19.4    6.2    0.0   25.9    2.1    0.1   16.2
+    lib/Modwheel/User.pm           98.4   93.2  100.0  100.0    0.0   83.5   93.6
+    Total                          74.6   62.5   56.9   78.3   51.2  100.0   70.7
+    ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 AUTHOR
 

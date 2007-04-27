@@ -8,6 +8,7 @@ config/example-apache2-config.conf
 config/modwheelconfig.yml
 devel/apache_push_lib_startup.pl
 devel/blowfish.pl
+devel/changeversion.sh
 devel/count.sh
 devel/Instance.pm
 devel/Modwheel.pm
@@ -22,7 +23,6 @@ devel/POD.stub
 devel/RCS.stub
 devel/testyaml.pl
 doc/exceptions.pod
-doc/index.html
 doc/inlineEditor
 inc/ExtUtils/AutoInstall.pm
 inc/Module/AutoInstall.pm
@@ -62,7 +62,6 @@ LICENSE
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.skip
-META.yml
 mwconfig.pl
 README
 sql/MySQL/01-Users.sql
@@ -109,9 +108,9 @@ t/Test/Modwheel.pm
 t/TestClass.pm
 t/TestClassChild.pm
 t/testfilenames.UNIX
-Templates/Modwheel-UI-Simple.tar.gz
-Templates/Modwheel-UI-SimpleAdmin.tar.gz
+Templates/Modwheel-UI-Simple-0.2.2.tar.gz
+Templates/Modwheel-UI-SimpleAdmin-0.2.2.tar.gz
 ToDo
 utils/mwMaintainance
 utils/mwuser
-SIGNATURE    Added here by Module::Build
+META.yml
