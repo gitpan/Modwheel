@@ -10,7 +10,8 @@ my $prefix = q{};
 
 $ENV{DEVEL_COVER_OPTIONS} = '-ignore,blib/Class/InsideOut/Policy/Modwheel.pm';
 
-my $builder = Module::Build->new(
+#my $builder = inc::Module::Build::Modwheel->new(
+ my $builder = Module::Build->new(
     module_name          => 'Modwheel',
     license              => 'perl',
     dist_author          => 'Ask Solem <ASKSH@cpan.org>',

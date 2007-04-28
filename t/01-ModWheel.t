@@ -292,11 +292,12 @@ exception') );
 
 }
 
-$THIS_BLOCK_HAS_TESTS=6;
+$THIS_BLOCK_HAS_TESTS=7;
 SKIP:
 {
     eval 'use Test::Exception';
-    skip 'Skipping tests that requires Test::Exception', 1 if $EVAL_ERROR;
+    skip 'Skipping tests that requires Test::Exception', $THIS_BLOCK_HAS_TESTS
+         if $EVAL_ERROR;
 
     my $modwheel = Modwheel->new($modwheel_config);
     # Loghandler must be CODELIKE

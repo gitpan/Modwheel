@@ -1,5 +1,5 @@
 package Modwheel;
-use version; $VERSION = qv('0.2.2');
+use version; $VERSION = qv('0.2.3');
 
 use strict;
 use warnings;

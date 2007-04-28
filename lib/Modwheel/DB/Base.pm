@@ -8,19 +8,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Base.pm,v 1.7 2007/04/27 10:57:40 ask Exp $
+# $Id: Base.pm,v 1.8 2007/04/28 13:13:04 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/DB/Base.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.7 $
-# $Date: 2007/04/27 10:57:40 $
+# $Revision: 1.8 $
+# $Date: 2007/04/28 13:13:04 $
 #####
 package Modwheel::DB::Base;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base 'Modwheel::Instance';
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 {
     use DBI;
     use Carp         qw(confess carp croak cluck longmess shortmess);
@@ -1290,7 +1290,7 @@ The Modwheel website: L<http://www.0x61736b.net/Modwheel/>
 
 =head1 VERSION
 
-v0.2.2
+v0.2.3
 
 =head1 AUTHOR
 

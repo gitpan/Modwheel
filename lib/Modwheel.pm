@@ -1,9 +1,9 @@
-# $Id: Modwheel.pm,v 1.8 2007/04/27 19:58:01 ask Exp $
+# $Id: Modwheel.pm,v 1.9 2007/04/28 13:13:02 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.8 $
-# $Date: 2007/04/27 19:58:01 $
+# $Revision: 1.9 $
+# $Date: 2007/04/28 13:13:02 $
 #
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel.pm - Web framework.
@@ -19,7 +19,7 @@ package Modwheel;
 use strict;
 use warnings;
 use 5.00800;
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
 
@@ -488,7 +488,7 @@ Modwheel - Web framework.
 
 =head1 VERSION
 
-This document describes Modwheel version 0.2.2
+This document describes Modwheel version 0.2.3
 
 =head1 DESCRIPTION
 

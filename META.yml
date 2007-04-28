@@ -1,6 +1,6 @@
 ---
 name: Modwheel
-version: 0.2.2
+version: 0.2.3
 author:
   - 'Ask Solem <ASKSH@cpan.org>'
 abstract: Web framework.
@@ -60,52 +60,52 @@ provides:
     version: 1.06
   Modwheel:
     file: lib/Modwheel.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::DB:
     file: lib/Modwheel/DB.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::DB::Base:
     file: lib/Modwheel/DB/Base.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::DB::MySQL:
     file: lib/Modwheel/DB/MySQL.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::DB::PostgreSQL:
     file: lib/Modwheel/DB/PostgreSQL.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::HTML::Tagset:
     file: lib/Modwheel/HTML/Tagset.pm
     version: 1.0.0
   Modwheel::Instance:
     file: lib/Modwheel/Instance.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Object:
     file: lib/Modwheel/Object.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Repository:
     file: lib/Modwheel/Repository.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Session:
     file: lib/Modwheel/Session.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Template:
     file: lib/Modwheel/Template.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Template::ObjectProxy:
     file: lib/Modwheel/Template/ObjectProxy.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Template::Shortcuts:
     file: lib/Modwheel/Template/Shortcuts.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Template::TT:
     file: lib/Modwheel/Template/TT.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::Template::TT::Plugin:
     file: lib/Modwheel/Template/TT/Plugin.pm
-    version: 0.2.2
+    version: 0.2.3
   Modwheel::User:
     file: lib/Modwheel/User.pm
-    version: 0.2.2
+    version: 0.2.3
 generated_by: Module::Build version 0.2807
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

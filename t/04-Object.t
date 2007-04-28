@@ -91,8 +91,9 @@ ok( Modwheel::Object::ITERATE_TAGS_MAX,
 
 ok( $object->set_defaults, 'Set defaults without db connected' );
 
+
 # ### Features that require database goes below here.
-$THIS_BLOCK_HAS_TESTS = 120;
+$THIS_BLOCK_HAS_TESTS = 143;
 SKIP:
 {
     if ( not $ENV{MODWHEEL_DBTEST} ) {

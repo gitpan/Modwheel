@@ -4,19 +4,18 @@ use strict;
 use warnings;
 use base 'Module::Build';
 
-use SUPER;
 use File::Path;
 use Data::Dumper;
 use File::Spec::Functions qw(splitpath catfile);
 use English qw( -no_match_vars );
 
 sub new {
-    my ($class, %args) = @_;
-    my $self = $class->SUPER::new(@_);
+    my $class  = shift;
+    my $self   = $class->SUPER::new(@_);
+    my %args   = @_;
     my $config = $self->notes( 'config_data' ) || { };
         
     for my $question ( @{ $args{config_questions} } ) {
-        print "QUESTION IS: \n";
         my ($q, $name, $default) = map { defined $_ ? $_ : '' } @$question;
         $config->{$name} = $self->prompt( $q, $default );
     }
@@ -27,7 +26,7 @@ sub new {
 }
 
 sub ACTION_build {
-    my ($self) = @_;
+    my $self = shift;
 
     $self->write_config( );
     $self->SUPER::ACTION_build(@_);
@@ -66,15 +65,5 @@ END_MODULE
     print {$fh} $package;
     close $fh;
 }
-
-1;
-
-
-
-
-
-
-
-
 
 1;

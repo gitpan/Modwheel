@@ -6,18 +6,18 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Template.pm,v 1.6 2007/04/27 10:57:38 ask Exp $
+# $Id: Template.pm,v 1.7 2007/04/28 13:13:03 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.6 $
-# $Date: 2007/04/27 10:57:38 $
+# $Revision: 1.7 $
+# $Date: 2007/04/28 13:13:03 $
 #####
 package Modwheel::Template;
 use strict;
 use warnings;
 use Params::Util ('_CLASS');
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 {
 
     #------------------------------------------------------------------------
@@ -81,7 +81,7 @@ drivers.
 
 =head1 VERSION
 
-v0.2.2
+v0.2.3
 
 =head1 SYNOPSIS
 

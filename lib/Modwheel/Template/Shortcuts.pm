@@ -1,15 +1,15 @@
-# $Id: Shortcuts.pm,v 1.6 2007/04/27 10:57:42 ask Exp $
+# $Id: Shortcuts.pm,v 1.7 2007/04/28 13:13:05 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/Shortcuts.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.6 $
-# $Date: 2007/04/27 10:57:42 $
+# $Revision: 1.7 $
+# $Date: 2007/04/28 13:13:05 $
 #####
 package Modwheel::Template::Shortcuts;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 {
     use URI::Escape  ();
     use Params::Util ('_HASH');
@@ -154,7 +154,7 @@ Class for expanding shortcut abbreviations in strings.
 
 =head1 VERSION
 
-v0.2.2
+v0.2.3
 
 =head1 SYNOPSIS
 

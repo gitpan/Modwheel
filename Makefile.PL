@@ -38,7 +38,7 @@ use inc::Module::Install;
 
 # Define metadata
 name            'Modwheel';
-version         '0.2.2';
+version         '0.2.3';
 all_from        'lib/Modwheel.pm';
 author          'Ask Solem <ask@0x61736b.net>';
 license         'perl';

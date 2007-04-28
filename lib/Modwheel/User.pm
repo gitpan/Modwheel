@@ -6,18 +6,18 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: User.pm,v 1.7 2007/04/27 19:58:02 ask Exp $
+# $Id: User.pm,v 1.8 2007/04/28 13:13:03 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/User.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.7 $
-# $Date: 2007/04/27 19:58:02 $
+# $Revision: 1.8 $
+# $Date: 2007/04/28 13:13:03 $
 #####
 package Modwheel::User;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 use base 'Modwheel::Instance';
 {
     use Carp;

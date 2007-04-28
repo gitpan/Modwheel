@@ -7,17 +7,17 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Object.pm,v 1.8 2007/04/27 19:58:02 ask Exp $
+# $Id: Object.pm,v 1.9 2007/04/28 13:13:03 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Object.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.8 $
-# $Date: 2007/04/27 19:58:02 $
+# $Revision: 1.9 $
+# $Date: 2007/04/28 13:13:03 $
 #####
 package Modwheel::Object;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 use base 'Modwheel::Instance';
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
@@ -858,7 +858,6 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
                 $hash_copy_of_the_object{_CHECKSUM} = $checksum;
             }
                             
-            local $YAML::Syck::ImplicitBinary = 1;
             $textual = YAML::Syck::Dump(\%hash_copy_of_the_object);
         }
        
@@ -968,6 +967,37 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $self->save( );
     }
 
+}
+
+sub create_revision {
+    my ($self, $textual_diff, $checksum, $version, $approved) = @_;
+    my $modwheel = $self->modwheel;
+    my $db       = $self->db;
+    $approved  ||= 1;
+    $version   ||= 1.0;
+
+    if (! $checksum) {
+        $modwheel->throw('object-revision-create-missing-checksum');
+        $modwheel->logerror('Create Revision: Missing checksum.');
+    }
+
+    my $q = $db->build_insert_q('revision', [
+        qw(id version approved objid checksum diff)
+    ]);
+
+    my $new_id = $db->fetch_next_id('revision');
+
+    my $ret = $db->exec_query($q,
+        $new_id,
+        $version,
+        $approved,
+        $self->id,
+        $checksum,
+        $textual_diff,
+    );
+        
+    return $new_id if $ret;
+    return;
 }
 
 1;
@@ -1210,7 +1240,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.2.2
+v0.2.3
 
 
 =head1 AUTHOR

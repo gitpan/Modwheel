@@ -95,7 +95,7 @@ not complete yet.
 
 =head1 VERSION
 
-This documentation describes Modwheel version 0.2.2.
+This documentation describes Modwheel version 0.2.3.
 
 =head1 AUTHOR
 

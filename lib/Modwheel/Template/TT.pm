@@ -6,19 +6,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: TT.pm,v 1.7 2007/04/27 10:57:42 ask Exp $
+# $Id: TT.pm,v 1.8 2007/04/28 13:13:05 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/TT.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.7 $
-# $Date: 2007/04/27 10:57:42 $
+# $Revision: 1.8 $
+# $Date: 2007/04/28 13:13:05 $
 #####
 package Modwheel::Template::TT;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base 'Modwheel::Instance';
-use version; our $VERSION = qv('0.2.2');
+use version; our $VERSION = qv('0.2.3');
 {
     use Template::Stash::XS;
     use Template::Context;

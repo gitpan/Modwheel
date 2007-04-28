@@ -69,6 +69,7 @@ sql/MySQL/02-Tags.sql
 sql/MySQL/03-Object.sql
 sql/MySQL/04-Repository.sql
 sql/MySQL/05-Prototype.sql
+sql/MySQL/06-Revision.sql
 sql/MySQL/mytags.sql
 t/00-pod_coverage.t.disabled
 t/00-POD_valid.t
