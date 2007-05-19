@@ -19,7 +19,7 @@ use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base qw(Template::Plugin Modwheel::Instance);
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 {
     use Modwheel::Template::ObjectProxy;
     use Modwheel::HTML::Tagset;

@@ -17,7 +17,7 @@
 package Modwheel::Object;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 use base 'Modwheel::Instance';
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
@@ -1278,7 +1278,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.3.1
+v0.3.2
 
 
 =head1 AUTHOR

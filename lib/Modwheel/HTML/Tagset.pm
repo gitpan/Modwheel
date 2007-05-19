@@ -247,7 +247,7 @@ Modwheel::HTML::Tagset - Allow basic tags in strings.
 
 =head1 VERSION
 
-This document describes version 0.3.1
+This document describes version 0.3.2
 
 =head1 SYNOPSIS
 

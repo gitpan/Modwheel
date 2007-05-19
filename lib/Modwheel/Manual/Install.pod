@@ -33,8 +33,8 @@ Installation should be easy, just follow these steps:
     make test
     make install
 
-    ./bin/modstrap install
-    ./bin/modstrap config
+    perl bin/modstrap install
+    perl bin/modstrap config
 
 Most of the time the default values are OK to choose, but read the on-screen instructions
 carefully and think before you hit enter.

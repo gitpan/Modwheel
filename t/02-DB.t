@@ -2,9 +2,9 @@
 #########################
 
 use Test::More tests => 45;
+use FindBin qw($Bin);
 BEGIN {
-    use lib '/opt/devel/Modwheel/lib';
-    use lib './t';
+    use lib $Bin;
     use_ok('Modwheel');                                             # TEST 1
     use_ok('Modwheel::Session');                                    # TEST 2
 };
@@ -18,8 +18,8 @@ our $THIS_BLOCK_HAS_TESTS;
 
 use Test::Modwheel  qw( :boolean );
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/modwheelconfig.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'modwheelconfig.yml';
 Readonly my $TEST_SITE       => 'modwheeltest';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';

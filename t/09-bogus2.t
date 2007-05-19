@@ -4,10 +4,10 @@ use Data::Dumper;
 #use Data::Structure::Util qw(has_circular_ref);
 
 use Test::More tests => 1;
+use FindBin qw($Bin);
 
 BEGIN {
-    use lib '/opt/devel/Modwheel/lib';
-    use lib './t';
+    use lib $Bin;
 }
 
 use Modwheel::Session;
@@ -18,8 +18,8 @@ use Readonly;
 
 our $THIS_BLOCK_HAS_TESTS;
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/config_w_bogus_classes.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'config_w_bogus_classes.yml';
 Readonly my $TEST_SITE       => 'modwheeltest2';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';
@@ -69,7 +69,7 @@ my $template    = Modwheel::Template->new({
     user        => $user,
     object      => $object,
     repository  => $repository,
-    input       => './myfile.html',
+    input       => 'myfile.html',
 });
 
 $modwheel->set_debug(0);

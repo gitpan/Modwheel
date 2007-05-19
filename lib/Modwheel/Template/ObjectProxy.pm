@@ -20,7 +20,7 @@ package Modwheel::Template::ObjectProxy;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw( :std );
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 {
     
     use Sub::Install;
@@ -171,7 +171,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.3.1
+v0.3.2
 
 =head1 AUTHOR
 

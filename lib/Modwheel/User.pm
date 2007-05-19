@@ -17,7 +17,7 @@ package Modwheel::User;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 use base 'Modwheel::Instance';
 {
     use Carp;

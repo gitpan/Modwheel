@@ -4,10 +4,10 @@ use Data::Dumper;
 use Scalar::Util qw(blessed);
 
 use Test::More tests => 20;
+use FindBin qw($Bin);
 
 BEGIN {
-    use lib '/opt/devel/Modwheel/lib';
-    use lib './t';
+    use lib $Bin;
 }
 
 use Modwheel::Session;
@@ -18,8 +18,8 @@ use Readonly;
 
 our $THIS_BLOCK_HAS_TESTS;
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/modwheelconfig.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'modwheelconfig.yml';
 Readonly my $TEST_SITE       => 'modwheeltest';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';
@@ -31,6 +31,11 @@ my $modwheel_config = {
     locale               => $TEST_LOCALE,                            
     logmode              => $TEST_LOGMODE,                           
 };
+
+my $version_file
+    = File::Spec->catfile($TEST_PREFIX, 'templates', 'modwheel_version.html');
+my $param_file
+    = File::Spec->catfile($TEST_PREFIX, 'templates', 'getparam.html');
 
 my $test_modwheel = Test::Modwheel->new({
     config => $modwheel_config,
@@ -71,7 +76,7 @@ my $template    = Modwheel::Template->new({
     user        => $user,
     object      => $object,
     repository  => $repository,
-    input       => 'modwheel_version.html',
+    input       => $version_file,
 });
 
 ok( blessed $template );
@@ -86,7 +91,7 @@ ok(! Modwheel::Template->new({
     user     => $user,
     object   => $object,
     repository => $repository,
-    input    => 'modwheel_version.html',
+    input    => $version_file,
 }));
 $siteconfig->{templatedriver} = $old_templatedriver;
 
@@ -112,12 +117,12 @@ is( $tk->ceil( -3.8), -3,   'ceil( -3.8) == -3?' );                 # TEST 8
 is( $template->process, $Modwheel::VERSION,
     'Process Template: modwheel_version.html (as argument to new())',
  );
-$template->init({ input => 'modwheel_version.html' });
+$template->init({ input => $version_file });
 is( $template->process, $Modwheel::VERSION,
     'Process Template: modwheel_version.html (as argument to init())',
  );
 
-$template->init({ input => 'modwheel_version.html', parent => 1 });
+$template->init({ input => $version_file, parent => 1 });
 is( $template->process, $Modwheel::VERSION,
     'Process Template: modwheel_version.html (as argument to init())',
 );
@@ -130,7 +135,7 @@ my $t2 = Modwheel::Template->new({
     user        => $user,
     object      => $object,
     repository  => $repository,
-    input => 'modwheel_version.html',
+    input => $version_file,
     parent => 1,
     DontCreateInitialModwheelObject => 1,
 });
@@ -147,7 +152,7 @@ my $tx = Modwheel::Template->new({
     user        => $user,
     object      => $object,
     repository  => $repository,
-    input => 'modwheel_version.html',
+    input => $version_file,
     parent => 1,
 });
 is( $template->process, $Modwheel::VERSION,
@@ -166,7 +171,7 @@ $tx = Modwheel::Template->new({
     user        => $user,
     object      => $object,
     repository  => $repository,
-    input => 'modwheel_version.html',
+    input => $version_file,
     parent => 1,
 });
 is( $template->process, $Modwheel::VERSION,
@@ -182,7 +187,7 @@ my $t3 = Modwheel::Template->new({
     user        => $user,
     object      => $object,
     repository  => $repository,
-    input => 'getparam.html',
+    input => $param_file,
     parent => 1,
     param  => $mockparam,
 });

@@ -11,7 +11,7 @@ use warnings;
 use utf8;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base 'Modwheel::Instance';
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 {
 
     use English      qw( -no_match_vars );

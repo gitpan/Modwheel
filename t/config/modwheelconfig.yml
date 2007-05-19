@@ -37,8 +37,8 @@ site:
       type: MySQL
       username: modwheel
       password: torskd0rsk
-    templatedir: templates
-    repository: repository
+    templatedir: t/templates
+    repository: t/repository
     repositoryurl: /rep
     templatedriver: TT
     directoryindex: index.html
@@ -54,7 +54,7 @@ site:
         String: Template::Plugin::String
         URL: Template::Plugin::URL
         Wrap: Template::Plugin::Wrap
-      COMPILE_DIR: cache/TT
+      COMPILE_DIR: t/cache/TT
     locale: en_EN
     uniqueidfortest: SITEID0001
   modwheeltest2:
@@ -64,7 +64,7 @@ site:
       type: MySQL
       username: modwheel
       password: torskd0rsk
-    templatedir: templates
+    templatedir: t/templates/
     templatedriver: TT
     uniqueidfortest: SITEID0002
     TT:
@@ -80,7 +80,7 @@ site:
       type: MySQL
       username: modwheel
       password: torskd0rsk
-    templatedir: templates/
+    templatedir: t/templates/
     templatedriver: TT
     uniqueidfortest: SITEID0003
     TT:

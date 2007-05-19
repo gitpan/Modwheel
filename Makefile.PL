@@ -1,70 +1,85 @@
+# $Id: RCS.stub,v 1.1 2007/04/23 19:28:42 ask Exp $
+# $Source: /opt/CVS/Modwheel/devel/RCS.stub,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.1 $
+# $Date: 2007/04/23 19:28:42 $
 use strict;
 use warnings;
 no strict 'subs';
 use ExtUtils::MM_Unix ();
-use inc::M::Bootstrap;
-
 use inc::Module::Install;
+use inc::M::Bootstrap;
+use English qw( -no_match_vars );
+
+#############################################################
+
+# Configuration for this script is done in the config.ph file.
+our $BUILD_CONFIGFILE = 'config.ph';
+
+# ##########################################################
+
+my $BUILD_CONFIG = get_config_ph( );    
 
 # Define metadata
-name            'Modwheel';
-version         '0.3.1';
-all_from        'lib/Modwheel.pm';
-author          'Ask Solem <ask@0x61736b.net>';
-license         'perl';
+name            $BUILD_CONFIG->{module_name};
+version         $BUILD_CONFIG->{dist_version};
+all_from        $BUILD_CONFIG->{all_from};
+author          $BUILD_CONFIG->{dist_author};
+license         $BUILD_CONFIG->{license};
 
 include('ExtUtils::AutoInstall');
     
 # Specific dependencies
-requires        'namespace::clean'      => 0;
-requires        'version'               => 0;
-requires        'Carp'                  => 0;
-requires        'Params::Util'          => 0.23;
-requires        'POSIX'                 => 0;
-requires        'Data::Dumper'          => 0;
-requires        'FileHandle'            => 0;
-requires        'Fcntl'                 => 0;
-requires        'Scalar::Util'          => 1.14; # Last significant bug fix for weaken 
-requires        'List::Util'            => 0;
-requires        'List::MoreUtils'       => 0;
-requires        'Sub::Install'          => 0;
-requires        'Readonly'              => 1.00;
-recommends      'Readonly::XS'          => 1.00;
-requires        'Perl6::Export::Attrs'  => 0;
-requires        'YAML'                  => 0.39;
-requires        'YAML::Syck'            => 0.84;
-requires        'DBI'                   => 1.51;
-requires        'Crypt::Eksblowfish'    => 0.001;
-requires        'HTML::Tagset'          => 3.10;
-requires        'HTML::Parser'          => 3.48;
-requires        'URI::Escape'           => 3.28;
-requires        'AppConfig'             => 1.56;
-requires        'Template'              => 2.18;
-requires        'Template::Context'     => 2.98;
-requires        'Template::Stash::XS'   => 0;
-requires        'Template::Plugin'      => 2.70;
-requires        'Term::ReadKey'         => 2.30;
-requires        'Getopt::Euclid'        => 0.001000;
-requires        'Perl6::Export'         => 0.07;
-requires        'Perl6::Form'           => 0.04;
-requires        'IO::Prompt'            => '0.099004';
-requires        'Digest::SHA1'          => 2.11;
-requires        'IO::Interactive'       => '0.0.3';
-requires        'Perl6::Slurp'          => 0.03;
+while (my ($module, $version) = each %{ $BUILD_CONFIG->{requires} }) {
+    requires $module => $version;
+}
 
-build_requires  'Test::More'            => 0.42;
-recommends      'Test::Pod'             => 1.26;
-recommends      'Test::Pod::Coverage'   => 0;
-recommends      'Test::YAML::Valid'     => 0;
-recommends      'Test::Exception'       => 0;
-recommends      'Perl::Critic'          => 1.051;
-recommends      'Test::Perl::Critic'    => 1.0;
-recommends      'Test::YAML::Meta'      => 0.04;
-recommends      'Test::Kwalitee'        => 0.30;
+while (my ($module, $version) = each %{ $BUILD_CONFIG->{build_requires} }) {
+    build_requires  $module => $version;
+}
+
+while (my ($module, $version) = each %{ $BUILD_CONFIG->{recommends} }) {
+    recommends  $module => $version;
+}
     
 no_index        'directory'            => '.svn';
-#install_script  'bin/install.sh';
     
 auto_install();
-WriteAll;
+
+print qq{-\n};
+$inc::M::Bootstrap::builder = 'Makefile.PL';
+my $buildconfig_class = $BUILD_CONFIG->{config_module};
+my $default_prefix    = inc::M::Bootstrap->default_prefix( );
+my $prefix 
+    = ExtUtils::MakeMaker::prompt('Where would you like to install Modwheel?', $default_prefix);
+my $config_data = {
+    prefix => $prefix,
+};
+print "Writing build configuration to $buildconfig_class...\n";
+inc::M::Bootstrap->write_buildconfig($buildconfig_class, $config_data);
+print qq{-\n};
+
 inc::M::Bootstrap->strap_it( );
+
+WriteAll;
+
+sub get_config_ph {
+    no warnings;
+    my $configfile = slurp_file($BUILD_CONFIGFILE);
+    my $BUILD_CONFIG = {eval $configfile};
+    if ($EVAL_ERROR) {
+        die "Error with config.ph, please review the file for syntax error(s).\n";
+    }
+    return $BUILD_CONFIG;
+}
+
+sub slurp_file {
+    my ($filepath) = @_;
+    open my $fh, '<', $filepath
+        or die "Couldn't open $filepath for reading: $OS_ERROR\n";
+    my $contents = do { local $/; <$fh> };
+    close $fh
+        or die "Couldn't close $filepath after reading: $OS_ERROR\n";
+    return $contents;
+}

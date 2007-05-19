@@ -1,10 +1,10 @@
-use Test::More tests => 68;
 use strict;
 use warnings;
+use Test::More tests => 68;
+use FindBin qw($Bin);
 
 BEGIN {
-    use lib '/opt/devel/Modwheel/lib';
-    use lib './t';
+    use lib $Bin;
     use_ok('Modwheel::User');
 }
 
@@ -17,8 +17,8 @@ use Readonly;
 
 our $THIS_BLOCK_HAS_TESTS;
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/modwheelconfig.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'modwheelconfig.yml';
 Readonly my $TEST_SITE       => 'modwheeltest';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';

@@ -30,7 +30,7 @@ package Modwheel::Session;
 use strict;
 use warnings;
 use Perl6::Export::Attrs;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 
 # example:
 #   my $modwheel_config = { prefix => '...', configfile => '...' };
@@ -93,7 +93,7 @@ Modwheel::Session - Easily create Modwheel sessions.
 
 =head1 VERSION
 
-v0.3.1
+v0.3.2
 
 =head1 SYNOPSIS
 

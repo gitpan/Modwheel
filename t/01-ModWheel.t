@@ -1,9 +1,9 @@
 # TESTS FOR Modwheel.pm
 use Test::More tests => 114;
+use FindBin qw($Bin);
 
 BEGIN {
-    use lib '/opt/devel/Modwheel/lib';
-    use lib './t';
+    use lib $Bin;
     use_ok('Modwheel');
 };
 
@@ -13,6 +13,7 @@ use Test::Modwheel  qw( :boolean );
 use strict;
 use warnings;
 use Readonly;
+use File::Spec;
 use English         qw( -no_match_vars );
 
 #########################
@@ -20,11 +21,11 @@ use English         qw( -no_match_vars );
 
 our $THIS_BLOCK_HAS_TESTS;
 
-our $TMP_NULL = './t/cache/.devnull';
+our $TMP_NULL = File::Spec->catfile($Bin, 'cache', '.devnull');
 
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/modwheelconfig.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'modwheelconfig.yml';
 Readonly my $TEST_SITE       => 'modwheeltest';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';
@@ -252,7 +253,7 @@ exception') );
 #config.');
     is( $mw2->siteconfig->{uniqueidfortest}, 'SITEID0001' );
     ok( my $mwA = Modwheel->new({
-        prefix             => "$TEST_PREFIX/t",
+        prefix             => $TEST_PREFIX,
     }), 'Create another Modwheel root object instance, without configfile specified.');
     ok( my $mw4 = Modwheel->new({
         prefix             => $TEST_PREFIX,
@@ -338,7 +339,7 @@ SKIP:
     );
 
     %config_tmp = %{ $modwheel_config };
-    $config_tmp{configfile} = 't/broken_yaml_file.yml';
+    $config_tmp{configfile} = 'broken_yaml_file.yml';
     dies_ok( sub { $modwheel_tmp = Modwheel->new(\%config_tmp) },
         'Bail on broken config.',
     );

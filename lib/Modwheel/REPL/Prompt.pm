@@ -9,7 +9,7 @@ package Modwheel::REPL::Prompt;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw( :std );
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 {
     use Term::ReadKey;
     use Term::Complete;
@@ -261,7 +261,7 @@ Modwheel::REPL::Prompt - User interaction from the console.
 
 =head1 VERSION
 
-This document describes Modwheel version v0.3.1
+This document describes Modwheel version v0.3.2
 
 =head1 SYNOPSIS
 
@@ -301,6 +301,7 @@ Create a new Modwheel::REPL::Prompt object.
 =over 4
 
 =item C<Modwheel::REPL::Promt-E<gt>echo>
+
 =item C<Modwheel::REPL::Promt-E<gt>set_echo($bool_on)>
 
 Should echo be on or off for user input?
@@ -415,7 +416,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.3.1
+v0.3.2
 
 =head1 AUTHOR
 

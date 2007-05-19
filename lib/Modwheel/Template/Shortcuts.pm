@@ -9,7 +9,7 @@ package Modwheel::Template::Shortcuts;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 {
     use URI::Escape  ();
     use Params::Util ('_HASH');
@@ -152,7 +152,7 @@ Modwheel::Template::Shortcuts - Class for expanding shortcut abbreviations in st
 
 =head1 VERSION
 
-This document describes version 0.3.1.
+This document describes version 0.3.2.
 
 =head1 SYNOPSIS
 

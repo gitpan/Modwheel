@@ -13,7 +13,7 @@ use Modwheel::Session 0.002003;
 use Time::HiRes qw(gettimeofday);
 use Perl6::Slurp qw(slurp);
 use Readonly;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
     Readonly my $PREFIX => '/opt/modwheel';

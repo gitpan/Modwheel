@@ -1,12 +1,12 @@
 ---
 name: Modwheel
-version: 0.3.1a
+version: 0.3.2
 author:
   - 'Ask Solem <ASKSH@cpan.org>'
 abstract: Tree-based Web framework.
 license: perl
 resources:
-  Download: http://search.cpan.org/~asksh/Modwheel-0.3.1/
+  Download: http://search.cpan.org/~asksh/Modwheel-0.3.2/
   HomePage: http://www.0x61736b.net/Modwheel
   license: http://dev.perl.org/licenses/
 requires:
@@ -15,13 +15,13 @@ requires:
   Crypt::Eksblowfish: 0.001
   DBI: 1.51
   Data::Dumper: 0
-  Digest::SHA1: 2.11
+  Digest::SHA1: 2.07
   Fcntl: 0
   File::Copy::Recursive: 0
   FileHandle: 0
   Getopt::Euclid: 0.001
   HTML::Parser: 3.48
-  HTML::Tagset: 3.1
+  HTML::Tagset: 3.03
   IO::Interactive: 0.0.3
   IO::Prompt: 0.099004
   List::MoreUtils: 0
@@ -65,75 +65,75 @@ provides:
     version: 1.06
   FCGI::Modwheel:
     file: lib/FCGI/Modwheel.pm
-    version: 0.3.1
+    version: 0.3.2
   FCGI::Modwheel::Server:
     file: lib/FCGI/Modwheel/Server.pm
   Modwheel:
     file: lib/Modwheel.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Configure:
     file: lib/Modwheel/Configure.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::DB:
     file: lib/Modwheel/DB.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::DB::Base:
     file: lib/Modwheel/DB/Base.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::DB::MySQL:
     file: lib/Modwheel/DB/MySQL.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::DB::PostgreSQL:
     file: lib/Modwheel/DB/PostgreSQL.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::DB::SQLite:
     file: lib/Modwheel/DB/SQLite.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::DB::SQLite2:
     file: lib/Modwheel/DB/SQLite2.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::HTML::Tagset:
     file: lib/Modwheel/HTML/Tagset.pm
     version: 1.0.0
   Modwheel::Instance:
     file: lib/Modwheel/Instance.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Object:
     file: lib/Modwheel/Object.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::REPL:
     file: lib/Modwheel/REPL.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::REPL::Prompt:
     file: lib/Modwheel/REPL/Prompt.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Repository:
     file: lib/Modwheel/Repository.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Session:
     file: lib/Modwheel/Session.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Template:
     file: lib/Modwheel/Template.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Template::ObjectProxy:
     file: lib/Modwheel/Template/ObjectProxy.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Template::Shortcuts:
     file: lib/Modwheel/Template/Shortcuts.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Template::TT:
     file: lib/Modwheel/Template/TT.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::Template::TT::Plugin:
     file: lib/Modwheel/Template/TT/Plugin.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::User:
     file: lib/Modwheel/User.pm
-    version: 0.3.1
+    version: 0.3.2
   Modwheel::User::Session:
     file: lib/Modwheel/User/Session.pm
-    version: 0.3.1
+    version: 0.3.2
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

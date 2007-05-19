@@ -51,8 +51,8 @@ Modwheel uses the standard perl module install process:
 
 Then you need to set up your modwheel directory:
 
-    ./bin/modstrap install
-    ./bin/modstrap configure
+    perl bin/modstrap install
+    perl bin/modstrap configure
 
 Note that the install script requires bash to run, it won't work in regular
 sh.

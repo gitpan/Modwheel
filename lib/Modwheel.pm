@@ -1,9 +1,9 @@
-# $Id: Modwheel.pm,v 1.13 2007/05/18 23:42:36 ask Exp $
+# $Id: Modwheel.pm,v 1.14 2007/05/19 01:32:18 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.13 $
-# $Date: 2007/05/18 23:42:36 $
+# $Revision: 1.14 $
+# $Date: 2007/05/19 01:32:18 $
 #
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel.pm - Web framework.
@@ -19,7 +19,7 @@ package Modwheel;
 use strict;
 use warnings;
 use 5.00800;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
 
@@ -40,7 +40,8 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     #========================================================================
 
     # Default configfile:
-    #   Path must be absolute or relative to prefix.
+    #   Filename and directory relative to prefix of the configfile.
+    Readonly my @DEFAULT_CONFIGDIR  => qw(config);
     Readonly my $DEFAULT_CONFIGFILE => 'modwheelconfig.yml';
 
     # Default logmode:
@@ -102,8 +103,10 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         my $self = register($class);
 
+        my $default_configfile
+            = File::Spec->catfile(@DEFAULT_CONFIGDIR, $DEFAULT_CONFIGFILE);
+        $arg_ref->{configfile} ||= $default_configfile;
         $arg_ref->{logmode}    ||= $DEFAULT_LOGMODE;
-        $arg_ref->{configfile} ||= $DEFAULT_CONFIGFILE;
 
         # install default logging handlers
         my $loghandlers_ref = {
@@ -541,19 +544,27 @@ Modwheel - Tree-based Web framework.
 
 =head1 VERSION
 
-This document describes Modwheel version 0.3.1
+This document describes Modwheel version 0.3.2
 
 =head1 DESCRIPTION
 
-Modwheel is a publishing system for use with web, print, TeX, or whatever medium you have
-a need to publish in. It is designed to be very extensible and will in the future have 
-drop-in support for several relational databases and templating systems.
+Most web sites are pages categorized by topic. So web sites can be viewed as a
+tree system where every page is a sub-tree and the page elements are nodes.
+Page elements can be things like articles, links, ads, news, comments and so on.
+In Modwheel a page-element is called an object.
+You define your own object prototypes and then you define how to display these
+objects with the representation engine. Objects can be displayed differently in
+different contexts (pages) by using templates.
+The only representation engine supported right now is the Template Toolkit,
+but it wouldn't be much work to add support for others.
+The project is in beta development stage but already has an admin interface
+implemented in it and has been tested on Mac OS X, FreeBSD, OpenBSD, NetBSD,
+Ubuntu Linux, Solaris and Cygwin.
 
-Modwheel is currently in a very early alpha development stage.
-
-The current development version of Modwheel should work with SQLite, SQLite2, MySQL and
-the Template Toolkit, although porting to other databases or representation engines shouldn't be
-much work. Adding support for SQLite took about 30 minutes.
+The current development version of Modwheel should work with MySQL, SQLite2 and
+the Template Toolkit, although porting to other databases or templating
+systems. shouldn't be much work. (Actually the SQLite2 port took less than 30
+minutes).
 
 =head1 SYNOPSIS
 
@@ -566,8 +577,6 @@ much work. Adding support for SQLite took about 30 minutes.
     *STDOUT->autoflush( );
 
     my $modwheel_config = {
-        prefix          => '/opt/modwheel',
-        configfile      => 'modwheelcfg.yml',
         site            => 'modwheeltest',
         locale          => 'en_EN',
         logmode         => 'stderr',

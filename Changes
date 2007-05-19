@@ -1,4 +1,20 @@
-0.3.0 Sat May 19 01:26:32 AM 2007 [ASKSH@cpan.org]
+0.3.2 Sat May 19 02:26:16 PM 2007 [Alexandr Ciornii CHORNY@cpan.org]
+    - Digest::SHA1 did not changed anything important from 2.07 to 2.11. So
+      minimum required version should be 2.07.
+      Same for HTML::Tagset 3.03 - 3.10.
+     [cpan-rt-ticket: 27197]
+     [cpan-rt-url: http://rt.cpan.org//Ticket/Display.html?id=27197]
+
+0.3.2 Sat May 19 01:31:34 PM 2007 [ASKSH@cpan.org]
+    - Makefile.PL and Build.PL now uses the same config. (Which is config.ph).
+    - Makefile.PL now works just like Build.PL. (writes BuildConfig and Installer classes).
+
+0.3.2 Sat May 19 02:34:17 AM 2007 [ASKSH@cpan.org]
+    - Modwheel now tested using Modwheel::BuildConfig instead of explicit prefix.
+    - All test files in t/ now uses File::Spec to generate paths and files.
+    - Changed Modwheel description in README and POD for Modwheel.pm
+
+0.3.1 Sat May 19 01:26:32 AM 2007 [ASKSH@cpan.org]
     - Makefile.PL does not work properly at the moment. You need Module::Build.
     - FCGI in development.
     - New configuration method. (Modwheel::Configure, modstrap configure, Modwheel::REPL::Prompt).

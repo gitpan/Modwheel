@@ -19,23 +19,13 @@ use inc::M::Bootstrap;
 
 my $CONFIG_MODULE = 'Modwheel::BuildConfig';
 
-my @DEFAULT_PREFIX;
-
-if ($OSNAME eq 'Win32') {
-    @DEFAULT_PREFIX = ('Program Files', 'Modwheel'); ## no critic
-}
-else {
-    @DEFAULT_PREFIX = qw(opt modwheel);
-}
-
 sub new {
     my $class  = shift;
     my $self   = $class->SUPER::new(@_);
     my %args   = @_;
     my $reason;
 
-    my $prefix = File::Spec->catdir(@DEFAULT_PREFIX);
-       $prefix = File::Spec->rel2abs($prefix, q{/});
+    my $prefix = inc::M::Bootstrap->default_prefix( );
     $self->set_m_prefix($prefix);
 
     my $config = $self->notes('config_data') || { };
@@ -102,48 +92,13 @@ sub m_save_config {
 sub ACTION_build {
     my $self = shift;
     $self->SUPER::ACTION_build(@_);
-    $self->m_write_config( );
+
+    my $module_file = $self->notes('config_module');
+    my $data        = $self->notes('config_data');
+    inc::M::Bootstrap->write_buildconfig($module_file, $data);
     inc::M::Bootstrap->strap_it( );
 
     return;
 }
 
-sub m_write_config {
-    my ($self) = @_;
-    my $module_file = $self->notes( 'config_module' );
-    my $data = $self->notes( 'config_data'   );
-    my $dump = Data::Dumper->new([$data], ['config_data'])->Dump;
-    my @file_path = split m/::/xms, $module_file;
-    my $file_path = catfile( 'blib', 'lib', @file_path );
-       $file_path = $file_path . q{.pm};
-
-    my $path = ( splitpath( $file_path ) )[1];
-    if (!-d $path) {
-        mkpath($path);
-    };
-
-    my $package = <<"END_MODULE";
-        package $module_file;
-
-        my $dump;
-
-        sub get_value {
-            my (\$class, \$key) = \@_;
-            return unless exists \$config_data->{\$key};
-            return               \$config_data->{\$key};
-        }
-
-        1;
-END_MODULE
-    ;
-                                                                                       
-    $package =~ s/^\t//xmsg;
-    open  my $fh, '>', $file_path
-        or die "Cannot write config file module '$path': $OS_ERROR\n";
-    print {$fh} $package;
-    close $fh
-        or die "Couldn't close config file module '$path': $OS_ERROR\n";
-
-    return;
-}
 1;

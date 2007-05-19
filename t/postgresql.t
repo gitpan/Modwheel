@@ -5,6 +5,7 @@ use Data::Dumper;
 #use Data::Structure::Util qw(has_circular_ref);
 
 use Test::More;
+use FindBin qw($Bin);
 
 if ( not $ENV{MODWHEEL_DBTEST} ) {
    my $msg = 'Database test.  Set $ENV{MODWHEEL_DBTEST} to a ' .
@@ -31,8 +32,7 @@ if ($EVAL_ERROR) {
 plan tests => 2;
 
 BEGIN {
-    use lib '/opt/devel/Modwheel/lib';
-    use lib './t';
+    use lib $Bin;
 }
 
 use Modwheel::Session;
@@ -43,8 +43,8 @@ use Readonly;
 
 our $THIS_BLOCK_HAS_TESTS;
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/postgresconfig.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'postgresconfig.yml';
 Readonly my $TEST_SITE       => 'modwheeltest';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';

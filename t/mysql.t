@@ -2,6 +2,7 @@
 use strict;
 use English qw( -no_match_vars );
 use Data::Dumper;
+use FindBin qw($Bin);
 #use Data::Structure::Util qw(has_circular_ref);
 
 use Test::More;
@@ -44,8 +45,8 @@ use Readonly;
 
 our $THIS_BLOCK_HAS_TESTS;
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/mysqlconfig.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'mysqlconfig.yml';
 Readonly my $TEST_SITE       => 'modwheeltest';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';

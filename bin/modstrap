@@ -14,7 +14,7 @@ use Modwheel::REPL;
 use Modwheel::Install::Everything;
 use Modwheel::Configure;
 use Readonly;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 
 Readonly my $DEFAULT_PROMPT => q{modstrap > };
 
@@ -95,7 +95,7 @@ modstrap - Modwheel installation and configuration utility.
 
 =head1 VERSION
 
-This document refers to Modwheel version 0.3.1.
+This document refers to Modwheel version 0.3.2.
 
 =head1 USAGE
 

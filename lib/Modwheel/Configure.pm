@@ -1,9 +1,9 @@
-# $Id: RCS.stub,v 1.1 2007/04/23 19:28:42 ask Exp $
-# $Source: /opt/CVS/Modwheel/devel/RCS.stub,v $
+# $Id: Configure.pm,v 1.1 2007/05/19 01:33:43 ask Exp $
+# $Source: /opt/CVS/Modwheel/lib/Modwheel/Configure.pm,v $
 # $Author: ask $
 # $HeadURL$
 # $Revision: 1.1 $
-# $Date: 2007/04/23 19:28:42 $
+# $Date: 2007/05/19 01:33:43 $
 package Modwheel::Configure;
 use strict;
 use warnings;
@@ -12,7 +12,7 @@ use Term::ANSIColor;
 use Modwheel::Session;
 use Modwheel::BuildConfig;
 use Modwheel::REPL::Prompt;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 
 my $prefix     = Modwheel::BuildConfig->get_value('prefix');
 my $cfgfile    = File::Spec->catfile($prefix, 'config', 'modwheelconfig.yml');

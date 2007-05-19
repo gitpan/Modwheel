@@ -4,10 +4,10 @@ use warnings;
 use Data::Dumper;
 
 use Test::More tests => 765;
+use FindBin qw($Bin);
 
 BEGIN {
-    use lib '/opt/devel/Modwheel/lib';
-    use lib './t';
+    use lib $Bin;
     use_ok('Modwheel::Repository');
 }
 
@@ -21,8 +21,8 @@ use Fcntl;
 
 our $THIS_BLOCK_HAS_TESTS;
 
-Readonly my $TEST_PREFIX     => './';
-Readonly my $TEST_CONFIGFILE => 't/modwheelconfig.yml';
+Readonly my $TEST_PREFIX     => $Bin;
+Readonly my $TEST_CONFIGFILE => 'modwheelconfig.yml';
 Readonly my $TEST_SITE       => 'modwheeltest';
 Readonly my $TEST_LOCALE     => 'en_EN';
 Readonly my $TEST_LOGMODE    => 'off';
@@ -80,7 +80,8 @@ $modwheel->set_debug(0);
 
 my $args = { };
 
-my $tfn = $repository->safeopen('t/testfilenames.UNIX', Fcntl::O_RDONLY);
+my $unix_filename_file = File::Spec->catfile($TEST_PREFIX, 'testfilenames.UNIX');
+my $tfn = $repository->safeopen($unix_filename_file, Fcntl::O_RDONLY);
 
 ok( _HANDLE($tfn), 'safeopen returns filehandle' );
 

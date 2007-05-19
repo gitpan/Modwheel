@@ -18,7 +18,7 @@ package Modwheel::DB;
 use strict;
 use warnings;
 use Params::Util ('_CLASS');
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 {
 
     #------------------------------------------------------------------------
@@ -82,7 +82,7 @@ Modwheel::DB - Abstract factory class for Modwheel database drivers.
 
 =head1 VERSION
 
-v0.3.1
+v0.3.2
 
 =head1 SYNOPSIS
 

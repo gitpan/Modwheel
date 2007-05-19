@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Modwheel::Session;
 use vars qw($TODO);
+use FindBin qw($Bin);
 
 use Test::More;
 
@@ -21,8 +22,8 @@ print $t->db->modwheel, "\n";
 #print $t->process( );
 
 my $modwheel2 = Modwheel->new({
-    prefix => '/opt/modwheel',
-    configfile => 'config/modwheelconfig.yml',
+    prefix => $Bin,
+    configfile => 'modwheelconfig.yml',
 });
 
 print $modwheel2, "\n";

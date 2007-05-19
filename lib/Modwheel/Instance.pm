@@ -20,7 +20,7 @@
 package Modwheel::Instance;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.1');
+use version; our $VERSION = qv('0.3.2');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use Scalar::Util qw(weaken);
 use namespace::clean;
@@ -88,7 +88,7 @@ Modwheel::Instance - Base class for modwheel application components.
 
 =head1 VERSION
 
-This document describes version 0.3.1.
+This document describes version 0.3.2.
 
 =head1 SYNOPSIS
 
