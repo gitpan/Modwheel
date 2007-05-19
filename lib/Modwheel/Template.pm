@@ -6,18 +6,18 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Template.pm,v 1.7 2007/04/28 13:13:03 ask Exp $
+# $Id: Template.pm,v 1.11 2007/05/18 23:42:37 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.7 $
-# $Date: 2007/04/28 13:13:03 $
+# $Revision: 1.11 $
+# $Date: 2007/05/18 23:42:37 $
 #####
 package Modwheel::Template;
 use strict;
 use warnings;
 use Params::Util ('_CLASS');
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 {
 
     #------------------------------------------------------------------------
@@ -52,17 +52,19 @@ use version; our $VERSION = qv('0.2.3');
 
         # Check the class name.
         if (!_CLASS($driver)) {
-            $modwheel->logerror(
-                "Template: $driver is not a valid class name."
+            return $modwheel->throw(
+                'template-factory-invalid-class', $driver
             );
-            return;
         }
 
         # we just include the database we need by require(),
         # create a new instance and return it.
         my $file = $driver . q{.pm};
         $file =~ s{::}{/}xmsg;
-        require $file;    ## no critic
+       
+        if (! $INC{$file}) {
+            CORE::require $file;    ## no critic
+        }
         my $obj = $driver->new($arg_ref);
 
         return $obj;
@@ -81,7 +83,7 @@ drivers.
 
 =head1 VERSION
 
-v0.2.3
+v0.3.1
 
 =head1 SYNOPSIS
 
@@ -105,8 +107,6 @@ v0.2.3
 Abstract loading of template drivers.
 
 =head1 MORE INFORMATIOAN
-
-Please see L<Modwheel::Template::Base>
 
 If you're using Template Toolkit as representation engine, see:
 
@@ -142,16 +142,16 @@ templatedriver defined in the global configuration directive.
 Be sure that the module specified in the templatedriver: section of the
 coniguration file is installed and is loadable.
 
-If the module name includes the characters '::', it will use the full
+If the module name includes the characters C<::>, it will use the full
 module name, if it doesn't it will add Modwheel::Template:: to the front of 
 the name. So if the module name is:
 
-MyCompany::OurRepresentationEngine::ModwheelSupport
+    MyCompany::OurRepresentationEngine::ModwheelSupport
 
 it will load that module. If the name is Mason however, it will
 load:
 
-Modwheel::Template::Mason
+    Modwheel::Template::Mason
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -159,7 +159,7 @@ See the templatedriver section of L<Modwheel::Manual::Config>
 
 =head1 DEPENDENCIES
 
-Requires the module specified in the templatedriver: directive in the
+Requires the module specified in the C<templatedriver:> directive in the
 configuration to be installed.
 
 =head1 INCOMPATIBILITIES
@@ -168,8 +168,8 @@ None.
 
 =head1 BUGS AND LIMITATIONS
 
-If you have a module that doesn't include '::' in the name, it will
-add Modwheel::Template:: to the name.
+If you have a module that doesn't include C<::> in the name, it will
+add C<Modwheel::Template::> to the name.
 
 =head1 AUTHOR
 

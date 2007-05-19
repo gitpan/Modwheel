@@ -193,9 +193,9 @@ SKIP:
     ok( $modwheel->catch('user-create-already-exists') );
     
     ok(! $user->create( ), 'create bail without args' );
-    ok($modwheel->catch('user-missing-field') );
+    ok($modwheel->catch('user-create-missing-field') );
     ok(! $user->create( username => $newusername ) );
-    ok($modwheel->catch('user-missing-field') );
+    ok($modwheel->catch('user-create-missing-field') );
 
     ok( _ARRAY($user->list( )), 'list users' );
 
@@ -221,7 +221,7 @@ SKIP:
         'login: ok with correct password and ip'
     );
     ok(!$user->get( ), 'get bail without username/uid' );
-    ok( $modwheel->catch('user-missing-field') );
+    ok( $modwheel->catch('user-get-missing-field') );
     ok(!$user->get('z0#*!^&%*&^%#^&%^*!@#'), 'get bail on nonexisting user' );
     ok(!$user->get(0xfeedface),              'get bail on nonexisting user' );
     ok( $modwheel->catch('user-no-such-user') );

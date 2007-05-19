@@ -1,0 +1,54 @@
+--- 
+log-no-message: "Du prøvde å logge med en tom beskjed."
+log-unknown-logmode: "Obs: Ukjent loggemetode: '%s'. Bruker stderr istedet."
+db-factory-invalid-class: "DB: %s er ikke et gyldig klassenavn."
+template-factory-invalid-class: "Template: %s er ikke et gyldig klassenavn"
+db-connection-error: "Kunne ikke koble til database: %s: %s"
+db-no-driver: "Ingen databasedriver valgt."
+db-prepare-without-query: "Mangler spørsmål for database prepare()”
+db-prepare-query-error: "Kunne ikke behandle spørsmål %s: %s"
+db-execute-query-error: "Kunne ikke eksekvere spørsmål '%s': %s"
+db-build-query-missing-where: ":Bygg spørsmål: Du må velge hvilke felter du vil utføre kommandoen på."
+db-build-delete-query-missing-where: "Bygg spørsmål for å slette: Du må velge hvilke felter du vil slette."
+object-save-missing-field: "Mangler obligatorisk argument: %s"
+object-save-parent-loop: "Save: Objektet kan ikke ha seg selv som far!"
+object-tree-parent-loop: "Hent tre av objekter: UENDELIG LØKKE. Identifikasjonstall for objektet er: %d"
+object-exprbyid-loop: "exprbyid: for objekt %d gikk inn i en uendelig løkke."
+object-tag-create-missing-name: "Lag ny tagg: Mangler navn."
+object-no-such-tag: "Finnes ingen tag med navnet/id: %s"
+object-tag-delete-missing-field: "Slett tagg: Mangler navn eller id på taggen du vil slette.”
+object-tag-connect-missing-field: 'Koble opp objekt mot tagg: Mangler navn eller id på tag du vil koble til.'
+object-tag-connect-missing-object: 'Koble opp objekt mot tagg: Mangler id på objekt.'
+object-tag-disconnect-missing-field: 'Koble fra tagg: Mangler navn eller id på tagg du vil koble fra.'
+object-tag-disconnect-missing-object: 'Koble fra tagg: Mangler id på objekt'
+object-tags-missing-field: 'Hent alle tagger for objekt: Mangler id på objekt.'
+object-prototype-get-missing-field: 'Hent prototype for type: Mangler type’
+object-prototype-remove-missing-field: 'Slett prototype for type: Mangler type'
+object-create_prototype-missing_type: ‘Lag ny prototype: Mangler argument: navn på ny type'
+object-create_prototype-already_exists: "Lag ny type: Prototype for %s eksisterer allerede."
+object-stream-max-depth: 'Traverser objekter: Vi har gått for dypt inn i treet.'
+object-deserialize-parse-error: 'Deserialiser objekt: Feil med YAML-fil.'
+object-deserialize-checksum-error: 'Deserialiser objekt: kontrollsum stemmer ikke.'
+object-revision-create-missing-checksum: 'Create Revision: Missing checksum.'
+repository-upload-missing-argument: "Last opp til arkiv: Mangler obligatorisk argument: %s."
+repository-upload-parent-id-not-digit: "Last opp til arkiv: Objekt som filen knyttes til må ha en id som er et tall."
+repository-upload-mkdir-error:  "Last opp til arkiv: Kunne ikke lage ny mappe '%s': %s"
+repository-could-not-delete-file:  'Slett fra arkiv: Kunne ikke slette file (rep id: %d, filsti: %s): %s'
+repository-could-not-delete-entry: "Kunne ikke slette arkiv element med id %d: %s"
+repository-open-file-shell-escape: "Bruker prøver å motstå kommandotolkens beskyttelse eller gå til katalogen over arkivet!"
+repository-open-can-not-stat: "Kunne ikke finne statistikk for fil $filename: %s"
+repository-open-error: "Kunne ikke åpne file %s (flagg: %d): %s"
+repository-open-can-not-stat-fh: "Kunne ikke finne statistikk for filhåndtak %s: %s"
+repository-open-race-condition: "POSSIBLE RACE ATTEMP. STAT DOES NOT MATCH FOR FILE %s: (%d|%d, %d|%d)."
+user-uidbyname-missing-user: "Uidbyname: Mangler brukernavn"
+user-namebyuid-missing-uid: 'Namebyuid: Mangler bruker-ID'
+user-no-such-user: "Brukernavn finnes ikke, eller ikke noe passord oprettet for bruker %s"
+user-login-failed: "Feil brukernavn eller  passord for bruker %s. (Bruker passord: JA)"
+user-update-missing-user: "Oppdater bruker: Du må spesifisere hvilket brukernavn du vil endre."
+user-create-missing-field: "Opprett ny bruker: Kan ikke opprette ny bruker uten nytt brukernavn og passord."
+user-create-already-exists: "Opprett ny bruker: Det finnes allerede en bruker med brukernavn %s"
+user-u2id-no-such-user: "Oversett brukernavn til bruker-ID: Ingen bruker med brukernavn: %s"
+user-get-missing-field: "Hent bruker: Mangler argument brukernavn eller bruker-ID."
+user-get-no-such-user: "Hent bruker: Ingen bruker med bruker-ID %d"
+user-delete-missing-field: "Slett bruker: Mangler obligatorisk argument brukernavn eller bruker-ID."
+user-delete-no-such-user: "Slett bruker: Kan ikke slette bruker: Ingen bruker med bruker-id %d"

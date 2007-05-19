@@ -1,13 +1,13 @@
 ---
 name: Modwheel
-version: 0.2.3
+version: 0.3.1a
 author:
   - 'Ask Solem <ASKSH@cpan.org>'
-abstract: Web framework.
+abstract: Tree-based Web framework.
 license: perl
 resources:
-  cpan: http://search.cpan.org/~asksh/Modwheel-0.02/
-  homepage: http://www.0x61736b.net/Modwheel
+  Download: http://search.cpan.org/~asksh/Modwheel-0.3.1/
+  HomePage: http://www.0x61736b.net/Modwheel
   license: http://dev.perl.org/licenses/
 requires:
   AppConfig: 1.56
@@ -17,10 +17,12 @@ requires:
   Data::Dumper: 0
   Digest::SHA1: 2.11
   Fcntl: 0
+  File::Copy::Recursive: 0
   FileHandle: 0
   Getopt::Euclid: 0.001
   HTML::Parser: 3.48
   HTML::Tagset: 3.1
+  IO::Interactive: 0.0.3
   IO::Prompt: 0.099004
   List::MoreUtils: 0
   List::Util: 0
@@ -29,6 +31,7 @@ requires:
   Perl6::Export: 0.07
   Perl6::Export::Attrs: 0
   Perl6::Form: 0.04
+  Perl6::Slurp: 0.03
   Readonly: 1
   Scalar::Util: 1.14
   Sub::Install: 0
@@ -49,66 +52,90 @@ recommends:
   Pod::Coverage: 0
   Readonly::XS: 1
   Test::Exception: 0
+  Test::Kwalitee: 0.3
   Test::Perl::Critic: 1
   Test::Pod: 0
   Test::Pod::Coverage: 0
+  Test::YAML::Meta: 0.04
   Test::YAML::Valid: 0
 dynamic_config: 0
 provides:
   Class::InsideOut::Policy::Modwheel:
     file: lib/Class/InsideOut/Policy/Modwheel.pm
     version: 1.06
+  FCGI::Modwheel:
+    file: lib/FCGI/Modwheel.pm
+    version: 0.3.1
+  FCGI::Modwheel::Server:
+    file: lib/FCGI/Modwheel/Server.pm
   Modwheel:
     file: lib/Modwheel.pm
-    version: 0.2.3
+    version: 0.3.1
+  Modwheel::Configure:
+    file: lib/Modwheel/Configure.pm
+    version: 0.3.1
   Modwheel::DB:
     file: lib/Modwheel/DB.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::DB::Base:
     file: lib/Modwheel/DB/Base.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::DB::MySQL:
     file: lib/Modwheel/DB/MySQL.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::DB::PostgreSQL:
     file: lib/Modwheel/DB/PostgreSQL.pm
-    version: 0.2.3
+    version: 0.3.1
+  Modwheel::DB::SQLite:
+    file: lib/Modwheel/DB/SQLite.pm
+    version: 0.3.1
+  Modwheel::DB::SQLite2:
+    file: lib/Modwheel/DB/SQLite2.pm
+    version: 0.3.1
   Modwheel::HTML::Tagset:
     file: lib/Modwheel/HTML/Tagset.pm
     version: 1.0.0
   Modwheel::Instance:
     file: lib/Modwheel/Instance.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::Object:
     file: lib/Modwheel/Object.pm
-    version: 0.2.3
+    version: 0.3.1
+  Modwheel::REPL:
+    file: lib/Modwheel/REPL.pm
+    version: 0.3.1
+  Modwheel::REPL::Prompt:
+    file: lib/Modwheel/REPL/Prompt.pm
+    version: 0.3.1
   Modwheel::Repository:
     file: lib/Modwheel/Repository.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::Session:
     file: lib/Modwheel/Session.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::Template:
     file: lib/Modwheel/Template.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::Template::ObjectProxy:
     file: lib/Modwheel/Template/ObjectProxy.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::Template::Shortcuts:
     file: lib/Modwheel/Template/Shortcuts.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::Template::TT:
     file: lib/Modwheel/Template/TT.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::Template::TT::Plugin:
     file: lib/Modwheel/Template/TT/Plugin.pm
-    version: 0.2.3
+    version: 0.3.1
   Modwheel::User:
     file: lib/Modwheel/User.pm
-    version: 0.2.3
-generated_by: Module::Build version 0.2807
+    version: 0.3.1
+  Modwheel::User::Session:
+    file: lib/Modwheel/User/Session.pm
+    version: 0.3.1
+generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
   version: 1.2
-uses:
-  scriptaculous: http://script.aculo.us/
+distribution_type: Application

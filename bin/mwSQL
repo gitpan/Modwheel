@@ -1,19 +1,29 @@
 #!/usr/local/bin/perl
-# $Id: mwuser,v 1.4 2007/04/28 13:13:10 ask Exp $
-# $Source: /opt/CVS/Modwheel/utils/mwuser,v $
+# $Id: mwsql,v 1.3 2007/05/18 23:42:25 ask Exp $
+# $Source: /opt/CVS/Modwheel/utils/mwsql,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.4 $
-# $Date: 2007/04/28 13:13:10 $
+# $Revision: 1.3 $
+# $Date: 2007/05/18 23:42:25 $
 use strict;
 use warnings;
 use Data::Dumper;
 use Getopt::Euclid;
 use Perl6::Form;
-use Params::Util ('_ARRAY', '_HASH');
-use IO::Prompt;
+use Params::Util qw(_CODELIKE);
+use IO::Interactive qw(is_interactive interactive);
 use Modwheel::Session;
-use version; our $VERSION = qv('0.2.3');
+use Term::ANSIColor;
+use Readonly;
+use YAML::Syck;
+use JSON::Syck;
+use namespace::clean;
+use version; our $VERSION = qv('0.3.1');
+sub say;
+
+# Euclid seems to break is_interactive, we clear out @ARGV,
+# so noone thinks that we're reading from a file.
+undef @ARGV;
 
 my $prefix     = $ARGV{-prefix};
 my $configfile = $ARGV{-config};
@@ -30,120 +40,129 @@ if ($site) {
     $modwheel_config->{site} = $site;
 }
 
-my($modwheel, $user, $db, $object, $repository, $template)
+Readonly our $Bold  => color 'bold';
+Readonly our $Reset => color 'reset';
+
+our($modwheel, $user, $db, $object, $repository, $template)
     = modwheel_session($modwheel_config,
     qw(db user object template repository));
 
+our %COMMANDS = (
+    quit        => sub {
+        exit;
+    },
+    version     => sub {
+        say $VERSION;
+    }
+
+);
+
+
 $db->connect( );
 
-if ($ARGV{-list}) {
-    $db->connect( );
-    list_users( $user );
-    $db->disconnect( );
-    exit;
-}
-if ($ARGV{'-n'}) {
-    $db->connect( );
-    create_user($user, $ARGV{-new});
-    $db->disconnect( );
-    exit;
-}
-if ($ARGV{-mkpasswd}) {
-    print Modwheel::User::mkpasswd( ), qq{\n};
-    exit;
-}
-if ($ARGV{-hash}) {
-    print Modwheel::User::hashcookie_encipher($ARGV{-hash}), qq{\n};
-    exit;
-}
-
-print <<'EOF'
-Usage: mwuser [-list|-new user|-delete user|-mkpasswd|-hash passwd]
-EOF
-;
-
-sub create_user {
-    my ($user, $username) = @_;
-
-    my($password, $confirm);
-
-    USERNAME:
-    while (1) {
-        $username = prompt(q{-t}, 'New username: ');
-        $username = trim($username);
-        # I don't know what it is, but prompt makes it true
-        # even when lenght is 0. So we do it explcitly.
-        last USERNAME if length $username > 0;
-        warn "Need: username\n";
+=for comment
+use YAML::Syck;
+use JSON::Syck;
+my @data;
+my $slurp;
+my $in_start = 1;
+open EXPORT, './export' or die;
+while (my $line  = <EXPORT> ) {
+    if (!$in_start && $line =~ m/^---\s+$/xms) {
+        push @data, YAML::Syck::Load($slurp);
+        $slurp = q{};
     }
-
-    PASSWORD:
-    while (1) {
-        $password = prompt(q{-t},
-            -echo => q{*},
-            "New password for $username: "
-        );
-        $password = trim($password);
-        last PASSWORD if length $password > 0;
-        warn "Need: password.\n";
-    }
-
-    CONFIRM:
-    while (1) {
-        $confirm = prompt(q{-t},
-            -echo => q{*},
-            "Confirm new password for $username: "
-        );
-        last CONFIRM if $password eq $confirm;
-        warn "Password's doesn't match.\n";
-    }
-
-    $user->create(username => $username, password => $password);
-
-    if (!$modwheel->error) {
-        print "OK!\n";
-    }
-
-    return;
+    $slurp .= $line;
+    $in_start = 0;
 }
 
-
-sub list_users {
-    my ($user) = @_;
-
-    my $users = $user->list( );
-    if (!_ARRAY($users)) {
-        print "No users created yet. You should atleast create one user.\n";
-        return;
-    }
-
-    print form {bullet => q{*}},
-        '.========================================================================================.',
-        '| Id | Username           | Real name              | E-Mail            | Last IP-Address |',
-        '|========================================================================================|',
-    ;
-    foreach my $u (@{ $users }) {
-        $u->{realname}  ||= q{-};
-        $u->{email}     ||= q{-};
-        $u->{last_ip}   ||= 'Never logged in';
-    print form { bullet =>  q{*} },
-        '| {[[[}* {[[[[[[[[[[[[[[} | {||||||||||||||||||||} | {]]]]]]]]]]]]]]]} | {>>>>>>>>>>>>>} |',
-            $u->{id},    $u->{username},         $u->{realname},             $u->{email},        $u->{last_ip},
-        ;
-    }
-    print form { bullet => q{*} },
-       q{`========================================================================================'}
-    ;
-
-    return;
+$^W =0;
+foreach my $cur (@data) {
+    delete $cur->{id};
+    my $newo = Modwheel::Object->new({modwheel=>$modwheel, user=>$user,
+db=>$db});
+    $newo->deserialize( JSON::Syck::Dump($cur) );
+    print $newo->save( ), "\n"; 
 }
 
-sub trim {
-    my ($string) = @_;
-    $string =~ s/^\s+//xmsg;
-    $string =~ s/\s+$//xmsg;
-    return $string;
+exit;
+=cut
+
+if ($ARGV{-execute}) {
+    exit (do_command($ARGV{-execute}) || do_query($ARGV{-execute}));
 }
+
+my $buffer;
+while (my $line  = safeprompt("${Bold}sql>${Reset} ")) {
+    $buffer .= $line;
+    if ($line =~ m/;\s*$/xms) {
+        my $valid_cmd = do_command($buffer);
+        if (!$valid_cmd) {
+            do_query($buffer);
+        }
+        # clear buffer.
+        $buffer = q{};
+    }
+}
+# execute anything left in buffer.
+if (length $buffer) {
+    do_query($buffer);
+}
+
+$db->disconnect( );
+
+sub do_query {
+    my ($query) = @_;
+    $query = $db->trim($query);
+    return 0 if not $query;
+    my $sth = $db->prepare($query);
+    return 0 if not $sth;
+    my $ret = $db->execute($sth);
+    return 0 if not $ret;
+    if ($query =~ m/^SELECT/xmsi && $sth->rows) {
+        
+        my @rows;
+        while (my $hres = $db->fetchrow_hash($sth)) {
+            push @rows, $hres;
+        }
+        print $ARGV{-json} ? JSON::Syck::Dump(\@rows)
+                           : YAML::Syck::Dump(\@rows);
+    }
+    $query =~ s{ ;$}{}xms;
+    say "${Bold}++${Reset} $query";
+    say "${Bold}++ OK${Reset}";
+    $db->query_end($sth);
+    return 1;
+}
+
+sub do_command {
+    my ($line) = @_;
+    $line =~ tr/;//d;
+    $line = $db->trim($line);
+    my ($command, @args) = split m/\s+/xms, $line;
+    my $cmd_sub_ref = $COMMANDS{$command};
+    if (_CODELIKE($cmd_sub_ref)) {
+        $cmd_sub_ref->(@args);
+        return 1;
+    }
+    return 0;
+}
+
+sub safeprompt {
+    print {interactive} @_;
+    my $reply = <STDIN>;
+    $reply =~ s/\n/ /xms;
+
+# We dont use chomp, because we must have a character
+# left so 'while' knows we're not finished yet.
+
+    return $reply;
+}
+
+sub say { 
+    return if $ARGV{-execute};
+    return print {interactive} @_, "\n"
+};
 
 __END__
 
@@ -151,15 +170,21 @@ __END__
 
 =head1 NAME
 
-mwuser - Modwheel user management.
+mwsql - Execute SQL using Modwheel database drivers.
 
 =head1 VERSION
 
-This documentation refers to Modwheel version 0.2.3
+This documentation refers to Modwheel version 0.3.1
 
 =head1 USAGE
 
-    mwuser [options] [-l[ist]|-new|-d[elete]|-m[kpasswd]
+    mwsql [options] 
+
+Examples:
+
+    mwSQL -site Admin -e "SELECT * FROM object"
+    echo "SELECT * FROM object" | mwSQL -site Admin
+    mwSQL -site Admin < sql/MySQL/03-Object.sql
 
 =head1 REQUIRED ARGUMENTS
 
@@ -170,26 +195,6 @@ One of the COMMANDS listed below.
 =head2 COMMANDS
 
 =over
-
-=item   -l[ist]
-
-List users in the system.
-
-=item   -n <username>
-
-Create a new user
-
-=item   -d[elete] <username>
-
-Delete a user
-
-=item   -m[kpasswd] 
-
-Create a strong password.
-
-=item   -h[ash] <password>
-
-Create a hash for <password>
 
 =head2 OPTIONAL SETTINGS
 
@@ -208,6 +213,14 @@ Default: $PREFIX/config/modwheelconfig.yml
 Use a different modwheel site than the default.
 Default: defaultsite set in the config file.
 
+=item -e[xecute] <sql-statement>
+
+Execute SQL query as a command-line argument.
+
+=item -j[son]
+
+Use JSON instead of YAML for dumping data.
+
 =item -logmode <logmode>
 
 Use a logging mode other than stderr. (i.e off)
@@ -217,17 +230,17 @@ Default: stderr
 
 =head1 DESCRIPTION
 
-Manage and list users in Modwheel systems.
+Execute SQL using Modwheel database drivers.
 
 =head1 DIAGNOSTICS
 
 
-Check that mwuser is using the right configuration file, and the right prefix.
+Check that mwsql is using the right configuration file, and the right prefix.
 Set them manually with -prefix and -configfile.
 
 =head1 CONFIGURATION 
 
-mwuser is dependant on a Modwheel configuration file and database.
+mwsql is dependant on a Modwheel configuration file and database.
 See L<Modwheel::Manual::Config> and L<Modwheel::Manual> for more information.
 
 =head1 EXIT STATUS
@@ -248,6 +261,10 @@ of this application in any script.
 =item Params::Util
 
 =item Perl6::Form
+
+=item Term::ANSIColor
+
+=item Readonly
 
 =back
 
@@ -278,7 +295,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.2.3
+v0.3.1
 
 =head1 AUTHOR
 

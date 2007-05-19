@@ -1,15 +1,15 @@
-# $Id: Shortcuts.pm,v 1.7 2007/04/28 13:13:05 ask Exp $
+# $Id: Shortcuts.pm,v 1.9 2007/05/18 23:42:42 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/Shortcuts.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.7 $
-# $Date: 2007/04/28 13:13:05 $
+# $Revision: 1.9 $
+# $Date: 2007/05/18 23:42:42 $
 #####
 package Modwheel::Template::Shortcuts;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 {
     use URI::Escape  ();
     use Params::Util ('_HASH');
@@ -148,13 +148,11 @@ use version; our $VERSION = qv('0.2.3');
 __END__
 =head1 NAME
 
-Modwheel::Template::Shortcuts.
-
-Class for expanding shortcut abbreviations in strings.
+Modwheel::Template::Shortcuts - Class for expanding shortcut abbreviations in strings.
 
 =head1 VERSION
 
-v0.2.3
+This document describes version 0.3.1.
 
 =head1 SYNOPSIS
 
@@ -172,7 +170,7 @@ v0.2.3
 =head1 DESCRIPTION
 
 In the Modwheel configuration file you can define a set of shortcuts.
-An example of an abbreviation with the name CPAN, could be defined like this:
+An example of an abbreviation with the name C<cpan>, could be defined like this:
 
        shortcuts:
          cpan:  <a href="http://search.cpan.org?query=[:content]">[name]</a>
@@ -190,8 +188,9 @@ The type is the name of the shortcut in the configuration file.
         ">
         [name]                                 -> The Carp Module
 
-If you add a : (colon) to a variable in the shortcut configuration, the
-characthers will be properly escaped by using L<URI::Escape>.
+If you add a C<:> to a variable in the shortcut configuration, the
+characthers will be properly escaped to be used in a URL. (Using
+L<URI::Escape>) 
 
 =head1 SUBROUTINES/METHODS
 
@@ -225,11 +224,13 @@ Resolve shortcuts in C<$string>.
 =over 4
 
 =item C<$shortcuts-E<gt>template($template)>
+
 =item C<$shortcuts-E<gt>set_template($template)>
 
 Set or get the Modwheel template object.
 
 =item C<$shortcuts-E<gt>resolvers($resolvers)>
+
 =item C<$shortcuts-E<gt>set_resolvers($resolvers)>
 
 Set or get the current resolvers hash.

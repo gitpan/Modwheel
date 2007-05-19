@@ -1,5 +1,5 @@
 
-use Test::More tests => 19;
+use Test::More tests => 26;
 
 BEGIN {
     use lib './t';
@@ -25,6 +25,24 @@ BEGIN {
     public 'address'       => my %address,    {is => 'rw'};
     public 'phone'         => my %phone,      {is => 'rw'};
 
+}
+{
+    package smoke::TestClass::Using::isaOption;
+    use Class::InsideOut::Policy::Modwheel qw(:std);
+    
+    public person         => my %person,      {is => 'rw', isa => 'smoke::TestClass::Person'        };
+    public info           => my %info,        {is => 'ro', isa => 'smoke::TestClass::Person::Info'  };
+
+    sub new {
+        my ($class, $options_ref) = @_;
+        my $self       = register($class);
+        $options_ref ||= { };
+
+        $info{ident $self} = $options_ref->{info};
+
+        return $self;
+    }
+    
 }
 package main;
 
@@ -54,6 +72,22 @@ foreach my $method
 {
     ok($person_with_info->can($method));
 }
+
+my $isaOption = smoke::TestClass::Using::isaOption->new({
+    info => $person_with_info,
+});
+isa_ok($isaOption,  'smoke::TestClass::Using::isaOption');
+
+foreach my $method (qw(person set_person info)) {
+    ok( $isaOption->can($method), '$isaOption->can '.$method );
+}
+
+isa_ok($isaOption->info, 'smoke::TestClass::Person::Info');
+isa_ok($isaOption->person, 'smoke::TestClass::Person');
+# provided info object inside new object is the same
+is($isaOption->info, $person_with_info,
+    'provided info object inside new object has same memory address'
+);
 
 use TestClassChild;
 

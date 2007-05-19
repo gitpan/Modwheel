@@ -1,6 +1,6 @@
 
   package Modwheel;
-  use version; $VERSION = qv('0.2.3');
+  use version; $VERSION = qv('0.3.1');
   use Moose::Policy 'Modwheel::Policy';
   use Moose;
   
@@ -571,7 +571,7 @@ None.
 
 =over 8
 
-=item v0.2.3
+=item v0.3.1
 
 Now it's possible to create your own object types.
 

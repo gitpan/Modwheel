@@ -3,7 +3,7 @@ use strict;
 use Data::Dumper;
 #use Data::Structure::Util qw(has_circular_ref);
 
-use Test::More tests => 34;
+use Test::More tests => 35;
 
 BEGIN {
     use lib '/opt/devel/Modwheel/lib';

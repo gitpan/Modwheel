@@ -6,24 +6,25 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: User.pm,v 1.8 2007/04/28 13:13:03 ask Exp $
+# $Id: User.pm,v 1.12 2007/05/18 23:42:37 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/User.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.8 $
-# $Date: 2007/04/28 13:13:03 $
+# $Revision: 1.12 $
+# $Date: 2007/05/18 23:42:37 $
 #####
 package Modwheel::User;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 use base 'Modwheel::Instance';
 {
     use Carp;
     use Readonly;
     use Scalar::Util qw(blessed looks_like_number);
     use Params::Util ('_HASH', '_ARRAY', '_INSTANCE', '_CODELIKE');
+    use Modwheel::User::Session;
     use Crypt::Eksblowfish::Bcrypt;
     use namespace::clean;
 
@@ -43,11 +44,8 @@ use base 'Modwheel::Instance';
         my ($self, $user) = @_;
         my $modwheel = $self->modwheel;
         my $db       = $self->db;
-        if (! $user) {
-            $modwheel->throw('user-uidbyname-missing-user');
-            $modwheel->logerror('Uidbyname: Missing username');
-            return;
-        }
+        return $modwheel->throw('user-uidbyname-missing-user')
+            if !$user;
 
         # Select id from users where username is $user.
         my $query = $db->build_select_q('users', ['id'], ['username']);
@@ -59,11 +57,9 @@ use base 'Modwheel::Instance';
         my ($self, $uid) = @_;
         my $modwheel = $self->modwheel;
         my $db = $self->db;
-        if (! $uid) {
-            $modwheel->throw('user-namebyuid-missing-uid');
-            $modwheel->logerror('Namebyuid: Missing UID');
-            return;
-        }
+        return $modwheel->throw('user-namebyuid-missing-uid')
+            if !$uid;
+
         # Select username from users where id is $uid.
         my $query= $db->build_select_q('users', ['username'], ['id']);
 
@@ -95,9 +91,7 @@ use base 'Modwheel::Instance';
         my $db       = $self->db;
 
         if (! $username || ! $password) {
-            $modwheel->throw('user-no-such-user');
-            $modwheel->logerror(
-                'No such username or no password set for user: ', $username);
+            $modwheel->throw('user-no-such-user', $username);
             return 0;
         }
 
@@ -107,9 +101,7 @@ use base 'Modwheel::Instance';
         my $href    = $db->fetchonerow_hash($query, $username);
         my ($uid, $cryptpw) = ($href->{id}, $href->{password});
         if (! $cryptpw) {
-            $modwheel->throw('user-no-such-user');
-            $modwheel->logerror(
-                'No such username or no password set for user: ', $username);
+            $modwheel->throw('user-no-such-user', $username);
             return 0;
         }
 
@@ -123,11 +115,18 @@ use base 'Modwheel::Instance';
             $self->set_uid($uid);
             $self->set_uname($username);
 
+            my $session = Modwheel::User::Session->new({
+                modwheel => $modwheel,
+                db       => $db,
+                user     => $self,
+            });
+
+            $session->save_session($uid, $ip);
+
             return 1;
         }
         else {
-            $modwheel->throw('user-login-failed');
-            $modwheel->logerror('Invalid username or password.');
+            $modwheel->throw('user-login-failed', $username);
             return 0;
         }
     }
@@ -142,10 +141,7 @@ use base 'Modwheel::Instance';
         }
 
         if  (!$arg_ref->{username} && !$arg_ref->{id}) {
-            $modwheel->throw('user-update-missing-user');
-            $modwheel->logerror(
-                'Update user: Please specify which user to update.');
-            return;
+            return $modwheel->throw('user-update-missing-user');
         }
 
         if (!$arg_ref->{id}) {
@@ -162,22 +158,19 @@ use base 'Modwheel::Instance';
 
     sub create {
         my ($self, %argv) = @_;
-        my $db = $self->db;
+        my $modwheel = $self->modwheel;
+        my $db       = $self->db;
 
-        if (!$argv{username} || !$argv{password}) {
-            $self->modwheel->throw('user-missing-field');
-            $self->modwheel->logerror(
-                'Save user: Can not create user without username and password.'
-            );
-            return;
+        my $username = $argv{username};
+        my $password = $argv{password};
+        if (!$username || !$password) {
+            return $modwheel->throw('user-create-missing-field');
         }
 
-        if ($self->uidbyname( $argv{username} )) {
-            $self->modwheel->throw('user-create-already-exists');
-            $self->modwheel->logerror('Create user: User with username',
-                $argv{username}, 'already exists!'
+        if ($self->uidbyname( $username )) {
+            return $self->modwheel->throw(
+                'user-create-already-exists', $username
             );
-            return;
         }
 
         $argv{password} = hashcookie_encipher( $argv{password} );
@@ -196,13 +189,8 @@ use base 'Modwheel::Instance';
         if (!looks_like_number $uid) {
             my $username = $uid;
             $uid = $self->uidbyname($username);
-            if (!$uid) {
-                $modwheel->throw('user-no-such-user');
-                $modwheel->logerror(
-                    'Convert username to UID) No such user', $username
-                );
-                return;
-            }
+            return $modwheel->throw('user-u2id-no-such-user', $username)
+                if !$uid;
         }
 
         return int $uid;
@@ -213,11 +201,8 @@ use base 'Modwheel::Instance';
         my $modwheel = $self->modwheel;
         my $db       = $self->db;
 
-        if (!defined $uid) {
-            $modwheel->throw('user-missing-field');
-            $modwheel->logerror('Get User: Missing username or uid.');
-            return;
-        }
+        return $modwheel->throw('user-get-missing-field')
+            if !defined $uid;
 
         $uid = $self->unametouid($uid);
         return if not defined $uid;
@@ -230,11 +215,8 @@ use base 'Modwheel::Instance';
             {id => q{?}}
         );
         my $user = $db->fetchonerow_hash($query, $uid);
-        if (! _HASH($user)) {
-            $modwheel->throw('user-no-such-user');
-            $modwheel->logerror('User get: No such user id:', $uid);
-            return;
-        }
+        return $modwheel->throw('user-no-such-user', $uid)
+            if !_HASH($user);
 
         return $user;
     }
@@ -244,11 +226,8 @@ use base 'Modwheel::Instance';
         my $modwheel = $self->modwheel;
         my $db       = $self->db;
 
-        if (!defined $uid) {
-            $modwheel->throw('user-missing-field');
-            $modwheel->logerror('Delete User: Missing username or uid.');
-            return;
-        }
+        return $modwheel->throw('user-delete-missing-field')
+            if !defined $uid;
 
         $uid = $self->unametouid($uid);
         return if not defined $uid;
@@ -257,16 +236,8 @@ use base 'Modwheel::Instance';
         my $query = $db->build_delete_q('users', ['id']);
         my $ret   = $db->exec_query($query, $uid);
 
-        if (!$ret) {
-            $modwheel->throw('user-no-such-user');
-            $modwheel->logerror(
-                "User delete: Couldn't delete user: No such user id: $uid");
-        }
-        else {
-            return $ret;
-        }
-
-        return;
+        return $ret ? $ret
+                    : $modwheel->throw('user-delete-no-such-user', $uid);
     }
 
     # #### CLASS METHODS

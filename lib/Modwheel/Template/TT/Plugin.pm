@@ -7,19 +7,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Plugin.pm,v 1.8 2007/04/28 13:13:06 ask Exp $
+# $Id: Plugin.pm,v 1.11 2007/05/18 23:42:43 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/TT/Plugin.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.8 $
-# $Date: 2007/04/28 13:13:06 $
+# $Revision: 1.11 $
+# $Date: 2007/05/18 23:42:43 $
 #####
 package Modwheel::Template::TT::Plugin;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base qw(Template::Plugin Modwheel::Instance);
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 {
     use Modwheel::Template::ObjectProxy;
     use Modwheel::HTML::Tagset;
@@ -210,7 +210,7 @@ use version; our $VERSION = qv('0.2.3');
         return if not _HASH($argv);
 
         my $user = $self->user;
-        return $user->create($argv);
+        return $user->create(%{$argv});
     }
 
     sub updateUser {
@@ -301,23 +301,23 @@ use version; our $VERSION = qv('0.2.3');
 
         $searchstr = $db->sqlescape($searchstr);
 
-#my $query = qq{
-#    SELECT SQL_CALC_FOUND_ROWS distinct(name), $fetch_data type, keywords, description, created, changed, id, parent
-#    FROM object
-#    WHERE( name        LIKE('\%$searchstr\%')
-#       OR  keywords    LIKE('\%$searchstr\%')
-#       OR  description LIKE('\%$searchstr\%')
-#       OR  data        LIKE('\%$searchstr\%')
-#    )
-#    AND parent > 0
-#};
-        my $query = qq{
-        SELECT    SQL_CALC_FOUND_ROWS distinct(name), $fetch_data type, keywords, description, created
-                                   changed, id, parent
-        FROM    object
-        WHERE    MATCH(name, keywords, description, data) AGAINST('$searchstr')
-        AND        id > 0
-    };
+my $query = qq{
+    SELECT name, $fetch_data type, keywords, description, created, changed, id, parent
+    FROM object
+    WHERE( name        LIKE('\%$searchstr\%')
+       OR  keywords    LIKE('\%$searchstr\%')
+       OR  description LIKE('\%$searchstr\%')
+       OR  data        LIKE('\%$searchstr\%')
+    )
+    AND parent > 0
+};
+        #my $query = qq{
+        #SELECT    SQL_CALC_FOUND_ROWS distinct(name), $fetch_data type, keywords, description, created
+        #                           changed, id, parent
+        #FROM    object
+        #WHERE    MATCH(name, keywords, description, data) AGAINST('$searchstr')
+        #AND        id > 0
+    #};
         if ($bool_active_only) {
             $query .= ' AND active=1 ';
         }
@@ -345,8 +345,8 @@ use version; our $VERSION = qv('0.2.3');
                 };
         }
         $db->query_end($sth);
-        my $count = $db->fetch_singlevar('SELECT FOUND_ROWS()');
-        $self->set_lastRowCount($count);
+        #my $count = $db->fetch_singlevar('SELECT FOUND_ROWS()');
+        #$self->set_lastRowCount($count);
 
         return \@result;
     }

@@ -1,9 +1,9 @@
-# $Id: Modwheel.pm,v 1.9 2007/04/28 13:13:02 ask Exp $
+# $Id: Modwheel.pm,v 1.13 2007/05/18 23:42:36 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.9 $
-# $Date: 2007/04/28 13:13:02 $
+# $Revision: 1.13 $
+# $Date: 2007/05/18 23:42:36 $
 #
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel.pm - Web framework.
@@ -19,7 +19,7 @@ package Modwheel;
 use strict;
 use warnings;
 use 5.00800;
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
 
@@ -32,6 +32,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     use List::MoreUtils qw( any );
     use File::Spec      qw();
     use Params::Util    ('_ARRAY', '_HASH', '_CODELIKE');
+    use Modwheel::BuildConfig;
     use namespace::clean;
 
     #========================================================================
@@ -46,6 +47,12 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     #   Which log handler to use. The default log handlers
     #   are stderr and off.
     Readonly my $DEFAULT_LOGMODE => 'stderr';
+
+    # Name of the directory that has our localized strings.
+    Readonly my $LOCALIZED_DIRNAME => 'Localized';
+
+    # File-type of our localized string database.
+    Readonly my $LOCALIZED_SUFFIX  => '.yml';
 
     # Loghandler for stderr:
     Readonly my $LOGHANDLER_STDERR => sub {
@@ -79,6 +86,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     public logobject   => my %logobject_for,   { is => 'rw' };
     public loghandlers => my %loghandlers_for, { is => 'rw' };
     public exceptions  => my %exceptions_for,  { is => 'rw' };
+    public strings     => my %strings_for,     { is => 'rw' };
 
     #========================================================================
     #                     -- CONSTRUCTOR --
@@ -87,23 +95,28 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     sub new {
         my ( $class, $arg_ref ) = @_;
 
+        #no strict 'refs'; ## no critic
+        #my $instance = \${ "$class\::_instance" };
+        #my $self = defined $$instance ? $$instance
+        #                              : ($$instance = register($class));
+
         my $self = register($class);
 
         $arg_ref->{logmode}    ||= $DEFAULT_LOGMODE;
         $arg_ref->{configfile} ||= $DEFAULT_CONFIGFILE;
 
         # install default logging handlers
-        my $loghandlers = {
+        my $loghandlers_ref = {
             stderr => $LOGHANDLER_STDERR,
             debug  => $LOGHANDLER_DEBUG,
             off    => $LOGHANDLER_OFF,
         };
-        $self->set_loghandlers($loghandlers);
+        $self->set_loghandlers($loghandlers_ref);
 
         # install user-specified log_handlers
-        my $add_loghandlers = $arg_ref->{add_loghandlers};
-        if (_HASH($add_loghandlers) ) {
-            while (my ($lh_name, $lh_code_ref ) = each %{$add_loghandlers} ) {
+        my $loghandlers_to_add_ref = $arg_ref->{add_loghandlers};
+        if (_HASH($loghandlers_to_add_ref) ) {
+            while (my ($lh_name, $lh_code_ref ) = each %{$loghandlers_to_add_ref} ) {
                 $self->install_loghandler( $lh_name, $lh_code_ref );
             }
         }
@@ -117,25 +130,28 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         # ### Set prefix
         my $prefix   = $arg_ref->{prefix};
-        croak 'Missing prefix. Please edit your settings.'
+           $prefix ||= Modwheel::BuildConfig->get_value('prefix');
+        croak 'Missing prefix. Please reinstall Modwheel.'
             if not $prefix;
         $self->set_prefix($prefix);
 
         # Find configuration file.
+        # XXX
+        #$arg_ref->{configfile} = 'config/modwheelconfig.yml'; 
         $self->set_configfile( $arg_ref->{configfile} );
 
         # Parse and save access to config.
         # parseconfig dies on error.
-        my $config = $self->parseconfig();
-        $self->set_config($config);
+        my $config_ref = $self->parseconfig( );
+        $self->set_config($config_ref);
 
         # ## Set up the Site for this instance.
         my $site = $arg_ref->{site};
         $site ||= $self->config->{global}{defaultsite};
         $self->set_site($site);
         if (!ref $self->siteconfig) {
-            croak 'No configuration for site'. $self->site.
-                  'Please configure Modwheel.'
+            croak 'No configuration for site '. $self->site.
+                  ' please configure Modwheel.'
         }
 
         # ## Set up the locale for this instance.
@@ -144,9 +160,11 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             : $self->locale_setup_from_config();
 
         # ## Debugging on/off
-        my $debug = $arg_ref->{debug};
-        $debug ||= $self->config->{global}{debug};
-        $self->set_debug($debug);
+        my $is_debug_on = $arg_ref->{debug};
+        $is_debug_on ||= $self->config->{global}{debug};
+        $self->set_debug($is_debug_on);
+
+        $self->_init_l10n_strings( );
 
         return $self;
     }
@@ -214,12 +232,12 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             $configfile = File::Spec->catfile( $self->prefix, $configfile );
         }
         if (!-f $configfile) {
-            croak 'Fatal error: Could not open configuration file '
+            croak 'Fatal error: Could not open Modwheel configuration file '
                 . "($configfile): $OS_ERROR";
         }
-        my $ref = YAML::Syck::LoadFile($configfile);
+        my $config_ref = YAML::Syck::LoadFile($configfile);
 
-        return $ref;
+        return $config_ref;
     }
 
     #------------------------------------------------------------------------
@@ -309,13 +327,22 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     # This function pushes the exception onto the exceptions array.
     #------------------------------------------------------------------------
     sub throw {
-        my ($self, $exception) = @_;
+        my ($self, $exception, @fmtvars) = @_;
+        my $strings        = $self->strings;
         my $exceptions_ref = $self->exceptions;
-        $exceptions_ref ||= [];
+        $exceptions_ref ||= [ ];
 
         push @{$exceptions_ref}, $exception;
-
         $self->set_exceptions($exceptions_ref);
+
+        my $string = $strings->{$exception};
+        if ($string) {
+            my $message = $self->get_l10n_string($exception, @fmtvars);
+            $self->logerror($message);
+            return;
+        }
+       
+        $self->logerror($exception);
 
         return;
     }
@@ -358,14 +385,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         # catch any error.
         return 1 if !$catch;
 
-        for my $e (@{$exceptions_ref}) {
-            return 1 if $e eq $catch;
-        }
-
-        return 0;
-
         # catch the exception in $catch.
-        #return any { $_ eq $catch } @$exceptions_ref ? 1 : 0;
+        my $is_in = any { $_ eq $catch } @{ $exceptions_ref };
+        return $is_in ? 1 : 0;
     }
 
     #------------------------------------------------------------------------
@@ -387,14 +409,8 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         return 1 if !$catch;
 
-        $catch = quotemeta $catch;
-        foreach my $e (@{$exceptions_ref}) {
-            return 1 if $e =~ m/$catch/xms;
-        }
-
-        return 0;
-
-        # return any { m/$catch/xms } @$exceptions_ref ? 1 : 0;
+        my $is_in = any { m/$catch/xms } @{ $exceptions_ref };
+        return $is_in ? 1 : 0;
     }
 
     #========================================================================
@@ -421,8 +437,8 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         my ($self, $facility, @log_strings) = @_;
         my $loghandlers = $self->loghandlers;
         my $log_string = join q{ }, @log_strings;
-        $log_string ||= 'Tried to log, but no message specified.';
-
+        $log_string ||= $self->get_l10n_string('log-no-message');
+        no warnings 'uninitialized'; ## no critic
         # Format the log message.
         if ($self->debug) {
 
@@ -448,8 +464,8 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         if (!$loghandler_ref) {
             print {*STDERR}
-                "Warning: Unknown logmode '$logmode'. Using stderr ",
-                "instead.\n";
+                $self->get_l10n_string('log-unknown-logmode', $logmode),
+                "\n";
             $loghandler_ref = $loghandlers->{stderr};
         }
 
@@ -477,6 +493,43 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return;
     }
 
+    sub _init_l10n_strings {
+        my ($self) = @_;
+
+        my $locale = $self->locale;
+
+        my $strings_filepath = $self->_get_l10n_strings_file($locale);
+        if (! -f $strings_filepath) {
+            $strings_filepath = $self->_get_l10n_strings_file('en_EN');
+            return if ! -f $strings_filepath;
+        }
+       
+        my $l10n_strings_ref = YAML::Syck::LoadFile($strings_filepath);
+
+        $self->set_strings($l10n_strings_ref);
+
+        return;
+    }
+            
+    sub _get_l10n_strings_file {
+        my ($self, $locale) = @_;
+        my $strings_filename = $locale . $LOCALIZED_SUFFIX;
+        my $strings_filepath = File::Spec->catfile(
+            $self->prefix,
+            $LOCALIZED_DIRNAME,
+            $strings_filename
+        );
+        return $strings_filepath;
+    }
+
+    sub get_l10n_string {
+        my ($self, $string, @fmtvars) = @_;
+        my $strings_ref = $self->strings;
+
+        no warnings 'uninitialized'; ## no critic
+        my $message = sprintf $strings_ref->{$string}, @fmtvars;
+        return $message;
+    }
 };
 
 1;
@@ -484,11 +537,11 @@ __END__
 
 =head1 NAME
 
-Modwheel - Web framework.
+Modwheel - Tree-based Web framework.
 
 =head1 VERSION
 
-This document describes Modwheel version 0.2.3
+This document describes Modwheel version 0.3.1
 
 =head1 DESCRIPTION
 
@@ -498,8 +551,9 @@ drop-in support for several relational databases and templating systems.
 
 Modwheel is currently in a very early alpha development stage.
 
-The current development version of Modwheel should work with MySQL and the TemplateToolkit,
-although porting to other databases or representation engines shouldn't be much work.
+The current development version of Modwheel should work with SQLite, SQLite2, MySQL and
+the Template Toolkit, although porting to other databases or representation engines shouldn't be
+much work. Adding support for SQLite took about 30 minutes.
 
 =head1 SYNOPSIS
 
@@ -858,6 +912,15 @@ None known at the moment.
 =head1 BUGS AND LIMITATIONS
 
 None known at the moment.
+
+=head1 DSLIP
+
+b   - Beta testing
+d   - Developer: asksh@cpan.org
+p   - Perl-only
+O   - Object oriented
+p   - Standard-Perl: user may choose between GPL and Artistic.
+
 
 =head1 COVERAGE
 

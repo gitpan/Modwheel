@@ -1,0 +1,227 @@
+#!/usr/local/bin/perl
+# ########################################
+# $Id: modstrap,v 1.2 2007/05/18 23:42:25 ask Exp $
+# $Source: /opt/CVS/Modwheel/utils/modstrap,v $
+# $Author: ask $
+# $HeadURL$
+# $Revision: 1.2 $
+# $Date: 2007/05/18 23:42:25 $
+#################################################
+
+use strict;
+use warnings;
+use Modwheel::REPL;
+use Modwheel::Install::Everything;
+use Modwheel::Configure;
+use Readonly;
+use version; our $VERSION = qv('0.3.1');
+
+Readonly my $DEFAULT_PROMPT => q{modstrap > };
+
+#undef @ARGV;
+
+my $REPL_config = {
+    class  => mod->new(),
+    prompt => $DEFAULT_PROMPT,
+};
+
+if (@ARGV) {
+    my $r = Modwheel::REPL->new($REPL_config);
+    $r->do(join(q{ }, @ARGV), @ARGV);
+}
+else {
+    welcome();
+    Modwheel::REPL->new($REPL_config)->run;
+}
+
+sub welcome {
+    print q{ }, q{-+} x 32, qq{\n};
+    print
+        "Welcome to modstrap v$VERSION! Modwheel installation and configuration.",
+        qq{\n};
+    print q{ }, q{-+} x 32, qq{\n\n};
+    print
+        "Type `help` for some basic commands or `quit` to exit the program.\n\n";
+    return;
+}
+
+package mod;
+use Readonly;
+
+sub new {
+    return bless {}, shift;
+}
+
+sub install {
+    my ($self) = @_;
+    return Modwheel::Install::Everything::install( );
+}
+
+sub install_force {
+    my ($self) = @_;
+    return Modwheel::Install::Everything::install_force( );
+}
+
+sub configure {
+    my ($self) = @_;
+    return Modwheel::Configure->configure( );
+}
+
+sub child_help {
+    my ($self)  = @_;
+    my $spacing = 16;
+    my $method_help = {'install'   => 'Install Modwheel into the prefix chosen at compilation time.',};
+    while (my($sub, $description) = each %{$method_help}) {
+        my $whitespace = q{ } x ($spacing - length $sub);
+        print join $whitespace, ($sub, $description);
+        print qq{\n};
+    }
+    return;
+}
+
+sub touch {
+    my ($self, $file) = @_;
+    open my $fh, ">$file" or return;
+    close $fh;
+}
+
+__END__
+
+=pod
+
+=head1 NAME
+
+modstrap - Modwheel installation and configuration utility.
+
+=head1 VERSION
+
+This document refers to Modwheel version 0.3.1.
+
+=head1 USAGE
+
+    modstrap [option] [command] [cmd arg 1]..[cmd arg n]
+
+=head1 REQUIRED ARGUMENTS
+
+None.
+
+=head1 OPTIONS
+
+None.
+
+=head1 DESCRIPTION
+
+To install modwheel  into the prefix specified at build-time:
+
+    modstrap install
+
+To configure modwheel:
+
+    modstrap configure
+
+=head1 DIAGNOSTICS
+
+=head1 CONFIGURATION
+
+modstrap uses the prefix found in Modwheel::BuildConfig, which is a file
+created when you build and install the modwheel framework with either ./Build install
+or make install.
+
+=head1 EXIT STATUS
+
+Returns zero on sucess, and any value above zero on failure.
+
+=head1 DEPENDENCIES
+
+=over 4
+
+=item Modwheel
+
+=item Getopt::Euclid
+
+=item IO::Prompt
+
+=item Params::Util
+
+=item Term::ReadLine
+
+=item Readonly
+
+=item version
+
+=back
+
+=head1 INCOMPATIBILITIES                                                                                                                       
+                                                                                                                                               
+None known.                                                                                                                                    
+                                                                                                                                               
+=head1 BUGS AND LIMITATIONS                                                                                                                    
+                                                                                                                                               
+No bugs have been reported.                                                                                                                    
+                                                                                                                                               
+Please report any bugs or feature requests to                                                                                                  
+C<bug-modwheel@rt.cpan.org>, or through the web interface at                                                                                   
+                                                                                                                                               
+=head1 ACKNOWLEDGEMENTS
+
+Thanks to C<Matt Trout> for ideas.
+(See his blog post C<Writing a perl read-eval-print loop (REPL)> here:
+L<http://chainsawblues.vox.com/library/post/a-perl-read-excute-print-loop-repl.html>)
+
+Gisle Aas for base64 encoding/decoding code.
+
+=head1 SEE ALSO                                                                                                                                
+                                                                                                                                               
+=over 4                                                                                                                                        
+                                                                                                                                               
+=item * L<Modwheel::Manual>                                                                                                                    
+                                                                                                                                               
+The Modwheel manual.                                                                                                                           
+                                                                                                                                               
+=item * L<http://www.0x61736b.net/Modwheel/>                                                                                                   
+                                                                                                                                               
+The Modwheel website.                                                                                                                          
+                                                                                                                                               
+=back                                                                                                                                          
+                                                                                                                                               
+=head1 VERSION                                                                                                                                 
+                                                                                                                                               
+v0.2.2                                                                                                                                         
+                                                                                                                                               
+=head1 AUTHOR                                                                                                                                  
+                                                                                                                                               
+Ask Solem, C<< ask@0x61736b.net >>.                                                                                                            
+                                                                                                                                               
+                                                                                                                                               
+=head1 LICENSE AND COPYRIGHT                                                                                                                   
+                                                                                                                                               
+Copyright (c), 2007 Ask Solem C<< ask@0x61736b.net >>.                                                                                         
+                                                                                                                                               
+All rights reserved.                                                                                                                           
+                                                                                                                                               
+This library is free software; you can redistribute it and/or modify                                                                           
+it under the same terms as Perl itself, either Perl version 5.8.6 or,                                                                          
+at your option, any later version of Perl 5 you may have available.                                                                            
+                                                                                                                                               
+=head1 DISCLAIMER OF WARRANTY                                                                                                                  
+                                                                                                                                               
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE                                                                 
+SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE                                                                     
+STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE                                                                       
+SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED,                                                                    
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND                                                                   
+FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND                                                                        
+PERFORMANCE OF THE SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE,                                                                  
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.                                                                         
+                                                                                                                                               
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY                                                                 
+COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE                                                                    
+SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE TO YOU FOR DAMAGES,                                                                      
+INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING                                                                   
+OUT OF THE USE OR INABILITY TO USE THE SOFTWARE (INCLUDING BUT NOT LIMITED TO                                                                  
+LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR                                                                   
+THIRD PARTIES OR A FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER                                                                           
+SOFTWARE), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE                                                                          
+POSSIBILITY OF SUCH DAMAGES.                                                                                                                   
+                                                                                                                                               
+=cut

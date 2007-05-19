@@ -32,7 +32,9 @@ Installation should be easy, just follow these steps:
     make
     make test
     make install
-    bash bin/install.sh
+
+    ./bin/modstrap install
+    ./bin/modstrap config
 
 Most of the time the default values are OK to choose, but read the on-screen instructions
 carefully and think before you hit enter.
@@ -54,6 +56,13 @@ as you specify it in the configuration files.
     mkdir /opt/modwheel/Templates
     mkdir /opt/modwheel/Repository
     mkdir /opt/modwheel/cache
+    mkdir /opt/modwheel/Localized
+
+The Localized directory holds strings for all languages, you must copy
+the language files from the distribution directory to the installation
+directory.
+
+    cp ./Localized/* /opt/modwheel/Localized
 
 The repository directory must be owned by the same user that the Apache
 server runs as, so users are able to upload files with their browser.
@@ -100,13 +109,7 @@ installation, you might already have created the configuration and databases.
 
 To run the automatic configuration script, run the following command:
 
-    perl mwconfig.pl /opt/modwheel
-
-Where /opt/modwheel is the modwheel installation directory you created
-earlier.
-
-NOTE: Only MySQL is supported at this time, other database systems are planned
-for the future.
+   modstrap configure 
 
 =head1 MANUAL CONFIGURATION
 

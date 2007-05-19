@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS objtagmap
     tagid     INT                         NOT NULL,
     PRIMARY KEY(id)
 )
-ENGINE = MyISAM;
+ENGINE = MyISAM ROW_FORMAT = FIXED AVG_ROW_LENGTH = 5 MAX_ROWS = 250000;
 
 CREATE TABLE IF NOT EXISTS tags
 (
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS tags
     name    char(32)                    NOT NULL,
     PRIMARY KEY(tagid)    
 )
-ENGINE = MyISAM;
+ENGINE = MyISAM ROW_FORMAT = FIXED AVG_ROW_LENGTH = 32 MAX_ROWS = 1000;
 
 -- Select all tags for a object: argument: object_id
 -- SELECT t.name FROM objtagmap m, tags t WHERE m.objid=? AND m.tagid = t.tagid;

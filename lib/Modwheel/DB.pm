@@ -7,18 +7,18 @@
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #####
-# $Id: DB.pm,v 1.6 2007/04/28 13:13:03 ask Exp $
+# $Id: DB.pm,v 1.10 2007/05/18 23:42:37 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/DB.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.6 $
-# $Date: 2007/04/28 13:13:03 $
+# $Revision: 1.10 $
+# $Date: 2007/05/18 23:42:37 $
 #####
 package Modwheel::DB;
 use strict;
 use warnings;
 use Params::Util ('_CLASS');
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 {
 
     #------------------------------------------------------------------------
@@ -53,17 +53,19 @@ use version; our $VERSION = qv('0.2.3');
 
         # Check the class name. 
         if (!_CLASS($backend)) {
-            $modwheel->logerror(
-                "DB: $backend is not a valid class name."
-            );
-            return;
+            return $modwheel->throw('db-factory-invlid-class', $backend);
         };
 
         # we just include the database we need by require(),
         # create a new instance and return it.
         my $file = $backend . q{.pm};
         $file =~ s{ :: }{/}xmsg;
-        require $file;    ## no critic
+
+        # Check if the module is already loaded. (about 4 x faster).
+        if (! $INC{$file}) {
+            CORE::require $file;    ## no critic
+        }
+
         my $obj = $backend->new($arg_ref);
 
         return $obj;
@@ -80,7 +82,7 @@ Modwheel::DB - Abstract factory class for Modwheel database drivers.
 
 =head1 VERSION
 
-v0.2.3
+v0.3.1
 
 =head1 SYNOPSIS
 

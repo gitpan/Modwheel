@@ -1,0 +1,55 @@
+--- 
+log-no-message: "Tried to log, but no message specified"
+log-unknown-logmode: "Warning: Unknown logmode: '%s'. Using standard error instead."
+db-factory-invalid-class: "DB: %s is not a valid class name."
+template-factory-invalid-class: "Template: %s is not a valid class name."
+db-connection-error: "Couldn't connect to database %s: %s"
+db-no-driver: "No database driver selected"
+db-prepare-without-query: "Missing query for database prepare()"
+db-prepare-query-error: "Couldn't prepare query '%s': %s"
+db-execute-query-error: "Couldn't execute query '%s': %s"
+db-build-query-missing-where: "Build database update query: Not having a where clause is probably not what you want..."
+db-build-delete-query-missing-where: "Build database delete query: Not having a where clause is probably not what you want..."
+object-save-missing-field: "Missing required field: %s"
+object-save-parent-loop: "Save: Object can't have itself as parent."
+object-tree-parent-loop: "Fetch object tree: INFINITE LOOP IN TREE!. Currently at id: %d"
+object-exprbyid-loop: "Object: exprbyid for id %d went into an infinite loop"
+object-tag-create-missing-name: "Create tag: Missing tag name"
+object-no-such-tag: "No such tag: %s"
+object-tag-delete-missing-field: "Delete tag: Missing tag name or id"
+object-tag-connect-missing-field: 'Connect Object With Tag: Missing tag name or id.'
+object-tag-connect-missing-object: 'Connect Object With Tag: Missing object id.'
+object-tag-disconnect-missing-field: 'Disconnect Object From Tag: Missing tag name or id.'
+object-tag-disconnect-missing-object: 'Disconnect Object From Tag: Missing object id.'
+object-tags-missing-field: 'Get Tags For Object: Missing object id.'
+object-prototype-get-missing-field: 'Get prototype for type: Missing type'
+object-prototype-get-missing-field: 'Get prototype for type: Missing type'
+object-prototype-remove-missing-field: 'Remove prototype for type: Missing type'
+object-create_prototype-missing_type: 'Create prototype: Missing argument: type-name'
+object-create_prototype-already_exists: "Create prototype: Prototype for %s already exists."
+object-stream-max-depth: 'Object traverse: Max levels exceeded.'
+object-deserialize-parse-error: 'Object deserialize: Invalid YAML'
+object-deserialize-checksum-error: 'Object deserialize: Checksum mismatch'
+object-revision-create-missing-checksum: 'Create Revision: Missing checksum.'
+repository-upload-missing-argument: "Repository upload: Missing argument: %s."
+repository-upload-parent-id-not-digit: "Repository upload: Parent for upload must be a digit."
+repository-upload-mkdir-error:  "Repository upload: Couldn't create directory '%s': %s"
+repository-could-not-delete-file:  'Repository Delete: Could not delete file (rep id: %d, filepath: %s): %s'
+repository-could-not-delete-entry: "Couldn't delete repository id %d: %s"
+repository-open-file-shell-escape: "User tries to shell escape or get parent directory!"
+repository-open-can-not-stat: "Couldn't stat file $filename: %s"
+repository-open-error: "Couldn't open %s (flags %d): %s"
+repository-open-can-not-stat-fh: "Couldn't stat filehandle for %s: %s"
+repository-open-race-condition: "POSSIBLE RACE ATTEMP. STAT DOES NOT MATCH FOR FILE %s: (%d|%d, %d|%d)."
+user-uidbyname-missing-user: "Uidbyname: Missing username"
+user-namebyuid-missing-uid: 'Namebyuid: Missing UID'
+user-no-such-user: "No such username or no password set for user: %s"
+user-login-failed: "Invalid username or password for user %s. (Using password: YES)"
+user-update-missing-user: "Update user: Please specify which user to update."
+user-create-missing-field: "Create user: Can not create user without username and password."
+user-create-already-exists: "Create user: User with username %s already exists!"
+user-u2id-no-such-user: "Convert username to UID) No such user: %s"
+user-get-missing-field: "Get User: Missing username or uid."
+user-get-no-such-user: "User get: No such user id: %d"
+user-delete-missing-field: "Delete User: Missing username or uid."
+user-delete-no-such-user: "User delete: Couldn't delete user: No such user id: %d"

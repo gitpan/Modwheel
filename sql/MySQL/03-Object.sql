@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS object
     created     TIMESTAMP         DEFAULT     CURRENT_TIMESTAMP,
     changed     TIMESTAMP,
     sort        TINYINT    SIGNED DEFAULT 0,
+    karma       INT DEFAULT 0,
     name        VARCHAR(255),
     keywords     VARCHAR(768),
     description    MEDIUMTEXT,
@@ -24,7 +25,7 @@ CREATE TABLE IF NOT EXISTS object
     KEY keywords2(name(1), keywords(2), description(3)),
     FULLTEXT(name,keywords,description,data)
 )
-ENGINE = MYISAM;
+ENGINE = MYISAM ROW_FORMAT = DYNAMIC MAX_ROWS = 250000;
 
 
 --    KEY data2 (name, keywords, description(768), data(999))

@@ -67,6 +67,9 @@ sub __coderef { ref shift eq 'CODE' or die "must be a code reference" }
         my $v = shift;
         $v =~ /rw|ro/ or die "'$v' is not a valid is setting.";
     },
+    isa     => sub {
+        return 1;
+    },
 );
 
 #--------------------------------------------------------------------------#
@@ -457,11 +460,13 @@ sub _install_property{
     if ( exists $options->{privacy} && $options->{privacy} eq 'public' ) {
         no strict 'refs';
         my $policy_applied;
-        my $is = $options->{is};
+        my $is  = $options->{is};
+        my $isa = $options->{isa};
         if ($is eq 'ro' || $is eq 'rw') {
             my $get_label = $GET_PREFIX . $label;
             *{ $caller . '::' . $get_label } =
-                _get_get_accessor( $hash, $get_label );
+                $isa ? _get_get_accessor_using_isa( $isa, $hash, $get_label )
+                     : _get_get_accessor( $hash, $get_label );
             $policy_applied++;
         }
         if ($is eq 'rw') {
@@ -490,6 +495,20 @@ sub _get_get_accessor {
         my $obj_id = refaddr $obj;
         return $ref->{ $obj_id };
     }
+}
+
+sub _get_get_accessor_using_isa {
+    my ($isa_class_name, $ref, $label) = @_;
+    return sub {
+        my $obj = shift;
+            confess "$label called with arguments, are you sure you don't want set_$label?" if @_;
+            my $obj_id = refaddr $obj;
+            my $this_object = $ref->{ $obj_id }; 
+            if (! ref $this_object) {
+                $this_object = $isa_class_name->new( );
+            }
+            return $this_object;
+        }
 }
 
 sub _get_set_accessor {

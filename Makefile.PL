@@ -2,43 +2,13 @@ use strict;
 use warnings;
 no strict 'subs';
 use ExtUtils::MM_Unix ();
-
-=for comment
-BEGIN {
-    use English qw( -no_match_vars );
-    eval 'use version';
-    if ($EVAL_ERROR) {
-        die 'Modwheel requires the version module. ' .
-            'You can download version from CPAN: '   .
-            "http://search.cpan.org/~jpeacock/version-0.71/.\n"
-        ;
-    }
-    eval 'use Readonly';
-    if ($EVAL_ERROR) {
-        die 'Modwheel requires the Readonly module. ' .
-            'You can download Readonly from CPAN: '   .
-            "http://search.cpan.org/~roode/Readonly-1.03/\n"
-        ;
-    }
-}
-
-use version;
-use Readonly;
-
-my $v = version->new;
-
-Readonly my $MAIN_DIST_FILE => 'lib/Modwheel.pm';
-
-my $modwheel_version = ExtUtils::MM_Unix->parse_version($MAIN_DIST_FILE);
-my $modwheel_numified_version = version->new($modwheel_version)->numify;
-
-=cut
+use inc::M::Bootstrap;
 
 use inc::Module::Install;
 
 # Define metadata
 name            'Modwheel';
-version         '0.2.3';
+version         '0.3.1';
 all_from        'lib/Modwheel.pm';
 author          'Ask Solem <ask@0x61736b.net>';
 license         'perl';
@@ -79,6 +49,8 @@ requires        'Perl6::Export'         => 0.07;
 requires        'Perl6::Form'           => 0.04;
 requires        'IO::Prompt'            => '0.099004';
 requires        'Digest::SHA1'          => 2.11;
+requires        'IO::Interactive'       => '0.0.3';
+requires        'Perl6::Slurp'          => 0.03;
 
 build_requires  'Test::More'            => 0.42;
 recommends      'Test::Pod'             => 1.26;
@@ -87,9 +59,12 @@ recommends      'Test::YAML::Valid'     => 0;
 recommends      'Test::Exception'       => 0;
 recommends      'Perl::Critic'          => 1.051;
 recommends      'Test::Perl::Critic'    => 1.0;
+recommends      'Test::YAML::Meta'      => 0.04;
+recommends      'Test::Kwalitee'        => 0.30;
     
 no_index        'directory'            => '.svn';
 #install_script  'bin/install.sh';
     
 auto_install();
 WriteAll;
+inc::M::Bootstrap->strap_it( );

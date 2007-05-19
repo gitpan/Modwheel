@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users
     comments    MEDIUMTEXT,
     PRIMARY KEY(id)
 )
-ENGINE = MYISAM;
+ENGINE = MYISAM ROW_FORMAT = DYNAMIC AVG_ROW_LENGTH = 150 MAX_ROWS = 1000;
 
 CREATE TABLE IF NOT EXISTS groups
 (
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS groups
     password    char(64),
     PRIMARY KEY(id)
 )
-ENGINE = MYISAM;
+ENGINE = MYISAM ROW_FORMAT = FIXED AVG_ROW_LENGTH = 64 MAX_ROWS = 500;
 
 #-- Create root user with default password: 'modwheel', and..
 #-- ...guest user 

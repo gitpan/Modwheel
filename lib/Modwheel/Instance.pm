@@ -9,34 +9,49 @@
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #####
-# $Id: Instance.pm,v 1.6 2007/04/28 13:13:03 ask Exp $
+# $Id: Instance.pm,v 1.9 2007/05/18 23:42:37 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Instance.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.6 $
-# $Date: 2007/04/28 13:13:03 $
+# $Revision: 1.9 $
+# $Date: 2007/05/18 23:42:37 $
 #####
 
 package Modwheel::Instance;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use Scalar::Util qw(weaken);
 use namespace::clean;
 {
 
-    public modwheel   => my %modwheel_for,   { is => 'rw' };
-    public db         => my %db_for,         { is => 'rw' };
-    public user       => my %user_for,       { is => 'rw' };
-    public object     => my %object_for,     { is => 'rw' };
-    public repository => my %repository_for, { is => 'rw' };
-    public template   => my %template_for,   { is => 'rw' };
+    public modwheel   => my %modwheel_for,   { is => 'rw', isa => 'Modwheel'             };
+    public db         => my %db_for,         { is => 'rw', isa => 'Modwheel::DB'         };
+    public user       => my %user_for,       { is => 'rw', isa => 'Modwheel::User'       };
+    public object     => my %object_for,     { is => 'rw', isa => 'Modwheel::Object'     };
+    public repository => my %repository_for, { is => 'rw', isa => 'Modwheel::Repository' };
+    public template   => my %template_for,   { is => 'rw', isa => 'Modwheel::Template'   };
 
     sub new {
-        my ($class, $arg_ref ) = @_;
+        my ($class, $arg_ref) = @_;
+        my $self;
 
-        my $self = register($class);
+=for Todo
+        if ($class =~ /^Modwheel::DB/) {
+            our $counter++;
+            print "$counter. CLASS $class IS NOW A SINGLETON OBJECT\n";
+            no strict 'refs'; ## no critic
+            my $instance = \${ "$class\::_instance" };
+            $self = defined $$instance ? $$instance
+                                       : ($$instance = register($class));
+        }
+        else {
+            $self = register($class);
+        }
+=cut
+
+        $self = register($class);
 
         # Save modwheel object and delete the argument for modwheel.
         $modwheel_for{ident $self} = $arg_ref->{modwheel};
@@ -73,7 +88,7 @@ Modwheel::Instance - Base class for modwheel application components.
 
 =head1 VERSION
 
-v0.2.3
+This document describes version 0.3.1.
 
 =head1 SYNOPSIS
 
@@ -115,7 +130,7 @@ between the Modwheel components.
 
 =over 4
 
-=item C<-Egt>new(\%args)>
+=item C<-E<gt>new(\%args)>
 
 Inherited method for creating a modwheel instance class.
 
@@ -169,7 +184,7 @@ Access/set the current object for working with file repositories.
 
 =over 4
 
-=item C<$self-E<gt>setup_instance({db => $db, user => $user ...})>
+=item C<$self-E<gt>setup_instance({db =E<gt> $db, user =E<gt> $user ...})>
 
 Shortcut for set_db, set_user, set_template, set_object, set_repository.
 

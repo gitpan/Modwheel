@@ -1,0 +1,10 @@
+CREATE TABLE objtagmap (
+    id INTEGER PRIMARY KEY NOT NULL,
+    objid INTEGER NOT NULL,
+    tagid INTEGER NOT NULL
+);
+
+CREATE TABLE tags (
+    tagid INTEGER PRIMARY KEY NOT NULL,
+    name char(32) NOT NULL
+);

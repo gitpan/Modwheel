@@ -1,6 +1,7 @@
 use strict;
 use warnings;
-use inc::Module::Build::Modwheel;
+#use inc::Module::Build::Modwheel;
+use inc::Module::Build::M;
 
 sub YES { 1 };
 sub NO  { 0 };
@@ -10,20 +11,17 @@ my $prefix = q{};
 
 $ENV{DEVEL_COVER_OPTIONS} = '-ignore,blib/Class/InsideOut/Policy/Modwheel.pm';
 
-#my $builder = inc::Module::Build::Modwheel->new(
- my $builder = Module::Build->new(
+my $builder = inc::Module::Build::M->new(
+# my $builder = Module::Build->new(
     module_name          => 'Modwheel',
     license              => 'perl',
     dist_author          => 'Ask Solem <ASKSH@cpan.org>',
+    dist_version         => '0.3.1a',
     dist_version_from    => 'lib/Modwheel.pm',
     dynamic_config       => NO,
     sign                 => NO, # asksh: have to find out why my signature fails.
     recursive_test_files => YES,
     config_module        => 'Modwheel::BuildConfig',
-    config_questions     => [
-            ['Where do you want to install modwheel?', 'prefix',
-            '/opt/modwheel'],
-    ],
     docs => [ qw(
         lib/Modwheel/Manual.pod
         lib/Modwheel/Manual/Install.pod
@@ -63,6 +61,9 @@ $ENV{DEVEL_COVER_OPTIONS} = '-ignore,blib/Class/InsideOut/Policy/Modwheel.pm';
         'Perl6::Form'           => 0.04,
         'IO::Prompt'            => 0.099004,
         'Digest::SHA1'          => 2.11,
+        'IO::Interactive'       => '0.0.3',
+        'Perl6::Slurp'          => 0.03,
+        'File::Copy::Recursive' => 0,
     },
     recommends           => {
         'Test::Pod'             => 0,
@@ -73,6 +74,8 @@ $ENV{DEVEL_COVER_OPTIONS} = '-ignore,blib/Class/InsideOut/Policy/Modwheel.pm';
         'Test::Exception'       => 0,
         'Perl::Critic'          => 1.051,
         'Test::Perl::Critic'    => 1.0,
+        'Test::YAML::Meta'      => 0.04,
+        'Test::Kwalitee'        => 0.30,
     },
     build_requires       => {
         'Test::More'            => 0.42,
@@ -91,6 +94,18 @@ $ENV{DEVEL_COVER_OPTIONS} = '-ignore,blib/Class/InsideOut/Policy/Modwheel.pm';
         t/cache
     ) ],
     auto_features        => {
+        db_sqlite_support       => {
+            description             => 'SQLite as database driver.',
+            requires                => {
+                'DBD::SQLite'           => 1.13,
+            },
+        },
+        db_sqlite2_support       => {
+            description             => 'SQLite2 as database driver.',
+            requires                => {
+                'DBD::SQLite2'           => 0.33,
+            },
+        },
         db_mysql_support        => {
             description             => 'MySQL as database driver.',
             requires                => {
@@ -120,12 +135,10 @@ $ENV{DEVEL_COVER_OPTIONS} = '-ignore,blib/Class/InsideOut/Policy/Modwheel.pm';
     },
     meta_merge          => {
         resources           => {
-            homepage            => 'http://www.0x61736b.net/Modwheel',
-            cpan                => 'http://search.cpan.org/~asksh/Modwheel-0.02/',
+            HomePage            => 'http://www.0x61736b.net/Modwheel',
+            Download            => 'http://search.cpan.org/~asksh/Modwheel-0.3.1/',
         },
-        uses            => {
-            scriptaculous       => 'http://script.aculo.us/',
-        },
+        distribution_type   => 'Application',
     },
     
 );

@@ -7,17 +7,17 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Object.pm,v 1.9 2007/04/28 13:13:03 ask Exp $
+# $Id: Object.pm,v 1.12 2007/05/18 23:42:37 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Object.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.9 $
-# $Date: 2007/04/28 13:13:03 $
+# $Revision: 1.12 $
+# $Date: 2007/05/18 23:42:37 $
 #####
 package Modwheel::Object;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 use base 'Modwheel::Instance';
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
@@ -28,7 +28,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     use Scalar::Util qw(blessed weaken);
     use Perl6::Export::Attrs;
     use Digest::SHA1;
-    use YAML::Syck;
+    use JSON::Syck;
     use namespace::clean;
 
     # #####################
@@ -56,6 +56,10 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     Readonly my @PROTOTYPE_FIELDS=>
         qw(data description id keywords name type);
 
+    #========================================================================
+    #                       -- OBJECT ATTRIBUTES --
+    #========================================================================
+
     Readonly our %attributes => (
         id          => q{$},  # Object ID.
         parent      => q{$},  # ID of object parent.
@@ -66,6 +70,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         groupo      => q{$},  # ID of the group this object belong to.
         revised_by  => q{$},  # The laster user (ID) that changed this object.
         'sort'      => q{$},  # Sort priority.
+        karma       => q{$},
         template    => q{$},  # Path to the object's template.
         type        => q{$},  # The objects type.
         name        => q{$},  # The object name (or title).
@@ -92,6 +97,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
     public keywords     => my %keywords_for,    {is => 'rw'};
     public data         => my %data_for,        {is => 'rw'};
     public detach       => my %detach_for,      {is => 'rw'};
+    public karma        => my %karma_for,       {is => 'rw'};
     public degree       => my %degree_for,      {is => 'rw'};
 
     # ### Object structure.
@@ -114,8 +120,17 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         description =>  q{'%s'},
         data        =>  q{'%s'},
         detach      =>  q{%d},
+        karma       =>  q{%d},
     );
 
+    #========================================================================
+    #                     -- PUBLIC INSTANCE METHODS --
+    #========================================================================
+
+    #------------------------------------------------------------------------
+    # ->set_defaults( )
+    #
+    #------------------------------------------------------------------------ 
     sub set_defaults {
         my ($self)  = @_;
         my $mw      = $self->modwheel;
@@ -173,6 +188,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return 1;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->fetch(\%match, \@select, \%options, $table)
+    #------------------------------------------------------------------------ 
     sub fetch {
         my($self, $match, $select, $options, $table) = @_;
         my $mw   = $self->modwheel;
@@ -214,6 +232,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             : \@objects;
     }
 
+    #------------------------------------------------------------------------ 
+    # > _find_bool_value($string)
+    #------------------------------------------------------------------------ 
     sub _find_bool_value {
         my ($string) = @_;
         return if !defined $string;
@@ -240,6 +261,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->save( )
+    #------------------------------------------------------------------------ 
     sub save {
         my ($self) = @_;
         my $mw     = $self->modwheel;
@@ -248,9 +272,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         foreach my $field (qw(name type parent)) {
             if (!$self->$field) {
-                $mw->throw('object-save-missing-field');
-                $mw->logerror("Missing required field: \u$field");
-                return;
+                return $mw->throw('object-save-missing-field', uc $field);
             }
         }
 
@@ -276,9 +298,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         if ($self->id) {
             $query = $db->build_update_q('object', \%objstruct, ['id']);
             if ($self->parent == $self->id) {
-                $mw->throw('object-parent-loop');
-                $mw->logerror('Object can not have itself as parent.');
-                return;
+                return $mw->throw('object-save-parent-loop');
             }
             $save_mode = 'update';
         }
@@ -309,6 +329,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $self->id;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->fetch_tree($id)
+    #------------------------------------------------------------------------ 
     sub fetch_tree {
         my ($self, $parent) = @_;
         my $modwheel        = $self->modwheel;
@@ -325,14 +348,10 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         my $opt_never_detach = _find_bool_value(
             $modwheel->siteconfig->{NeverDetach});
 
-    NODE:
+        NODE:
         while (defined $parent) {
             if ( $seen{$parent}++ ) {
-                $modwheel->throw('object-parent-loop');
-                $modwheel->logerror(
-                         'Fetch Object Tree: INFINITE LOOP IN TREE!.'
-                        ."Currently at id $parent.");
-                return;
+                return $modwheel->throw('object-tree-parent-loop', $parent);
             }
 
             my $node = $self->fetch({ id => $parent} );
@@ -358,6 +377,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return \@names;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->path_to_id($path, $opt_path_delimiter)
+    #------------------------------------------------------------------------ 
     sub path_to_id {
         my ($self, $path, $opt_path_delimiter) = @_;
         my $db           = $self->db;
@@ -403,6 +425,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $id;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->expr_by_id($id, $opt_delimiter)
+    #------------------------------------------------------------------------ 
     sub expr_by_id {
         my ($self, $id, $opt_delimiter) = @_;
         my $modwheel     = $self->modwheel;
@@ -419,7 +444,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             = $db->build_select_q('object',[qw(name  parent  type)], ['id']);
         my $sth   = $db->prepare($query);
 
-    NODE:
+        NODE:
         while ($id) {
 
             $sth->execute($id);
@@ -434,10 +459,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
                 : last NODE;
 
             if ( $seen{$id}++ ) {
-                $modwheel->throw('object-exprbyid-loop');
-                $modwheel->logerror('Object: exprbyid for id ',
-                    "$id went into an infinite loop!");
-                return;
+                return $modwheel->throw('object-exprbyid-loop', $id);
             }
 
         }
@@ -448,6 +470,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $final_expression;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->trash($id)
+    #------------------------------------------------------------------------ 
     sub trash {
         my ($self, $id) = @_;
         my $db          = $self->db;
@@ -458,6 +483,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $db->exec_query($query, MW_TREE_TRASH, $id);
     }
 
+    #------------------------------------------------------------------------ 
+    # ->empty_trash( )
+    #------------------------------------------------------------------------ 
     sub empty_trash {
         my ($self) = @_;
         my $db     = $self->db;
@@ -469,15 +497,16 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return 1;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->create_tag($tag_name)
+    #------------------------------------------------------------------------ 
     sub create_tag {
         my ($self, $tag_name) = @_;
         my $modwheel          = $self->modwheel;
         my $db                = $self->db;
 
         if (!$tag_name) {
-            $modwheel->throw('object-tag-create-missing-field');
-            $modwheel->logerror('Create Tag: Missing tag name.');
-            return;
+            return $modwheel->throw('object-tag-create-missing-name');
         }
 
         my $itq = $db->build_insert_q('tags', ['name']);
@@ -485,6 +514,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $db->exec_query($itq, $tag_name);
     }
 
+    #------------------------------------------------------------------------ 
+    # ->get_tagid_by_name($tag_name)
+    #------------------------------------------------------------------------ 
     sub get_tagid_by_name {
         my ($self, $tag_name) = @_;
         my $modwheel          = $self->modwheel;
@@ -497,22 +529,22 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         my $tag = $db->fetch_singlevar($q, $tag_name);
 
         if (!$tag) {
-            $modwheel->logerror('Get tagid by name: No such tag.');
-            return;
+            return $modwheel->throw('object-no-such-tag', $tag);
         }
 
         return $tag;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->delete_tag($tag)
+    #------------------------------------------------------------------------ 
     sub delete_tag {
         my ($self, $tag) = @_;
         my $modwheel     = $self->modwheel;
         my $db           = $self->db;
 
         if (!$tag) {
-            $modwheel->throw('object-tag-delete-missing-field');
-            $modwheel->logerror('Delete Tag: Missing tag name or id.');
-            return;
+            return $modwheel->throw('object-tag-delete-missing-field');
         }
 
         # Delete by id if the argument is a number, by name otherwise.
@@ -527,16 +559,16 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $db->exec_query($dtq, $tag);
     }
 
+    #------------------------------------------------------------------------ 
+    # ->connect_with_tag($tag, $object_id)
+    #------------------------------------------------------------------------ 
     sub connect_with_tag {
         my ($self, $tag, $objid) = @_;
         my $modwheel             = $self->modwheel;
         my $db                   = $self->db;
 
         if (!$tag) {
-            $modwheel->throw('object-tag-connect-missing-field');
-            $modwheel->logerror(
-                'Connect Object With Tag: Missing tag name or id.');
-            return;
+            return $modwheel->throw('object-tag-connect-missing-field');
         }
 
         # if the tag is not a number, try to get the id by the name.
@@ -544,10 +576,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             $tag = $self->get_tagid_by_name($tag);
         }
         if (!$tag) {
-            $modwheel->throw('object-tag-no-such-tag');
-            $modwheel->logerror('Connect Object With Tag: No tag with name',
-                $tag);
-            return;
+            return $modwheel->throw('object-no-such-tag', $tag);
         }
 
         # The object id can optionally be set as an argument, else we use
@@ -558,27 +587,24 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         # ...if we still have no object id, throw an error.
         if (!$objid) {
-            $modwheel->throw('object-tag-connect-missing-field');
-            $modwheel->logerror(
-                'Connect Object With Tag: Missing object id.');
-            return;
+            return $modwheel->throw('object-tag-connect-missing-object');
         }
+        my $id = $db->fetch_next_id('objtagmap');
+        my $q  = $db->build_insert_q('objtagmap', [qw(id objid tagid)]);
 
-        my $q = $db->build_insert_q('objtagmap', [qw(objid tagid)]);
-
-        return $db->exec_query($q, $objid, $tag);
+        return $db->exec_query($q, $id, $objid, $tag);
     }
 
+    #------------------------------------------------------------------------ 
+    # ->disconnect_from_tag($tag, $object_id)
+    #------------------------------------------------------------------------ 
     sub disconnect_from_tag {
         my ($self, $tag, $objid) = @_;
         my $modwheel             = $self->modwheel;
         my $db                   = $self->db;
 
         if (!$tag) {
-            $modwheel->throw('object-tag-disconnect-missing-field');
-            $modwheel->logerror(
-                'Disconnect Object From Tag: Missing tag name or id.');
-            return;
+            return $modwheel->throw('object-tag-disconnect-missing-field');
         }
 
         # if the tag is not a number, try to get the id by the name.
@@ -586,10 +612,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             $tag = $self->get_tagid_by_name($tag);
         }
         if (!$tag) {
-            $modwheel->throw('object-tag-no-such-tag');
-            $modwheel->logerror(
-                'Disconnect Object From Tag: No tag with name', $tag);
-            return;
+            return $modwheel->throw('object-no-such-tag', $tag);
         }
 
         # The object id can optionally be set as an argument, if it isn't
@@ -600,10 +623,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
 
         # ...if we still have no object id, throw an error.
         if (!$objid) {
-            $modwheel->throw('object-tag-disconnect-missing-field');
-            $modwheel->logerror(
-                'Disconnect Object From Tag: Missing object id.');
-            return;
+            return $modwheel->throw('object-tag-disconnect-missing-object');
         }
 
         my $q = $db->build_delete_q('objtagmap', [qw(objid tagid)]);
@@ -611,6 +631,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $db->exec_query($q, $objid, $tag);
     }
 
+    #------------------------------------------------------------------------ 
+    # ->get_all_tags( )
+    #------------------------------------------------------------------------ 
     sub get_all_tags {
         my ($self) = @_;
         my $db     = $self->db;
@@ -631,6 +654,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return \@tags;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->get_tags_for_object($object_id)
+    #------------------------------------------------------------------------ 
     sub get_tags_for_object {
         my ($self, $objid) = @_;
         my $modwheel       = $self->modwheel;
@@ -640,15 +666,12 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             $objid = $self->id;
         }
 
-        if (!$objid) {
-            $modwheel->throw('object-tags-missing-field');
-            $modwheel->logerror('Get Tags For Object: Missing object id.');
-            return;
-        }
+        return $modwheel->throw('object-tags-missing-field')
+            if !$objid;
 
         my $q = $db->build_select_q(
             { objtagmap => 'm',  tags     => 't'       },
-            ['DISTINCT(t.name)', 't.tagid'              ],
+            ['DISTINCT t.name', 't.tagid'              ],
             {'m.objid'  => q{?}, 't.tagid' => 'm.tagid' }
         );
 
@@ -665,15 +688,15 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return \@tags;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->get_prototype_for_type($type)
+    #------------------------------------------------------------------------ 
     sub get_prototype_for_type {
         my ($self, $type) = @_;
         my $modwheel      = $self->modwheel;
         my $db            = $self->db;
-        if(! defined $type) {
-            $modwheel->throw('object-prototype-get-missing-field');
-            $modwheel->logerror('Get prototype for type: Missing type');
-            return;
-        }
+        return $modwheel->throw('object-prototype-get-missing-field')
+            if not defined $type;
 
         my $q
             = $db->build_select_q('prototype',[@PROTOTYPE_FIELDS], ['type']);
@@ -683,15 +706,15 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $prototype;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->remove_prototype_for_type($type)
+    #------------------------------------------------------------------------ 
     sub remove_prototype_for_type {
         my ($self, $type) = @_;
         my $modwheel      = $self->modwheel;
         my $db            = $self->db;
-        if(! defined $type) {
-            $modwheel->throw('object-prototype-remove-missing-field');
-            $modwheel->logerror('Remove prototype for type: Missing type');
-            return;
-        }
+        return $modwheel->throw('object-prototype-remove-missing-field')
+            if not defined $type;
 
         my $q = $db->build_delete_q('prototype', [qw(type)]);
 
@@ -702,27 +725,21 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             : 0;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->create_prototype($type, {name => '..', keywords => '..', [...]})
+    #------------------------------------------------------------------------ 
     sub create_prototype {
         my ($self, $type, $arg_ref) = @_;
         my $modwheel = $self->modwheel;
         my $db       = $self->db;
 
         # We need a type to create.
-        if (!$type) {
-            $modwheel->throw('object-create_prototype-missing_type');
-            $modwheel->logerror(
-                'Create prototype: Missing argument: type-name',
-            );
-            return;
-        }
+        return $modwheel->throw('object-create_prototype-missing_type')
+            if not $type;
 
         # Check for duplicate.
         if ($self->get_prototype_for_type($type)) {
-            $modwheel->throw('object-create_prototype-already_exists');
-            $modwheel->logerror(
-                "Create prototype: Prototype for $type already exists.",
-            );
-            return;
+            return $modwheel->throw('object-create_prototype-already_exists', $type);
         }
 
         # Get next ID available.
@@ -740,6 +757,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $new_proto_id;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->get_all_prototypes( )
+    #------------------------------------------------------------------------ 
     sub get_all_prototypes {
         my ($self) = @_;
         my $db     = $self->db;
@@ -760,6 +780,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return \@prototypes;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->traverse(int $id, \%handlers, \@get, int $max_levels)
+    #------------------------------------------------------------------------ 
     sub traverse {
         my ($self, $id, $handlers, $get_ref, $max_levels) = @_;
         my $db = $self->db;
@@ -794,9 +817,7 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             # have we exceeded the max limit?
             if ($max_levels && $cur_levels++ >= $max_levels) {
                 $has_exceeded = 1;
-                $self->modwheel->throw('object-stream-max');
-                $self->modwheel->logerror(
-                    'Object get all children: Max levels exceeded.');
+                $self->modwheel->throw('object-stream-max-depth');
                 if (_CODELIKE($handler_end)) {
                     return $handler_end->($self, \@out, $cur_levels, $has_exceeded);
                 }
@@ -833,6 +854,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             : \@out;
     }
 
+    #------------------------------------------------------------------------ 
+    # ->serialize($the_object, \%options)
+    #------------------------------------------------------------------------ 
     sub serialize {
         my ($self, $the_object, $options_ref) = @_;
         my $textual;
@@ -854,34 +878,41 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             }
             if (_find_bool_value($options_ref->{sign})) {
                 my $sum = join q{}, values %hash_copy_of_the_object;
+                #print "-- SENDING SUM: $sum\n";
                 $checksum = Digest::SHA1::sha1_hex($sum);
+                #print "-- SENDING CHECKSUM: $checksum\n";
                 $hash_copy_of_the_object{_CHECKSUM} = $checksum;
             }
                             
-            $textual = YAML::Syck::Dump(\%hash_copy_of_the_object);
+            $textual = JSON::Syck::Dump(\%hash_copy_of_the_object);
         }
        
         return wantarray    ? ($textual, $checksum)
                             : $textual;
     }
 
+    #------------------------------------------------------------------------ 
+    # deserialize($serialized, $target_object)
+    #------------------------------------------------------------------------ 
     sub deserialize {
         my ($self, $textual, $target) = @_;
         my $modwheel = $self->modwheel;
         $target    ||= $self;
 
-        my $freezed_ref = YAML::Syck::Load($textual);
-        if (!_HASH($freezed_ref)) {
-           $modwheel->throw('object-deserialize-parse-error');
-           $modwheel->logerror('Object deserialize: Invalid YAML');
-           return;
-        }
+        my $freezed_ref = JSON::Syck::Load($textual);
+        return $modwheel->throw('object-deserialize-parse-error')
+            if !_HASH($freezed_ref);
+
+        # Verify checksum.
         my $checksum = delete $freezed_ref->{_CHECKSUM};
+        #print "-- INCOMING CHECKSUM: $checksum\n";
         my $sum      = join q{}, values %{ $freezed_ref };
-        if ($checksum ne $sum) {
-            $modwheel->throw('object-deserialize-checksum-error');
-            $modwheel->logerror('Object deserialize: Checksum mismatch');
-        }
+        #print "-- THIS SUM: $sum\n\n";
+        my $verify   = Digest::SHA1::sha1_hex($sum);
+        #print "-- THIS CHECKSUM: $verify\n";
+        #if ($checksum ne $verify) {
+        #    return $modwheel->throw('object-deserialize-checksum-error');
+        #}
         
         for my $attr (keys %objstruct) {
             if (defined $freezed_ref->{$attr} && $target->can($attr)) {
@@ -895,6 +926,9 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
                 
     }
 
+    #------------------------------------------------------------------------ 
+    # ->diff($old_object, $new_object)
+    #------------------------------------------------------------------------ 
     sub diff {
         my ($self, $old, $new) = @_;
         my $modwheel = $self->modwheel;
@@ -955,10 +989,13 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
             my $sum      = join q{}, values %diff;
             my $checksum = Digest::SHA1::sha1_hex($sum);
             $diff{_CHECKSUM} = $checksum;
-            return YAML::Syck::Dump(\%diff);
+            return JSON::Syck::Dump(\%diff);
         }
     }
 
+    #------------------------------------------------------------------------ 
+    # ->apply_path($diff)
+    #------------------------------------------------------------------------ 
     sub apply_patch {
         my ($self, $diff) = @_;
 
@@ -967,39 +1004,40 @@ use Class::InsideOut::Policy::Modwheel qw(:std);
         return $self->save( );
     }
 
-}
 
-sub create_revision {
-    my ($self, $textual_diff, $checksum, $version, $approved) = @_;
-    my $modwheel = $self->modwheel;
-    my $db       = $self->db;
-    $approved  ||= 1;
-    $version   ||= 1.0;
+    #------------------------------------------------------------------------ 
+    # ->create_revision($textual_diff, $checksum, float $version, int $approved)
+    #------------------------------------------------------------------------ 
+    sub create_revision {
+        my ($self, $textual_diff, $checksum, $version, $approved) = @_;
+        my $modwheel = $self->modwheel;
+        my $db       = $self->db;
+        $approved  ||= 1;
+        $version   ||= 1.0;
 
-    if (! $checksum) {
-        $modwheel->throw('object-revision-create-missing-checksum');
-        $modwheel->logerror('Create Revision: Missing checksum.');
+        return $modwheel->throw('object-revision-create-missing-checksum')
+            if !$checksum;
+
+        my $q = $db->build_insert_q('revision', [
+            qw(id version approved objid checksum diff)
+        ]);
+
+        my $new_id = $db->fetch_next_id('revision');
+
+        my $ret = $db->exec_query($q,
+            $new_id,
+            $version,
+            $approved,
+            $self->id,
+            $checksum,
+            $textual_diff,
+        );
+        
+        return $new_id if $ret;
+        return;
     }
 
-    my $q = $db->build_insert_q('revision', [
-        qw(id version approved objid checksum diff)
-    ]);
-
-    my $new_id = $db->fetch_next_id('revision');
-
-    my $ret = $db->exec_query($q,
-        $new_id,
-        $version,
-        $approved,
-        $self->id,
-        $checksum,
-        $textual_diff,
-    );
-        
-    return $new_id if $ret;
-    return;
 }
-
 1;
 
 __END__
@@ -1240,7 +1278,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.2.3
+v0.3.1
 
 
 =head1 AUTHOR

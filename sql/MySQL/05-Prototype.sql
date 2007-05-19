@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS prototype (
     data        char(255) DEFAULT 'data',
 
     PRIMARY KEY(id)
-);
+) ENGINE = MyISAM ROW_FORMAT = FIXED AVG_ROW_LENGTH = 150 MAX_ROWS = 100;
 
 CREATE INDEX prototype_type_idx ON prototype(type);
 

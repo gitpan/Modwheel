@@ -8,12 +8,12 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Session.pm,v 1.5 2007/04/28 13:13:03 ask Exp $
+# $Id: Session.pm,v 1.7 2007/05/18 23:42:37 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Session.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.5 $
-# $Date: 2007/04/28 13:13:03 $
+# $Revision: 1.7 $
+# $Date: 2007/05/18 23:42:37 $
 #####
 
 package main;
@@ -30,7 +30,7 @@ package Modwheel::Session;
 use strict;
 use warnings;
 use Perl6::Export::Attrs;
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 
 # example:
 #   my $modwheel_config = { prefix => '...', configfile => '...' };
@@ -93,7 +93,7 @@ Modwheel::Session - Easily create Modwheel sessions.
 
 =head1 VERSION
 
-v0.2.3
+v0.3.1
 
 =head1 SYNOPSIS
 

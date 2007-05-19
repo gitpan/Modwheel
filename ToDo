@@ -1,14 +1,37 @@
+All tests should use temporary SQLite database.
+Check out P5EE: App::Context etc etc. Interesting stuff? What the fuck are they talking about?
+
+Devel::Profiler::...Template (look at your mod_perl mailing list archive for the purposal)
+our $VERSION = sprintf "%d.%02d", q$Revision: 1.10 $ =~ /(\d+)/g;
+
+Prepare cached: NO.
+Never use DBI->rows( );
+Create examples/
+A Module::Starter::Modwheel !
+prepare_cached
+User Sessions w/ login screen.
+Add progress bar to all Ajax requests in SimpleAdmin. (See AJax design patterns section 2.2)
+
+changed db (using BerkeleyDB?)
+select by day of month (calendar, days with objects are bold/clickable).
+
+mod install -fastcgi SimpleAdmin
+mod install -cgi SimpleAdmin
+mod install -apache2 SimpleAdmin
+Check out Test::Count
+
+Write in changes that we added localized.
+Add VACUUM to SQLite maintainance.
+Use Want.pm
 Build.PL (maybe Makefile.pl too?) installs bin/install.sh, it shouldn't.
 Module::Build::Modwheel MUST NOT USE SUPER!!
 build_select_q( id => $id ); Edit so that the id will be ? (bind variable)
-Tar+Gzip Templates/*
 Text::Diff
 CSS::Tiny
 PPI::HTML
 Modwheel::Constants qw( :config ) ?
 Class::Singleton
 Test::Object
-Params::Coerce
 Test::LongString
 Test::Exception
 Learn more about Class::DBI and DBIx::Class

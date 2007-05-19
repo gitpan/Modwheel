@@ -1,20 +1,27 @@
 
-M o d w h e e l
+                            M o d w h e e l
 
-Modwheel is a publishing system for use with web, print, TeX, or what-
-ever medium you have a need to publish in. It is designed to be very
-extensible and will in the future have drop-in support for several
-relational databases and presentation engines.
-
-Modwheel is currently in a very early alpha development stage.
+Most web sites are pages categorized by topic. So web sites can be viewed as a
+tree system where every page is a sub-tree and the page elements are nodes.
+Page elements can be things like articles, links, ads, news, comments and so on.
+In Modwheel a page-element is called an object.
+You define your own object prototypes and then you define how to display these
+objects with the representation engine. Objects can be displayed differently in
+different contexts (pages) by using templates.
+The only representation engine supported right now is the Template Toolkit,
+but it wouldn't be much work to add support for others.
+The project is in beta development stage but already has an admin interface
+implemented in it and has been tested on Mac OS X, FreeBSD, OpenBSD, NetBSD,
+Ubuntu Linux, Solaris and Cygwin.
        
-The current development version of Modwheel should work with MySQL and
+The current development version of Modwheel should work with MySQL, SQLite2 and
 the Template Toolkit, although porting to other databases or templating
-systems. shouldn't be much work.
+systems. shouldn't be much work. (Actually the SQLite2 port took less than 30
+minutes).
 
 * Requirements
     DBI                             -   http://search.cpan.org/~timb/DBI-1.54/
-    YAML                            -   http://search.cpan.org/~ingy/YAML-0.62/
+    YAML::Syck                      -   http://search.cpan.org/~ingy/YAML-0.62/
 
 * Optional extensions.
 
@@ -44,7 +51,8 @@ Modwheel uses the standard perl module install process:
 
 Then you need to set up your modwheel directory:
 
-    bash bin/install.sh
+    ./bin/modstrap install
+    ./bin/modstrap configure
 
 Note that the install script requires bash to run, it won't work in regular
 sh.

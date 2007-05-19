@@ -28,7 +28,7 @@ shortcuts:
   perldoc: <a href="http://perldoc.com/cgi-bin/htsearch?words=[:content]">[name]</a>
   google: <a href="http://google.startsiden.no/?q=[:content]">[name]</a> 
   cpanauthor: <a href="http://search.cpan.org/~[:content]">[name]</a>
-  test: test:<<[:type]>[type]<[:name]<[name]>[content]<[:content]>>
+  test: '<<[:type]>[type]<[:name]<[name]>[content]<[:content]>>'
 site:
   modwheeltest:
     database:
@@ -82,9 +82,9 @@ site:
       password: torskd0rsk
     templatedir: t/templates/
     templatedriver: TT
-    uniqueidfortest: SITEID0002
-#    TT:
-#      INTERPOLATE: 0
-#      POST_CHOMP: 1
-#      RELATIVE: 1
-#      ABSOLUTE: 1
+    uniqueidfortest: SITEID0003
+    TT:
+      INTERPOLATE: 0
+      POST_CHOMP: 1
+      RELATIVE: 1
+      ABSOLUTE: 1

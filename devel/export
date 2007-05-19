@@ -1,0 +1,720 @@
+--- 
+active: 1
+changed: 0000-00-00 00:00:00
+created: 2007-03-30 12:26:22
+data: ~
+description: Dead, dismissed and objects waiting for deletion go here.
+detach: 0
+groupo: 1
+id: -1
+karma: 0
+keywords: ~
+name: Trash
+owner: 1
+parent: 0
+revised_by: 1
+sort: 0
+template: ~
+type: directory
+--- 
+active: 1
+changed: 0000-00-00 00:00:00
+created: 2007-03-30 12:26:22
+data: ~
+description: Objects with no parent directory sleeps here.
+detach: 0
+groupo: 1
+id: -10
+karma: 0
+keywords: ~
+name: NoParent
+owner: 1
+parent: -99
+revised_by: 1
+sort: 0
+template: ~
+type: directory
+--- 
+active: 1
+changed: 0000-00-00 00:00:00
+created: 2007-03-30 12:26:22
+data: ~
+description: Dead references waiting for deletion or new location.
+detach: 0
+groupo: 1
+id: -11
+karma: 0
+keywords: ~
+name: DeadRefs
+owner: 1
+parent: -99
+revised_by: 1
+sort: 0
+template: ~
+type: directory
+--- 
+active: 1
+changed: 2007-04-12 04:07:32
+created: 2007-03-30 13:49:03
+data: "The word modulo (Latin, with respect to a modulus of ___) is the Latin ablative of modulus which itself means \"a small measure.\" It was introduced into mathematics in the book Disquisitiones Arithmeticae by Carl Friedrich Gauss in 1801. Ever since however, \"modulo\" has gained many meanings, some exact and some imprecise.\r\n(This usage is from Gauss's book.) Given the integers a, b and n, the expression a ? b (mod n) (pronounced \"a is congruent to b modulo n\") means that a and b have the same remainder when divided by n, or equivalently, that a ? b is a multiple of n. For more details, see modular arithmetic.\r\nIn computing, given two numbers (either integer or real), a and n, a modulo n is the remainder after numerical division of a by n, under certain constraints. See modulo operation.\r\nTwo members of a ring or an algebra are congruent modulo an ideal if the difference between them is in the ideal.\r\nTwo members a and b of a group are congruent modulo a normal subgroup iff ab?1 is a member of the normal subgroup. See quotient group and isomorphism theorem.\r\nTwo subsets of an infinite set are equal modulo finite sets precisely if their symmetric difference is finite, that is, you can remove a finite piece from the first infinite set, then add a finite piece to it, and get as result the second infinite set.\r\nThe most general precise definition is simply in terms of an equivalence relation R. We say that a is equivalent or congruent to b modulo R if aRb.\r\nIn the mathematical community, the word modulo is also used informally, in many imprecise ways. Generally, to say \"A is the same as B modulo C\" means, more-or-less, \"A and B are the same except for differences accounted for or explained by C\". See modulo (jargon)."
+description: ''
+detach: 0
+groupo: 100
+id: 4
+karma: 0
+keywords: ''
+name: Modulo
+owner: 1
+parent: 1
+revised_by: 3
+sort: 10
+template: ~
+type: article
+--- 
+active: 1
+changed: 2007-04-25 20:11:07
+created: 2007-03-30 13:49:30
+data: "For the physical process, see ablation. For the spacecraft technology, see ablative armor. <br />Grammatical cases <br />List of grammatical cases <br />Abessive case <br />Ablative case <br />Absolutive case <br />Accusative case <br />Adessive case <br />Adverbial case <br />Allative case <br />Antessive case <br />Aversive case <br />Benefactive case <br />Caritive case <br />Causal case <br />Causal-final case <br />Comitative case <br />Dative case <br />Delative case <br />Direct case <br />Distantitive case <br />Distributive case <br />Distributive-temporal case <br />Dubitive case <br />Elative case <br />Essive case <br />Essive-formal case <br />Essive-modal case <br />Equative case <br />Evitative case <br />Excessive case <br />Final case <br />Formal case <br />Genitive case <br />Illative case <br />Inessive case <br />Instructive case <br />Instrumental case <br />Lative case <br />Locative case <br />Medial case <br />Modal case <br />Multiplicative case <br />Nominative case <br />Oblique case <br />Objective case <br />Partitive case <br />Perlative case <br />Postessive case <br />Possessive case <br />Postpositional case <br />Prepositional case <br />Privative case <br />Prolative case <br />Prosecutive case <br />Proximative case <br />Separative case <br />Sociative case <br />Subessive case <br />Sublative case <br />Superessive case <br />Superlative case <br />Temporal case <br />Terminative case <br />Translative case <br />Vialis case <br />Vocative case <br />Morphosyntactic alignment <br />Absolutive case <br />Accusative case <br />Ergative case <br />Instrumental case <br />Instrumental-comitative case <br />Intransitive case <br />Nominative case <br />Pegative case <br />Declension <br /><span style=\"font-weight: bold\" class=\"Apple-style-span\">Czech declension </span><br />English declension <br />German declension <br />Latin declension <br />Slovak declension\t <br />This box: view &bull; talk &bull; edit <br />In linguistics, ablative case (also called the sixth case) (abbreviated ABL) is a name given to cases in various languages whose common thread is that they mark motion away from something, though the details in each language may differ. The name &quot;ablative&quot; is derived from Latin ablatus, the (irregular) past participle of auferre &quot;to carry away&quot;. <br />Contents <br /> [hide] <br />1 Indo-European languages <br />1.1 Latin <br />2 Uralic languages <br />2.1 Finnish <br />3 Altaic languages <br />3.1 Azeri <br />4 External links <br />5 References <br />[edit]Indo-European languages <br /> <br />[edit]Latin <br />1st 2nd\t3rd\t4th\t5th <br />Singular -?\t-?\t-e/-?\t-?\t-? <br />Plural -?s\t-?s\t-ibus\t-ibus\t-?bus <br />The Latin ablative case (ablativus) has at least fifteen documented uses (although it is rumored by some classicists that there are as many as six hundred thirty-seven [637] unique uses). Generalizing their function, however, ablatives modify or limit verbs by ideas of where (place), when (time), how (manner), etc. Hence, the case is sometimes also called the adverbial case; this can be quite literal, as phrases in ablative can be translated as adverbs. E.g. magn? (cum) celerit?te, literally &quot;with great speed,&quot; may also be written &quot;very quickly.&quot; <br />Active motion away from a place is only one particular use of the ablative case and is called the ablative of place from which. Nouns, either proper or common, are almost always used in this sense with accompanying prepositions of ab/?/abs, &quot;from&quot;; e/?, &quot;out of&quot;; or d?, &quot;down from&quot;. E.g. ex agr?s, &quot;from the country&quot;; ex Graeci? ad Italiam navig?v?runt, &quot;They sailed from Greece to Italy.&quot; <br />A closely related construction is called the ablative of separation. This usage of the ablative implies that some person or thing is separated from another. No active movement from one location to the next occurs; furthermore, ablatives of separation sometimes lack a preposition, particularly with certain verbs like c&aacute;re? or l?ber?. E.g. Cicer? host?s ab urbe prohibuit, &quot;Cicero kept the enemy away from the city&quot;; E?s tim?re l?ber?vit, &quot;He freed them from fear.&quot; <br />The Latin ablative may also be used to indicate: <br />the means by which an action was carried out. E.g. ocul?s vid?re, &quot;to see with the eyes&quot;. This is known as the ablative of means or of instrument, and is equivalent to the instrumental case found in some other languages. Special deponent verbs in Latin sometimes use the ablative of means idiomatically. E.g. ?titur stil? literally says &quot;he is benefiting himself by means of a pencil&quot;; however, the phrase is more aptly translated &quot;he is using a pencil.&quot; <br />the manner in which an action was carried out. The preposition cum (meaning &quot;with&quot;) is used when (i) no adjective describes the noun E.g. cum c?r?, &quot;with care,&quot; or (ii) optionally after the adjective(s) and before the noun E.g. magn? (cum) celerit?te, &quot;with great speed.&quot; This is known as the ablative of manner. <br />the time when or within which an action occurred. E.g. aest?te, &quot;in summer&quot;; e? tempore, &quot;at that time&quot;; Pauc?s h?r?s id faciet, &quot;within a few hours he will do it.&quot; This is known as the ablative of time when or within which. <br />the circumstances surrounding an action. E.g. Urbe capt?, Aen?as fugit, &quot;With the city having been captured, Aeneas fled.&quot; This is known as the ablative absolute. <br />with whom something was done. Nouns in this construction are always accompanied by the preposition cum. E.g. cum e?s, &quot;with them&quot;; Cum am?c?s v?n?runt, &quot;They came with friends.&quot; This is known as the ablative of accompaniment. <br />the whole to which a certain number belongs or is a part. E.g. centum ex vir?s, &quot;one hundred of the men&quot;; qu?nque ex e?s, &quot;five of them.&quot; <br />agent by whom the action of a passive verb is performed. The agent is always preceded by ab/?/abs. E.g. Caesar ? d?s admon?tur, &quot;Caesar is warned by the gods.&quot; This is known as the ablative of personal agent. <br />Other known uses of the ablative include the ablatives of cause, of comparison, of degree of difference, of description, of place where, and of specification. Important: Not all ablatives can be categorized into the classes mentioned above! <br />Some Latin prepositions, like pro, take a noun in the ablative. A few prepositions may take either an accusative or an ablative, in which case the accusative indicates motion towards, and the ablative indicates no motion. E.g. in cas?, &quot;in the cottage&quot;; in casam, &quot;into the cottage&quot;.[1] <br />[edit]Uralic languages <br /> <br />[edit]Finnish <br />In Finnish, the ablative case is the sixth of the locative cases with the meaning &quot;from off of&quot;, e.g. p&ouml;yt&auml; &mdash; p&ouml;yd&auml;lt&auml; &quot;table &mdash; off from the table&quot;. It is an outer locative case, used just as the adessive and allative cases to denote both being on top of something and &quot;being around the place&quot; (as opposed to the inner locative case, the elative, which means &quot;from out of&quot; or &quot;from the inside of&quot;). <br />The Finnish ablative is also used in Time Expressions to indicate start times as well as with verbs expressing feelings or emotions. <br />The Finnish ablative has the ending -lta or -lt&auml; according to the regular rules of vocal harmony. <br />Usage <br />away from a place <br />Katolta <br />Off of the roof <br />P&ouml;yd&auml;lt&auml; <br />Off of the table <br />Rannalta <br />From the beach <br />Maalta <br />From the land <br />Merelt&auml; <br />Off the sea <br />to stop some activity with the verb l&auml;hte&auml; <br />l&auml;hte&auml; kalalta <br />quit fishing (literally Quit the fish) <br />l&auml;hte&auml; maidolta <br />stop drinking milk <br />l&auml;hte&auml; tupakalta <br />stop smoking (in the sense of putting out the cigarette one is smoking now; literally Quit the tobacco) <br />l&auml;hte&auml; hippasilta <br />quit the tag game (hippa=tag, olla hippasilla=playing tag) <br />[edit]Altaic languages <br /> <br />[edit]Azeri <br />The ablative in Azeri (&ccedil;?x??l?q hal) is expressed through the suffixes -dan or -d?n. Examples: <br />Ev - evd?n <br />House - from/off the house <br />Aparmaq - aparmaqdan <br />To carry - from/off carrying"
+description: ''
+detach: 0
+groupo: 100
+id: 5
+karma: 0
+keywords: ''
+name: Ablative Case
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-03-30 13:49:56
+created: 2007-03-30 13:49:56
+data: "Modulus may refer to:\r\nAbsolute value, in British English\r\nModulus of continuity, a way to measure the smoothness of a function\r\nYoung's modulus, a measure of stiffness\r\nModulus Guitars, musical instrument manufacturer\r\nA villain in Marvel's Fantastic Four comic book series\r\nModuli, in theoretical physics\r\n%, the modulo operator of various programming languages\r\n[edit]See also\r\n\r\nModulo\r\nModule\r\n\tThis disambiguation page lists articles associated with the same title. If an internal link led you here, you may wish to change the link to point directly to the intended article."
+description: ''
+detach: 0
+groupo: 100
+id: 6
+karma: 0
+keywords: ''
+name: Modulus
+owner: 1
+parent: 1
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-03-30 13:50:18
+created: 2007-03-30 13:50:18
+data: "The Disquisitiones Arithmeticae is a textbook of number theory written by German mathematician Carl Friedrich Gauss and first published in 1801 when Gauss was 24. In this book Gauss brings together results in number theory obtained by mathematicians such as Fermat, Euler, Lagrange and Legendre and adds important new results of his own.\r\nContents\r\n [hide]\r\n1 Scope\r\n2 Contents\r\n3 Importance\r\n4 References\r\n[edit]Scope\r\n\r\nThe Disquisitiones covers both elementary number theory and parts of the area of mathematics that we now call algebraic number theory. However, Gauss did not explicitly recognise the concept of the group that is central to modern algebra, so he did not use this term. His own title for his subject is Higher Arithmetic. In his Preface to the Disquisitiones Gauss describes the scope of the book as follows:\r\nThe inquiries which this volume will investigate pertain to that part of Mathematics which concerns itself with integers.\r\n[edit]Contents\r\n\r\nThe book is divided into seven sections, which are :-\r\nSection I. Congruent Number in General\r\nSection II. Congruences of the First Degree\r\nSection III. Residues of Powers\r\nSection IV. Congruences of the Second Degree\r\nSection V. Forms and Indeterminate Equations of the Second Degree\r\nSection VI. Various Applications of the Preceding Discussions\r\nSection VII. Equations Defining Sections of a Circle\r\nSections I to III are essentially a review of previous results, including Fermat's little theorem, Wilson's theorem and the existence of primitive roots. Although few of the results in these first sections are original, Gauss was the first mathematician to bring this material together and treat it in a systematic way. He was also the first mathematician to realise the importance of the property of unique factorisation (sometimes called the fundamental theorem of arithmetic), which he states and proves explicitly.\r\nFrom Section IV onwards, much of the work is original. Section IV itself develops a proof of quadratic reciprocity; Section V, which takes up over half of the book, is a comprehensive analysis of binary quadratic forms; and Section VI includes two different primality tests. Finally, Section VII is an analysis of cyclotomic polynomials, which concludes by giving the criteria that determine which regular polygons are constructible i.e. can be constructed with a compass and unmarked straight edge alone.\r\nGauss started to write an eighth section on higher order congruences, but he did not complete this, and it was published separately after his death.\r\nThe Disquisitiones was one of the last mathematical works to be written in scholarly Latin (an English translation was not published until 1965).\r\n[edit]Importance\r\n\r\nBefore the Disquisitiones was published, number theory consisted of a collection of isolated theorems and conjectures. Gauss brought the work of his predecessors together with his own original work into a systematic framework, filled in gaps, corrected unsound proofs, and extended the subject in numerous ways.\r\nThe logical structure of the Disquisitiones (theorem statement followed by proof, followed by corollaries) set a standard for later texts. While recognising the primary importance of logical proof, Gauss also illustrates many theorems with numerical examples.\r\nThe Disquisitiones was the starting point for the work of other nineteenth century European mathematicians including Kummer, Dirichlet and Dedekind. Many of the annotations given by Gauss are in effect announcements of further research of his own, some of which remained unpublished. They must have appeared particularly cryptic to his contemporaries; we can now read them as containing the germs of the theories of L-functions and complex multiplication, in particular.\r\n[edit]References\r\n\r\nCarl Friedrich Gauss tr. Arthur A. Clarke: Disquisitiones Aritmeticae, Yale University Press, 1965 ISBN 0-300-09473-6\r\nDisquisitiones Arithmeticae"
+description: ''
+detach: 0
+groupo: 100
+id: 7
+karma: 0
+keywords: ''
+name: Disquisitiones Arithmeticae
+owner: 1
+parent: 1
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-03-30 13:50:47
+created: 2007-03-30 13:50:47
+data: "Carl Friedrich Gauss (Gau\xDF) (help\xB7info) (30 April 1777 \x96 23 February 1855) was a German mathematician and scientist of profound genius who contributed significantly to many fields, including number theory, analysis, differential geometry, geodesy, magnetism, astronomy, and optics. Sometimes known as \"the prince of mathematicians\" and \"greatest mathematician since antiquity\", Gauss had a remarkable influence in many fields of mathematics and science and is ranked as one of history's most influential mathematicians.\r\nGauss was a child prodigy, of whom there are many anecdotes pertaining to his astounding precocity while a mere toddler, and made his first ground-breaking mathematical discoveries while still a teenager. He completed Disquisitiones Arithmeticae, his magnum opus, at the age of twenty-one (1798), though it would not be published until 1801. This work was fundamental in consolidating number theory as a discipline and has shaped the field to the present day.\r\nContents\r\n [hide]\r\n1 Biography\r\n1.1 Early years\r\n1.2 Middle years\r\n1.3 Later years, death, and afterwards\r\n1.4 Family\r\n1.5 Personality\r\n2 Commemorations\r\n3 See also\r\n4 References\r\n5 External links\r\n6 Further reading\r\n[edit]Biography\r\n\r\n[edit]Early years\r\n\r\n\r\nStatue of Gauss in Brunswick\r\nGauss was born in Brunswick, in the Duchy of Brunswick-L\xFCneburg (now part of Lower Saxony, Germany), as the only son of uneducated lower-class parents. According to legend, his gifts became very apparent at the age of three when he corrected, in his head, an error his father had made on paper while calculating finances.\r\nAnother famous story, and one that has evolved in the telling, has it that in primary school his teacher, J.G. B\xFCttner tried to occupy pupils by making them add up the integers from 1 to 100. The young Gauss produced the correct answer within seconds by a flash of mathematical insight, to the astonishment of all. Gauss had realized that pairwise addition of terms from opposite ends of the list yielded identical intermediate sums: 1 + 100 = 101, 2 + 99 = 101, 3 + 98 = 101, and so on, for a total sum of 50 \xD7 101 = 5050 (see arithmetic series and summation). (For more information, see [1] for discussion of original Wolfgang Sartorius von Waltershausen source.)\r\nThe Duke of Brunswick awarded Gauss a fellowship to the Collegium Carolinum (now Technische Universit\xE4t Braunschweig), which he attended from 1792 to 1795, and from there went on to the University of G\xF6ttingen from 1795 to 1798. While in college, Gauss independently rediscovered several important theorems; his breakthrough occurred in 1796 when he was able to show that any regular polygon with a number of sides which is a Fermat prime (and, consequently, those polygons with any number of sides which is the product of distinct Fermat primes and a power of 2) can be constructed by compass and straightedge. This was a major discovery in an important field of mathematics; construction problems had occupied mathematicians since the days of the Ancient Greeks. Gauss was so pleased by this result that he requested that a regular heptadecagon be inscribed on his tombstone. The stonemason declined, stating that the difficult construction would essentially look like a circle.\r\n1796 was probably the most productive year for both Gauss and number theory. The construction of the heptadecagon was discovered on March 30. He invented modular arithmetic, greatly simplifying manipulations in number theory. He became the first to prove the quadratic reciprocity law on April 8. This remarkably general law allows mathematicians to determine the solvability of any quadratic equation in modular arithmetic. The prime number theorem, conjectured on May 31, gives a good understanding of how the prime numbers are distributed among the integers. Gauss also discovered that every positive integer is representable as a sum of at most three triangular numbers on July 10 and then jotted down in his diary the famous words, \"Heureka! num= ? + ? + ?.\" On October 1 he published a result on the number of solutions of polynomials with coefficients in finite fields (this ultimately led to the Weil conjectures 150 years later).\r\n[edit]Middle years\r\n\r\n\r\nTitle page of Gauss's Disquisitiones Arithmeticae\r\nIn his 1799 dissertation, A New Proof That Every Rational Integer Function of One Variable Can Be Resolved into Real Factors of the First or Second Degree, Gauss gave a proof of the fundamental theorem of algebra. This important theorem states that every polynomial over the complex numbers must have at least one root. Other mathematicians had tried to prove this before him, e.g. Jean le Rond d'Alembert. Gauss's dissertation contained a critique of d'Alembert's proof, but his own attempt would not be accepted owing to implicit use of the Jordan curve theorem. Gauss over his lifetime produced three more proofs, probably due in part to this rejection of his dissertation; his last proof in 1849 is generally considered rigorous by today's standard. His attempts clarified the concept of complex numbers considerably along the way.\r\nGauss also made important contributions to number theory with his 1801 book Disquisitiones Arithmeticae, which contained a clean presentation of modular arithmetic and the first proof of the law of quadratic reciprocity. In that same year, Italian astronomer Giuseppe Piazzi discovered the planetoid Ceres, but could only watch it for a few days. Gauss predicted correctly the position at which it could be found again, and it was rediscovered by Franz Xaver von Zach on December 31, 1801 in Gotha, and one day later by Heinrich Olbers in Bremen. Zach noted that \"without the intelligent work and calculations of Doctor Gauss we might not have found Ceres again.\" Though Gauss had up to this point been supported by the stipend from the Duke, he doubted the security of this arrangement, and also did not believe pure mathematics to be important enough to deserve support. Thus he sought a position in astronomy, and in 1807 was appointed Professor of Astronomy and Director of the astronomical observatory in G\xF6ttingen, a post he held for the remainder of his life.\r\nThe discovery of Ceres by Piazzi on January 1, 1801 led Gauss to his work on a theory of the motion of planetoids disturbed by large planets, eventually published in 1809 under the name Theoria motus corporum coelestium in sectionibus conicis solem ambientum (theory of motion of the celestial bodies moving in conic sections around the sun). Piazzi had only been able to track Ceres for a couple of months, following it for three degrees across the night sky. Then it disappeared temporarily behind the glare of the Sun. Several months later, when Ceres should have reappeared, Piazzi could not locate it: the mathematical tools of the time were not able to extrapolate a position from such a scant amount of data \x96 three degrees represent less than 1% of the total orbit.\r\nGauss, who was 23 at the time, heard about the problem and tackled it head-on. After three months of intense work, he predicted a position for Ceres in December 1801 \x96 just about a year after its first sighting \x96 and this turned out to be accurate within a half-degree. In the process, he so streamlined the cumbersome mathematics of 18th century orbital prediction that his work \x96 published a few years later as Theory of Celestial Movement \x96 remains a cornerstone of astronomical computation. It introduced the Gaussian gravitational constant, and contained an influential treatment of the method of least squares, a procedure used in all sciences to this day to minimize the impact of measurement error. Gauss was able to prove the method in 1809 under the assumption of normally distributed errors (see Gauss-Markov theorem; see also Gaussian). The method had been described earlier by Adrien-Marie Legendre in 1805, but Gauss claimed that he had been using it since 1795.\r\nGauss was a prodigious mental calculator. Reputedly, when asked how he had been able to predict the trajectory of Ceres with such accuracy he replied, \"I used logarithms.\" The questioner then wanted to know how he had been able to look up so many numbers from the tables so quickly. \"Look them up?\" Gauss responded. \"Who needs to look them up? I just calculate them in my head!\"\r\nGauss had been asked in the late 1810s to carry out a geodetic survey of the state of Hanover to link up with the existing Danish grid. Gauss was pleased to accept and took personal charge of the survey, making measurements during the day and reducing them at night, using his extraordinary mental capacity for calculations. He regularly wrote to Schumacher, Olbers and Bessel, reporting on his progress and discussing problems. As part of the survey, Gauss invented the heliotrope which worked by reflecting the Sun's rays using a set of mirrors and a small telescope.\r\nGauss also claimed to have discovered the possibility of non-Euclidean geometries but never published it. This discovery was a major paradigm shift in mathematics, as it freed mathematicians from the mistaken belief that Euclid's axioms were the only way to make geometry consistent and non-contradictory. Research on these geometries led to, among other things, Einstein's theory of general relativity, which describes the universe as non-Euclidean. His friend Farkas (Wolfgang) Bolyai (with whom Gauss had sworn \"brotherhood and the banner of truth\" as a student) had tried in vain for many years to prove the parallel postulate from Euclid's other axioms of geometry. Bolyai's son, J\xE1nos Bolyai, discovered non-Euclidean geometry in 1829; his work was published in 1832. After seeing it, Gauss wrote to Farkas Bolyai: \"To praise it would amount to praising myself. For the entire content of the work ... coincides almost exactly with my own meditations which have occupied my mind for the past thirty or thirty-five years.\" This unproved statement put a strain on his relationship with J\xE1nos Bolyai (who thought that Gauss was \"stealing\" his idea), but it is nowadays generally taken at face value.\r\n\r\n\r\nGaussian distribution in statistics.\r\nThe survey of Hanover later led to the development of the Gaussian distribution, also known as the normal distribution, for describing measurement errors. Moreover, it fuelled Gauss's interest in differential geometry, a field of mathematics dealing with curves and surfaces. In this field, he came up in 1828 with an important theorem, the theorema egregrium (remarkable theorem in Latin) establishing an important property of the notion of curvature. Informally, the theorem says that the curvature of a surface can be determined entirely by measuring angles and distances on the surface; that is, curvature does not depend on how the surface might be embedded in (3-dimensional) space.\r\n[edit]Later years, death, and afterwards\r\nIn 1831 Gauss developed a fruitful collaboration with the physics professor Wilhelm Weber; it led to new knowledge in the field of magnetism (including finding a representation for the unit of magnetism in terms of mass, length and time) and the discovery of Kirchhoff's circuit laws in electricity. Gauss and Weber constructed the first electromagnetic telegraph in 1833, which connected the observatory with the institute for physics in G\xF6ttingen. Gauss ordered a magnetic observatory to be built in the garden of the observatory and with Weber founded the magnetischer Verein (\"magnetic club\"), which supported measurements of earth's magnetic field in many regions of the world. He developed a method of measuring the horizontal intensity of the magnetic field which has been in use well into the second half of the 20th century and worked out the mathematical theory for separating the inner (core and crust) and outer (magnetospheric) sources of Earth's magnetic field.\r\nGauss died in G\xF6ttingen, Hanover (now part of Lower Saxony, Germany) in 1855 and is interred in the cemetery Albanifriedhof there. Two individuals gave eulogies at his funeral, Gauss's son-in-law Heinrich Ewald, and Wolfgang Sartorius von Waltershausen, who was Gauss's close friend and biographer. His brain was preserved and was studied by Rudolf Wagner who found its weight to be 1,492 grams and the cerebral area equal to 219,588 square centimetres. There were also found highly developed convolutions, which in the early 20th century was suggested as the explanation of his genius (Dunnington, 1927).\r\n[edit]Family\r\nGauss's personal life was overshadowed by the early death of his first wife, Johanna Osthoff, in 1809, soon followed by the death of one child, Louis. Gauss plunged into a depression from which he never fully recovered. He married again, to a friend of his first wife named Friederica Wilhelmine Waldeck (Minna), but this second marriage does not seem to have been very happy. When his second wife died in 1831 after a long illness, one of his daughters, Therese, took over the household and cared for Gauss until the end of his life. His mother lived in his house from 1817 until her death in 1839.\r\nGauss had six children, three by each wife. With Johanna (1780\x961809), his children were Joseph (1806\x961873), Wilhelmina (1808\x961846) and Louis (1809\x961810). Of all of Gauss's children, Wilhelmina was said to have come closest to his talent, but she died young. With Minna Waldeck he also had three children: Eugene (1811\x961896), Wilhelm (1813\x961879) and Therese (1816\x961864). Eugene immigrated to the United States about 1832 after a falling out with his father, eventually settling in St. Charles, Missouri, where he became a well respected member of the community. Wilhelm came to settle in Missouri somewhat later, starting as a farmer and later becoming wealthy in the shoe business in St. Louis. Therese kept house for Gauss until his death, after which she married.\r\n[edit]Personality\r\nGauss was an ardent perfectionist and a hard worker. There is a famous anecdote of Gauss being interrupted in the middle of a problem and told that his wife was dying. He is purported to have said, \"Tell her to wait a moment 'til I'm through\". He was never a prolific writer, refusing to publish works which he did not consider complete and above criticism. This was in keeping with his personal motto pauca sed matura (few, but ripe). A study of his personal diaries reveals that he had in fact discovered several important mathematical concepts years or decades before they were published by his contemporaries. Prominent mathematical historian Eric Temple Bell estimated that had Gauss made known all of his discoveries, mathematics would have been advanced by fifty years. (Bell, 1937)\r\nAnother criticism of Gauss is that he did not support the younger mathematicians who followed him. He rarely, if ever, collaborated with other mathematicians and was considered aloof and austere by many. Though he did take in a few students, Gauss was known to dislike teaching (it is said that he attended only a single scientific conference, which was in Berlin in 1828). However, several of his students turned out to be influential mathematicians, among them Richard Dedekind, Bernhard Riemann, and Friedrich Bessel. Before she died, Sophie Germain was recommended by Gauss to receive her honorary degree.\r\nGauss generally did not get along with his male relatives. His father had wanted him to follow in his footsteps, i.e., to become a mason. He was not supportive of Gauss's schooling in mathematics and science. Gauss was primarily supported by his mother in this effort. Likewise, he had conflicts with his sons, two of whom migrated to the United States. He did not want any of his sons to enter mathematics or science for \"fear of sullying the family name\". His conflict with Eugene was particularly bitter. Gauss wanted Eugene to become a lawyer, but Eugene wanted to study languages. They had an argument over a party Eugene held, which Gauss refused to pay for. The son left in anger and immigrated to the United States, where he was quite successful. It took many years for Eugene's success to counteract his reputation among Gauss's friends and colleagues. See, also the letter from Robert Gauss to Felix Klein on September 3, 1912.\r\nUnlike modern mathematicians, Gauss usually declined to present the intuition behind his often very elegant proofs--he preferred them to appear \"out of thin air\" and erased all traces of how he discovered them.\r\nGauss was deeply religious and conservative. He supported monarchy and opposed Napoleon whom he saw as an outgrowth of revolution.\r\n[edit]Commemorations\r\n\r\nThe cgs unit for magnetic induction was named gauss in his honor.\r\n\r\n\r\n10 Deutsche Mark ? German banknote featuring Gauss\r\nFrom 1989 until the end of 2001, his portrait and a / normal distribution curve were featured on the German ten-mark banknote. Germany has issued three stamps honoring Gauss, as well. A stamp (no. 725), was issued in 1955 on the hundredth anniversary of his death; two other stamps, no. 1246 and 1811, were issued in 1977, the 200th anniversary of his birth.\r\nG. Waldo Dunnington was a lifelong student of Gauss. He wrote many articles, and a biography: Carl Frederick Gauss: Titan of Science. This book was reissued in 2003, after having been out of print for almost 50 years.\r\nIn 2007, his bust will be introduced to the Walhalla.\r\nPlaces, vessels and events named in honour of Gauss:\r\nGauss crater on the Moon\r\nAsteroid 1001 Gaussia.\r\nThe First German Antarctica Expedition's ship Gauss\r\nGaussberg, an extinct volcano discovered by the above mentioned expedition\r\nGauss Tower, an observation tower\r\nIn Canadian junior high schools, an annual national mathematics competition administered by the Centre for Education in Mathematics and Computing is named in honour of Gauss.\r\n[edit]See also\r\n\r\nList of topics named after Carl Friedrich Gauss\r\n[edit]References\r\n\r\nBell, E. T. (1986). \"Ch. 14: The Prince of Mathematicians: Gauss\", Men of Mathematics: The Lives and Achievements of the Great Mathematicians from Zeno to Poincar\xE9. New York: Simon and Schuster, pp. 218\x96269. ISBN 0-671-46400-0. \r\nCarl Friedrich Gauss. Retrieved on June, 2005.\r\nCarl Friedrich Gauss on PlanetMath\r\nDunnington, G. Waldo. (May, 1927). \"The Sesquicentennial of the Birth of Gauss\". Scientific Monthly XXIV: 402\x96414. Retrieved on 29 June 2005.  Comprehensive biographical article.\r\nDunnington, G. Waldo. (June 2003). Carl Friedrich Gauss: Titan of Science. The Mathematical Association of America. ISBN 0-88385-547-X. \r\nGauss, Carl Friedrich (1965). Disquisitiones Arithmeticae, tr. Arthur A. Clarke, Yale University Press. ISBN 0-300-09473-6. \r\nHall, T. (1970). Carl Friedrich Gauss: A Biography. Cambridge, MA: MIT Press. ISBN 0-262-08040-0. \r\nGauss and His Children. Retrieved on June, 2005.\r\nSimmons, J. (1996). The Giant Book of Scientists: The 100 Greatest Minds of All Time. Sydney: The Book Company. \r\n[edit]External links\r\n\r\n\r\nWikiquote has a collection of quotations related to:\r\nCarl Friedrich Gauss\r\n\r\nWikimedia Commons has media related to:\r\nJohann Carl Friedrich Gau\xDF\r\n\r\nWikisource has original works written by or about:\r\nCarl Friedrich Gauss\r\nGauss biography\r\nO'Connor, John J., and Edmund F. Robertson. \"Carl Friedrich Gauss\". MacTutor History of Mathematics archive.\r\nCarl Friedrich Gauss at the Mathematics Genealogy Project\r\nCarl Friedrich Gauss, Biography at Fermat's Last Theorem Blog.\r\nGauss: mathematician of the millennium, by Juergen Schmidhuber\r\nGauss, general information, submit your site about Gauss.\r\nObituary: MNRAS 16 (1856) 80\r\nA discussion of childhood problem and the sources\r\nComplete works\r\nCarl Friedrich Gauss on the 10 Deutsch Mark banknote.\r\n[edit]Further reading\r\n\r\nKehlmann, Daniel (2005). Die Vermessung der Welt. Rowohlt. ISBN 3-498-03528-2. \r\n\r\nThe Enlightenment\r\nv \x95 d \x95 e\r\nProminent people by country\r\nAustria: Joseph II | Leopold II | Maria Theresa\r\nFrance: Pierre Bayle | Fontenelle | Montesquieu | Fran\xE7ois Quesnay | Voltaire | G.L. Buffon | Jean-Jacques Rousseau | Denis Diderot | Helv\xE9tius | Jean le Rond d'Alembert | Baron d'Holbach | Marquis de Sade | Condorcet | Antoine Lavoisier | Olympe de Gouges | see also: French Encyclop\xE9distes\r\nGermany: Erhard Weigel | Gottfried Wilhelm von Leibniz | Frederick II | Immanuel Kant | Gotthold Ephraim Lessing | Thomas Abbt | Johann Gottfried von Herder | Adam Weishaupt | Johann Wolfgang von Goethe | J. C. F. von Schiller | Carl Friedrich Gauss | see also: German Classicism\r\nGreat Britain: Thomas Hobbes | John Locke | Isaac Newton | Samuel Johnson | David Hume | Lord Monboddo | Adam Smith | John Wilkes | Edmund Burke | Edward Gibbon | James Boswell | Jeremy Bentham | Mary Wollstonecraft | see also: Scottish Enlightenment\r\nItaly: Giambattista Vico | Cesare Beccaria\r\nNetherlands: Hugo Grotius | Benedict Spinoza\r\nPoland: Stanis?aw Leszczy?ski | Stanis?aw Konarski | Stanis?aw August Poniatowski | Ignacy Krasicki | Hugo Ko???taj | Ignacy Potocki | Stanis?aw Staszic | Jan ?niadecki | Julian Ursyn Niemcewicz | J?drzej ?niadecki\r\nRussia: Catherine the Great | Peter the Great | Ekaterina Dashkova | Mikhail Lomonosov | Ivan Shuvalov | Nikolay Novikov | Alexander Radishchev | Mikhail Shcherbatov\r\nSpain: Gaspar Melchor de Jovellanos | Leandro Fern\xE1ndez de Morat\xEDn\r\nUSA: Benjamin Franklin | David Rittenhouse | John Adams | Thomas Paine | Thomas Jefferson\r\nRelated concepts\r\nCapitalism | Civil Liberties | Critical Thinking | Deism | Democracy | Empiricism | Enlightened absolutism | Free Markets | Humanism | Liberalism | Natural Philosophy | Rationality | Reason | Sapere aude | Science | Secularism\r\n \r\n\r\n"
+description: ''
+detach: 0
+groupo: 100
+id: 8
+karma: 0
+keywords: ''
+name: Carl Friedrich Gauss
+owner: 1
+parent: 1
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-25 20:44:57
+created: 2007-03-30 13:51:11
+data: "The Integers (Latin, integer, literally, &quot;untouched,&quot; whole, entire, i.e. a whole number) are the numbers known informally as &quot;whole numbers&quot; (both positive and negative). <br />\n<br />\r\n<br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n More precisely, the integers consist of the positive natural numbers (1, 2, 3, &hellip;), their negatives (?1, ?2, ?3, ...) and the number zero. More formally, the integers are the only integral domain whose positive elements are well-ordered, and in which order is preserved by addition. Like the natural numbers, the integers form a countably infinite set. The set of all integers is usually denoted in mathematics by a boldface Z (or blackboard bold, , or Unicode ?), which stands for Zahlen (German for &quot;numbers&quot;)[citation needed]. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n The term rational integer is used in algebraic number theory to distinguish these &quot;ordinary&quot; integers, embedded in the field of rational numbers, from other &quot;integers&quot; such as the algebraic integers. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Contents <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n [hide] <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n 1 Algebraic properties <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n 2 Order-theoretic properties <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n 3 Construction <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n 4 Integers in computing <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n 5 References <img src=\"javascript/tiny_mce/plugins/emotions/images/smiley-innocent.gif\" border=\"0\" alt=\"Innocent\" title=\"Innocent\" /><br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n 6 External links <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n [edit]Algebraic properties <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Like the natural numbers, Z is closed below the operations of addition and multiplication, that is, the sum and product of any two integers is an integer. However, with the inclusion of the negative natural numbers, and, importantly, zero, Z (unlike the natural numbers) is also closed under subtraction. Z is not closed under the operation of division, since the quotient of two integers (e.g., 1 divided by 2), need not be an integer. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n The following lists some of the basic properties of addition and multiplication for any integers a, b and c. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n addition\tmultiplication <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n closure:\ta + b   is an integer\ta &times; b   is an integer <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n associativity:\ta + (b + c)  =  (a + b) + c\ta &times; (b &times; c)  =  (a &times; b) &times; c <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n commutativity:\ta + b  =  b + a\ta &times; b  =  b &times; a <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n existence of an identity element:\ta + 0  =  a\ta &times; 1  =  a <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n existence of inverse elements:\ta + (?a)  =  0\t <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n distributivity:\ta &times; (b + c)  =  (a &times; b) + (a &times; c) <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n No zero divisors:\t\tif ab = 0, then either a = 0 or b = 0 (or both) <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n In the language of abstract algebra, the first five properties listed above for addition say that Z under addition is an abelian group. As a group under addition, Z is a cyclic group, since every nonzero integer can be written as a finite sum 1 + 1 + ... 1 or (?1) + (?1) + ... + (?1). In fact, Z under addition is the only infinite cyclic group, in the sense that any infinite cyclic group is isomorphic to Z. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n The first four properties listed above for multiplication say that Z under multiplication is a commutative monoid. However, note that not every integer has a multiplicative inverse; e.g. there is no integer x such that 2x = 1, because the left hand side is even, while the right hand side is odd. This means that Z under multiplication is not a group. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n All the properties from the above table, except for the last, taken together say that Z together with addition and multiplication is a commutative ring with unity. Adding the last property says that Z is an integral domain. In fact, Z provides the motivation for defining such a structure. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n The lack of multiplicative inverses, which is equivalent to the fact that Z is not closed under division, means that Z is not a field. The smallest field containing the integers is the field of rational numbers. This process can be mimicked to form the field of fractions of any integral domain. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Although ordinary division is not defined on Z, it does possess an important property called the division algorithm: that is, given two integers a and b with b ? 0, there exist unique integers q and r such that a = q &times; b + r and 0 ? r &lt; |b|, where |b| denotes the absolute value of b. The integer q is called the quotient and r is called the remainder, resulting from division of a by b. This is the basis for the Euclidean algorithm for computing greatest common divisors. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Again, in the language of abstract algebra, the above says that Z is a Euclidean domain. This implies that Z is a principal ideal domain and any positive integer can be written as the products of primes in an essentially unique way. This is the fundamental theorem of arithmetic. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n [edit]Order-theoretic properties <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Z is a totally ordered set without upper or lower bound. The ordering of Z is given by <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n ... &lt; ?2 &lt; ?1 &lt; 0 &lt; 1 &lt; 2 &lt; ... <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n An integer is positive if it is greater than zero and negative if it is less than zero. Zero is defined as neither negative nor positive. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n The ordering of integers is compatible with the algebraic operations in the following way: <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n if a &lt; b and c &lt; d, then a + c &lt; b + d <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n if a &lt; b and 0 &lt; c, then ac &lt; bc. (From this fact, one can show that if c &lt; 0, then ac &gt; bc.) <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n It follows that Z together with the above ordering is an ordered ring. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n [edit]Construction <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n The integers can be constructed from the set of natural numbers by defining them to be the set of equivalence classes of pairs of natural numbers  under the equivalence relation <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n if  <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Addition and multiplication of integers are defined as follows: <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n where  denotes the equivalence class of  <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Typically,  is denoted by <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n where <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n This notation recovers the familiar representation of the integers as  <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Some examples are: <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n [edit]Integers in computing <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Main article: Integer (computer science) <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n An integer (sometimes known as an &quot;int&quot;, from the name of a datatype in the C programming language) is often a primitive datatype in computer languages. However, integer datatypes can only represent a subset of all integers, since practical computers are of finite capacity. Also, in the common two&#39;s complement representation, the inherent definition of sign (mathematics) distinguishes between &quot;negative&quot; and &quot;non-negative&quot; rather than &quot;negative, positive, and 0&quot;. (It is, however, certainly possible for a computer to determine whether an integer value is truly positive.) <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Variable-length representations of integers, such as bignums, can store any integer that fits in the computers memory. Other integer datatypes are implemented with a fixed size, usually a number of bits which is a power of 2 (4, 8, 16, etc.) or a memorable number of decimal digits (e.g., 9 or 10). <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n In contrast, theoretical models of digital computers, such as Turing machines, typically do have infinite (but only countable) capacity. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n [edit]References <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Herstein, I. N., Topics in Algebra, Wiley; 2 edition (June 20, 1975), ISBN 0-471-01090-1. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n Mac Lane, Saunders, and Garrett Birkhoff; Algebra, American Mathematical Society; 3rd edition (April 1999). ISBN 0-8218-1646-2. <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n [edit]External links <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n The Positive Integers - divisor tables and numeral representation tools <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n On-Line Encyclopedia of Integer Sequences cf OEIS <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n This article incorporates material from Integer on PlanetMath, which is licensed under the GFDL.\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n<br />\r\n <br />\r\n \r\n"
+description: "<blockquote>\n<blockquote>\r\n\t\t<blockquote>\r\n\t\t\t<blockquote>\r\n\t\t\t\t<blockquote>\r\n\t\t\t\t\t<blockquote>\r\n\t\t\t\t\t\t<blockquote>\r\n\t\t\t\t\t\t\t<blockquote>\r\n\t\t\t\t\t\t\t\t<blockquote>\r\n\t\t\t\t\t\t\t\t\t<a href=\"http://www.ntnu.no\" target=\"_blank\" title=\"Hei\"><img src=\"http://pair.com/\" alt=\"reklame\" title=\"reklame\" align=\"bottom\" />rekla</a>\r\n\t\t\t\t\t\t\t\t</blockquote>\r\n\t\t\t\t\t\t\t\t<blockquote>\r\n\t\t\t\t\t\t\t\t\t<a href=\"http://www.ntnu.no\" target=\"_blank\" title=\"Hei\"><img src=\"http://pair.com/\" alt=\"reklame\" title=\"reklame\" align=\"bottom\" /></a>\r\n\t\t\t\t\t\t\t\t</blockquote>\r\n\t\t\t\t\t\t\t\t<blockquote>\r\n\t\t\t\t\t\t\t\t\t<a href=\"http://www.ntnu.no\" target=\"_blank\" title=\"Hei\"><img src=\"http://pair.com/\" alt=\"reklame\" title=\"reklame\" align=\"bottom\" /></a>\r\n\t\t\t\t\t\t\t\t</blockquote>\r\n\t\t\t\t\t\t\t\t<blockquote>\r\n\t\t\t\t\t\t\t\t\t<a href=\"http://www.ntnu.no\" target=\"_blank\" title=\"Hei\"><img src=\"http://pair.com/\" alt=\"reklame\" title=\"reklame\" align=\"bottom\" /></a>\r\n\t\t\t\t\t\t\t\t</blockquote>\r\n\t\t\t\t\t\t\t</blockquote>\r\n\t\t\t\t\t\t</blockquote>\r\n\t\t\t\t\t</blockquote>\r\n\t\t\t\t</blockquote>\r\n\t\t\t</blockquote>\r\n\t\t</blockquote>\r\n\t</blockquote>\r\n</blockquote>\r\n<div style=\"width: 1261px; height: 12px\">\r\nNew layer.. HEHEHE\r\n<hr width=\"100%\" size=\"2\" />\r\n.\r\n</div>\r\n<div style=\"width: 1261px; height: 12px\">\r\n&nbsp;\r\n</div>\r\n<p>\r\n&nbsp;\r\n</p>\r\n<p>\r\nJajajaja. Dette er jo g&oslash;y.<img src=\"http://perlmonks.org/images/monkpics/pater_hat_sm.gif\" alt=\"\" width=\"76\" height=\"91\" align=\"absmiddle\" /><span style=\"background-color: #257cd9\">2007-04-2520:44:18&nbsp;</span>\r\n</p>\r\n"
+detach: 0
+groupo: 100
+id: 9
+karma: 0
+keywords: ''
+name: Integer
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-25 20:17:24
+created: 2007-03-30 13:51:46
+data: "<span class=\"Apple-style-span\">Your continued donations keep Wikipedia running!      <br />Remainder <br />From Wikipedia, the free encyclopedia <br />For other uses, see Remainder (disambiguation). <br />In arithmetic, the result of the division of two integers usually cannot be expressed with an integer quotient, unless a remainder &mdash;an amount &quot;left over&quot;&mdash; is also acknowledged. <br />Contents <br /> [hide] <br />1 The remainder for natural numbers <br />1.1 Examples <br />2 The case of general integers <br />3 The remainder for real numbers <br />4 The inequality satisfied by the remainder <br />5 Quotient and remainder in programming languages <br />6 See also <br />[edit]The remainder for natural numbers <br /> <br />If a and d are natural <span style=\"font-style: italic\" class=\"Apple-style-span\"><span style=\"font-weight: bold\" class=\"Apple-style-span\">number</span></span>s, with d non-zero, it can be proved that there exist unique integers q and r, such that a = qd + r and 0 ? r &lt; d. The number q is called the quotient, while r is called the remainder. The division algorithm provides a proof of this result and also an algorithm describing how to calculate the remainder. <br />[edit]Examples <br />When dividing 13 by 10, 1 is the quotient and 3 is the remainder, because 13=1&times;10+3. <br />When dividing 26 by 4, 6 is the quotient and 2 is the remainder, because 26=6&times;4+2. <br />When dividing 56 by 7, 8 is the quotient and 0 is the remainder, because 56=7&times;8+0. <br />[edit]The case of general integers <br /> <br />If a and d are integers, with d non-zero, then a remainder is an integer r such that a = qd + r for some integer q, and with 0 ? |r| &lt; |d|. <br />When defined this way, there are two possible remainders. For example, the division of ?42 by ?5 can be expressed as either <br />?42 = 9&times;(?5) + 3 <br />or <br />?42 = 8&times;(?5) + (?2). <br />So the remainder is then either 3 or ?2. <br />This ambiguity in the value of the remainder is not very serious; in the case above, the negative remainder is obtained from the positive one just by subtracting 5, which is d. This holds in general. When dividing by d, if the positive remainder is r1, and the negative one is r2, then <br />r1 = r2 + d. <br />[edit]The remainder for real numbers <br /> <br />When a and d are real numbers, with d non-zero, a can be divided by d without remainder, with the quotient being another real number. If the quotient is constrained to being an integer however, the concept of remainder is still necessary. It can be proved that there exists a unique integer quotient q and a unique real remainder r such that a=qd+r with 0?r &lt; |d|. As in the case of division of integers, the remainder could be required to be negative, that is, -|d| &lt; r ? 0. <br />Extending the definition of remainder for real numbers as described above is not of theoretical importance in mathematics; however, many programming languages implement this definition &mdash; see modulo operation. <br />[edit]The inequality satisfied by the remainder <br /> <br />The way remainder was defined, in addition to the equality a=qd+r an inequality was also imposed, which was either 0? r &lt; |d| or -|d| &lt; r ? 0. Such an inequality is necessary in order for the remainder to be unique &mdash; that is, for it to be well-defined. The choice of such an inequality is somewhat arbitrary. Any condition of the form x &lt; r ? x+|d| (or x ? r &lt; x+|d|), where x is a constant, is enough to guarantee the uniqueness of the remainder <br />[edit]Quotient and remainder in programming languages <br /> <br />Main article: Modulo operation <br />With two choices for the inequality, there are two possible choices for the remainder, one is negative and the other is positive. This means that there are also two possible choices for the quotient. Usually, in number theory, we always choose the positive remainder. But programming languages do not. C99 and Pascal choose the remainder with the same sign as a. (Before C99, the C language allowed either choice.) Perl and Python choose the remainder with the same sign as d. <br />[edit]See also <br /> <br />Chinese remainder theorem <br />division algorithm <br />Euclidean algorithm <br />modular arithmetic <br /></span>"
+description: ''
+detach: 0
+groupo: 100
+id: 10
+karma: 0
+keywords: ''
+name: Remainder
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-03-30 13:52:09
+created: 2007-03-30 13:52:09
+data: "In computing, the modulo operation finds the remainder of division of one number by another.\r\nGiven two numbers, a (the dividend) and n (the divisor), a modulo n (abbreviated as a mod n) is the remainder, on division of a by n. For instance, the expression \"7 mod 3\" would evaluate to 1, while \"9 mod 3\" would evaluate to 0. Although typically performed with a and n both being integers, many computing systems allow other types of numeric operands.\r\nSee modular arithmetic for an older and related convention applied in number theory.\r\nContents\r\n [hide]\r\n1 Remainder calculation for the modulo operation\r\n2 Modulo operation expression\r\n3 Performance issues\r\n4 See also\r\n5 Notes\r\n6 References\r\n[edit]Remainder calculation for the modulo operation\r\n\r\nModulo operators in various programming languages\r\nLanguage\tOperator\tResult has the same sign as\r\nAda\tmod\tDivisor\r\nrem\tDividend\r\nC (1989)\t%\tNot defined\r\nC (1999)\t%\tDividend\r\nColdFusion\tMOD\tDividend\r\nFortran\tmod\tDividend\r\nmodulo\tDivisor\r\nJava\t%\tDividend\r\nJavaScript\t%\tDividend\r\nMATLAB\tmod\tDivisor\r\nrem\tDividend\r\nMySQL\tMOD\r\n%\tDividend\r\nObjective Caml\tmod\tNot defined\r\nPascal\tmod\tDividend\r\nPerl\t%\tNot defined1\r\nPHP\t%\tDividend\r\nPython\t%\tDivisor\r\nRuby\t%\tDivisor\r\nVerilog (2001)\t%\tDividend\r\nVHDL\tmod\tDivisor\r\nrem\tDividend\r\nThere are various ways of defining a remainder, and computers and calculators have various ways of storing and representing numbers, so what exactly constitutes the result of a modulo operation depends on the programming language and/or the underlying hardware.\r\nIn nearly all computing systems, the quotient resulting from the division is constrained to the set of integers, and the remainder r is typically constrained by either  or , the choice between the two dependent from the signs of a and n and the programming language being used.2 (Some programming languages, such as C89, don't even define a result if either of n or a is negative.) See the table for details.\r\na modulo 0 is undefined in the majority of systems, although some do define it to be a. If the definition is consistent with the division algorithm, then n = 0 implies , which is a contradiction (i.e., the usual remainder does not exist in this case).\r\nThe remainder can be calculated by using equations, in terms of other functions. Differences may arise according to the scope of the variables, which in common implementations is broader than in the definition just given. One useful equation for calculating the remainder r is\r\n\r\nwhere  is the floor function of x. See e.g. [1], [2], [3].\r\nRaymond T. Boute[1] analyzed several definitions of integer division and modulo, and he introduces the \x93Euclidean\x94 definition. Let q be the integer quotient of a and n, then:\r\n\r\n\r\n\r\nTwo corollaries are that\r\n\r\n\r\nAs described by Leijen,[2]\r\nBoute argues that Euclidean division is superior to the other ones in terms of regularity and useful mathematical properties, although ?oored division, promoted by Knuth, is also a good definition. Despite its widespread use, truncated division is shown to be inferior to the other definitions.\r\n[edit]Modulo operation expression\r\n\r\nSome calculators have a mod() function button, and many programming languages have a mod() function or similar, expressed as mod(a,n), for example. Some also support expressions that use \"%\", \"mod\", or \"Mod\" as a modulo operator, such as\r\na % n\r\nor\r\na mod n\r\nboth of which are read as \"a modulo n\" when spoken aloud.\r\n[edit]Performance issues\r\n\r\nModulo operations might be implemented such that division with remainder is calculated each time. For real-time computer software this can be slower than alternatives, for special cases. For example, the modulus of powers of 2 can alternatively be expressed as a bitwise AND operation:\r\nx % 2^n == x & (2^n - 1)\r\nFurther examples:\r\nx % 2 == x & 1\r\nx % 4 == x & 3\r\nx % 8 == x & 7\r\nIn devices and software that implement bitwise operations more efficiently than modulo, this can result in faster calculations.\r\n[edit]See also\r\n\r\nModulo \x97 many uses of the word \"modulo\", all of which grew out of Carl F. Gauss's introduction of modular arithmetic in 1801.\r\nModular arithmetic\r\n[edit]Notes\r\n\r\nNote 1: The semantics of the modulo operator in Perl are defined to be those of the modulo operator of the C compiler that was used to compile the Perl interpreter itself.\r\nNote 2: Mathematically, these two choices are but two of the infinite number of choices available for the inequality satisfied by a remainder.\r\n[edit]References\r\n\r\n^ Boute, Raymond T. (April 1992). \"The Euclidean definition of the functions div and mod\". ACM Transactions on Programming Languages and Systems (TOPLAS) 14 (2): 127 - 144. \r\n^ Leijen, Daan (December 3, 2001). Division and Modulus for Computer Scientists (PDF). Retrieved on 2006-08-27."
+description: ''
+detach: 0
+groupo: 100
+id: 11
+karma: 0
+keywords: ''
+name: Modulo Operation
+owner: 1
+parent: 1
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-03-30 13:52:44
+created: 2007-03-30 13:52:44
+data: "In mathematics, the symmetric difference of two sets is the set of elements which are in one of the sets, but not in both. This operation is the set-theoretic equivalent of the exclusive disjunction (XOR operation) in Boolean logic. The symmetric difference of the sets A and B is commonly denoted by\r\n\r\n\r\n\r\nVenn diagram of A ? B. The symmetric difference is in solid green.\r\nFor example, the symmetric difference of the sets {1,2,3} and {3,4} is {1,2,4}. The symmetric difference of the set of all students and the set of all females consists of all male students together with all female non-students.\r\nThe symmetric difference is equivalent to the union of both relative complements, that is:\r\n\r\nand it can also be expressed as the union of the two sets, minus their intersection:\r\n\r\nor with the XOR operation:\r\n\r\nThe symmetric difference is commutative and associative:\r\n\r\n\r\nThus, the repeated symmetric difference is an operation on a multiset of sets giving the set of elements which are in an odd number of sets.\r\nThe symmetric difference of two repeated symmetric differences is the repeated symmetric difference of the join of the two multisets, where for each double set both can be removed. In particular:\r\n\r\nThis implies a kind of triangle inequality: the symmetric difference of A and C is contained in the union of the symmetric difference of A and B and that of B and C. (But note that for the diameter of the symmetric difference the triangle inequality does not hold.)\r\nThe empty set is neutral, and every set is its own inverse:\r\n\r\n\r\nTaken together, we see that the power set of any set X becomes an abelian group if we use the symmetric difference as operation. Because every element in this group is its own inverse, this is in fact a vector space over the field with 2 elements Z2. If X is finite, then the singletons form a basis of this vector space, and its dimension is therefore equal to the number of elements of X. This construction is used in graph theory, to define the cycle space of a graph.\r\nIntersection distributes over symmetric difference:\r\n\r\nand this shows that the power set of X becomes a ring with symmetric difference as addition and intersection as multiplication. This is the prototypical example of a Boolean ring.\r\nThe symmetric difference can be defined in any Boolean algebra, by writing\r\n\r\nThis operation has the same properties as the symmetric difference of sets.\r\n[edit]n-ary symmetric difference\r\n\r\nAs above, the symmetric difference of a collection of sets contains just elements which are in an odd number of the sets in the collection:\r\n.\r\nEvidently, this is well-defined only when each element of the union  is contributed by a finite number of elements of M."
+description: ''
+detach: 0
+groupo: 100
+id: 12
+karma: 0
+keywords: ''
+name: Symmetric Difference
+owner: 1
+parent: 1
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-25 02:47:37
+created: 2007-03-30 13:53:32
+data: "In mathematics, an equivalence relation, often denoted by an infix \"~\" or \"?\" or similar, is a binary relation on a set X that is reflexive, symmetric, and transitive, i.e. for all elements a, b, and c of X, the following must hold in order for '~' to be an equivalence relation:\nReflexivity: a ~ a\r\nSymmetry: if a ~ b then b ~ a\r\nTransitivity: if a ~ b and b ~ c then a ~ c\r\nEquivalence with respect to such a relation (which can hold for elements of the set X) must not be confused with the notion of logical equivalence (which can hold for logical statements). Equivalence relations should rather be thought of as grouping together objects that are similar in some sense, see also the notion of partition below.\r\nA set X together with an equivalence relation on X is called a setoid.\r\nContents\r\n[hide]\r\n1 From order to equivalence via symmetry\r\n2 Equivalence class, quotient set, partition\r\n3 Generating equivalence relations\r\n4 Algebraic characterizations\r\n4.1 Transformation groups\r\n4.2 Category theory\r\n5 Equivalence relations and mathematical logic\r\n6 Examples of equivalence relations\r\n7 Examples of relations that are not equivalences\r\n8 Euclid anticipated equivalence\r\n9 See also\r\n10 References\r\n11 External links\r\n[edit]From order to equivalence via symmetry\r\nJust as order relations are grounded in ordered sets, sets closed under pairwise supremum and infimum, equivalence relations are grounded in partitioned sets, sets closed under bijections preserving partition structure. Since all such bijections map an equivalence class onto itself, such bijections are also known as permutations.\r\nOrder and equivalence relations are both transitive, but only equivalence relations are symmetric as well. If symmetry:\r\nIs weakened to antisymmetry, the result is a partial order;\r\nIs discarded entirely, the result is a preorder;\r\nAnd reflexivity are both discarded, the result is a strict partial order.\r\nHence equivalence relations can be seen as the culmination of a hierarchy of order relations.\r\n[edit]Equivalence class, quotient set, partition\r\nLet X be a nonempty set with typical members a and b. Some definitions:\r\nThe set of all a and b for which a~b holds make up an equivalence class of X by '~'. Let [a] =: {x?X : x~a} denote the equivalence class to which a belongs. Then all members of X equivalent to each other are also members of the same equivalence class: ?a,b?X (a~b ? [a]=[b]).\r\nThe set of all possible equivalence classes of X by '~', denoted X/~ =: {[x] : x?X}, is the quotient set of X by '~'. If X is a topological space, there is a natural way of transforming X/~ into a topological space; see quotient space for the details.\r\nThe projection of '~' is the function ?: X?X/~, defined as ?(x) = [x], maps members of X into their respective equivalence classes by '~'.\r\nThe equivalence kernel of a function f is the equivalence relation, denoted Ef, such that xEfy ? f(x)=f(y). The equivalence kernel of a bijection is the identity relation.\r\nA partition of X is a set P of subsets of X, such that every member of X is a member of a unique member of P. Each member of P is a cell of the partition. Moreover, the members of P are pairwise disjoint and their union is X.\r\nLet X be finite with n elements. Since every equivalence relation over X corresponds to a partition of X, and vice versa, the number of possible equivalence relations on X equals the number of distinct partitions of X, which is the nth Bell number Bn:\r\nTheorem (\"Fundamental Theorem of Equivalence Relations\": Wallace 1998: 31, Th. 8; Dummit and Foote 2004: 3, Prop. 2):\r\nAn equivalence relation '~' partitions X.\r\nConversely, corresponding to any partition of X, there exists an equivalence relation '~' on X.\r\nIn both cases, the cells of the partition of X are the equivalence classes of X by '~'. Since each member of X belongs to a unique cell of any partition of X, and since each cell of the partition is identical to an equivalence class of X by '~', each member of X belongs to a unique equivalence class of X by '~'. Thus there is a natural bijection from the set of all possible equivalence relations on X and the set of all partitions of X.\r\nTheorem on projections (Birkhoff and Mac Lane 1999: 35, Th. 19): Let the function f: X?B be such that a~b ? f(a)=f(b). Then there is a unique function g: X/~?B, such that f = g(?). If f is a surjection and a~b ? f(a)=f(b), then g is a bijection.\r\n[edit]Generating equivalence relations\r\n\r\nAn equivalence relation ~ on X is the equivalence kernel of its surjective projection ?: X ? X/~. (Birkhoff and Mac Lane 1999: 33 Th. 18). Conversely, any surjection between sets determines a partition on its domain, the set of preimages of singletons in the codomain. Thus an equivalence relation over X, a partition of X, and a projection whose domain is X, are three equivalent ways of specifying the same thing.\r\nThe intersection of any two equivalence relations over X (viewed as a subset of X\xD7X) is also an equivalence relation. This yields a convenient way of generating an equivalence relation: given any binary relation R on X, the equivalence relation generated by R is the smallest equivalence relation containing R. Concretely, R generates the equivalence relation if:\r\na~b if and only if there exist elements x1, x2,...,xn in X such that x1 = a, xn = b, and such that (xi, xi +1) or (xi +1, xi) is in R for every i = 1,...,n -1.\r\nNote that the generated equivalence relation generated in this manner can be trivial. For instance, the equivalence relation '~' generated by:\r\nThe binary relation ? has exactly one equivalence class, X itself, because x~y for all x and y;\r\nAn antisymmetric relation has equivalence classes that are the singletons of X.\r\nLet r be any sort of relation on X. Then r?r-1 is a symmetric relation. The transitive closure s of r?r-1 assures that s is transitive and reflexive. Moreover, s is the \"smallest\" equivalence relation containing r, and r/s partially orders X/s.\r\nEquivalence relations can construct new spaces by \"gluing things together.\" Let X be the unit Cartesian square [0,1]\xD7[0,1], and '~' be the equivalence relation on X defined by ?a,b?[0,1]( (a,0)~(a,1) ? (0,b)~(1,b) ). Then the quotient space X/~ can be naturally identified with a torus: take a square piece of paper, bend and glue together the upper and lower edge to form a cylinder, then bend the resulting cylinder so as to glue together its two open ends, resulting in a torus.\r\nLet G be a group and H a subgroup of G. Define an equivalence relation '~' on G such that a~b ? (ab-1 ? H). The equivalence classes of '~'--also called the orbits of the action of H on G--are the right cosets of H in G. Interchanging a and b yields the left cosets.\r\n[edit]Algebraic characterizations\r\n\r\n[edit]Transformation groups\r\nIt is very well known that lattice theory captures the mathematical structure of order relations. It is much less known that transformation groups (some authors prefer permutation groups) and their orbits capture the mathematical structure of equivalence relations. See also Lucas (1973: \xA731).\r\nLet '~' denote an equivalence relation over some nonempty set A, called the universe or underlying set. Let G denote the set of bijective functions over A that preserve the partition structure of A: ?x?A?g?G(g(x)?[x]). Then the following three connected theorems hold (Van Fraassen 1989: \xA710.3):\r\n'~' partitions A into equivalence classes. (This is the Fundamental Theorem of Equivalence Relations, mentioned above);\r\nGiven a partition of A, G is a transformation group under composition, whose orbits are the cells of the partition\x87;\r\nGiven a transformation group G over A, there exists an equivalence relation '~' over A, whose equivalence classes are the orbits of G. (Wallace 1998: 202, Th. 6; Dummit and Foote 2004: 114, Prop. 2).\r\nIn sum, given an equivalence relation '~' over A, there exists a transformation group G over A whose orbits are the equivalence classes of A under '~'.\r\nThis transformation group characterisation of equivalence relations differs fundamentally from the way lattices characterize order relations. The arguments of the lattice theory operations meet and join are elements of some universe A. Meanwhile, the arguments of the transformation group operations composition and inverse are elements of a set of bijections, A?A.\r\n\x87Proof (adapted from Van Fraassen 1989: 246). Let function composition interpret group multiplication, and function inverse interpret group inverse. Then G is a group under composition, meaning that ?x?A?g?G ([g(x)] = [x]), because G satisfies the following four conditions:\r\nG is closed under composition. The composition of any two members of G exists, because the domain and codomain of any member of G is A. Moreover, the composition of bijections is bijective (Wallace 1998: 22, Th. 6);\r\nExistence of identity. The identity function, I(x)=x, is an obvious member of G;\r\nExistence of inverse. Every bijective function g has an inverse g-1, such that gg-1 = I;\r\nComposition associates. f(gh) = (fg)h. This holds for all functions over all domains (Wallace 1998: 24, Th. 7).\r\nLet f and g be any two members of G. By virtue of the definition of G, [g(f(x))] = [f(x)] and [f(x)] = [x], so that [g(f(x))] = [x]. Hence G is also a transformation group (and an automorphism group) because function composition preserves the partitioning of A.\r\n[edit]Category theory\r\nThe composition of morphisms central to category theory, denoted by concatenation, generalizes the composition of functions central to transformation groups. The two defining axioms of category theory assert that the composition of morphisms associates, and that the left and right identity morphisms exist. If all morphisms in a category were to have \"inverses,\" the category would resemble a transformation group, whose close relation to equivalence relations has just been explained. A morphism f can be said to have an inverse when f is an automorphism, i.e., the domain and codomain of f are identical, and there exists a morphism g such that fg = gf = identity morphism. Hence the category-theoretic concept nearest to an equivalence relation is a category whose morphisms are all automorphisms.\r\n[edit]Equivalence relations and mathematical logic\r\n\r\nAn implication of model theory is that the properties defining a relation can be proved independent of each other (and hence necessary parts of the definition) if and only if, for each property, examples can be found of relations not satisfying the given property while satisfying all the other properties. Hence the three defining properties of equivalence relations can be proved mutually independent as follows:\r\nReflexive and transitive: The relation ? on N;\r\nSymmetric and transitive: The relation R on N, defined as aRb ? ab?0;\r\nReflexive and symmetric: The relation R on Z, defined as aRb ? \"a-b is divisible by at least one of 2 or 3.\"\r\nProperties definable in first order logic that an equivalence relation may or may not possess include:\r\nThe number of equivalence classes is finite or infinite;\r\nIf finite, the number of equivalence classes is exactly n, n a natural number;\r\nAll equivalence classes have infinite cardinality;\r\nAll equivalence classes have size exactly n, n a natural number.\r\nAn equivalence relation with exactly 2 infinite equivalence classes is an easy example of a theory which is ?-categorical, but not categorical for any larger cardinal number.\r\nEquivalence relations are not all that difficult or interesting, but can be a source of easy examples or counterexamples.\r\n[edit]Examples of equivalence relations\r\n\r\nThe obvious example of an equivalence relation is the equality (\"=\") relation between elements of any set. Other examples include:\r\n\"Has the same birthday as\" on the set of all human beings.\r\n\"Is in thermal equilibrium with\" on physical objects.\r\n\"Is similar to\" or \"congruent to\" on the set of all triangles.\r\nLogical equivalence of statements in logic.\r\n\"Is isomorphic to\" on models of a set of sentences.\r\n\"Has the same image under a function\" on the elements of the domain of the function.\r\nSimilarity on the set of well-orderings. The resulting equivalence classes are the ordinal numbers.\r\nIn some axiomatic set theories other than the canonical ZFC, equinumerosity on the universe of:\r\nFinite sets gives rise to equivalence classes which are the natural numbers, the set of which is denoted N.\r\nInfinite sets gives rise to equivalence classes which are the transfinite cardinal numbers.\r\nLet a,b,c,d?N, and (a,b) and (c,d) be ordered pairs. The relations (a,b)~(c,d) if a+d = b+c, and (a,b)~(c,d) if ad = bc, are equivalence relations whose equivalence classes can be considered to be the integers and the rational numbers, respectively.\r\nLet {ri} and {si} be any two Cauchy sequences of rational numbers. The relation {ri}~{si}, if the sequence (rn - sn) has limit 0, is an equivalence relation whose equivalence classes can be considered to be the real numbers.\r\n\"Is congruent to modulo n\" on the integers.\r\nGreen's relations are five equivalence relations on the elements of a semigroup.\r\nis parallel to, on the set on affine subspaces of an affine space.\r\n[edit]Examples of relations that are not equivalences\r\n\r\nThe relation \"?\" between real numbers is reflexive and transitive, but not symmetric. E.g. 7 ? 5 does not imply that 5 ? 7. It is, however, a partial order.\r\nThe relation \"has a common factor greater than 1 with\" between natural numbers greater than 1, is reflexive and symmetric, but not transitive. (2 and 6 have a common factor greater than 1, and 6 and 3 have a common factor greater than 1, but 2 and 3 do not have a common factor greater than 1).\r\nThe empty relation R on a non-empty set X (i.e. aRb is never true) is vacuously symmetric and transitive, but not reflexive (except when X is also empty).\r\nThe relation \"is approximately equal to\" between real numbers or other things, even if more precisely defined, is not an equivalence relation, because although reflexive and symmetric, it is not transitive, since multiple small changes can accumulate to become a big change.\r\nThe relation \"is a sibling of\" on the set of all human beings is not an equivalence relation. Although siblinghood is symmetric (if A is a sibling of B, then B is a sibling of A) it is neither reflexive (no one is a sibling of himself), nor transitive (since if A is a sibling of B, then B is a sibling of A, but A is not a sibling of A). Instead of being transitive, siblinghood is \"almost transitive\", meaning that if A~B, and B~C, and A?C, then A~C.\r\nSymmetry and transitivity do not imply reflexivity, unless every A is related to some B.\r\n[edit]Euclid anticipated equivalence\r\n\r\nEuclid's The Elements includes the following \"Common Notion 1\":\r\nThings which equal the same thing also equal one another.\r\nNowadays, the property described by Common Notion 1 is called Euclidean (replacing \"equal\" by \"are in relation with\"). The following theorem reveals the connection between links Euclidian binary relations and equivalence relations:\r\nTheorem. If a relation is Euclidian and reflexive, it is also symmetric and transitive.\r\nProof:\r\n(aRc ? bRc) ? aRb [a/c] = (aRa ? bRa) ? aRb [reflexive; erase T?] = bRa ? aRb. This implies that R is symmetric.\r\n(aRc ? bRc) ? aRb [symmetry] = (aRc ? cRb) ? aRb. Hence R is transitive.\r\nHence an equivalence relation is a relation that is Euclidean and reflexive. The Elements mentions neither symmetry nor reflexivity, and Euclid probably would have deemed the reflexivity of equality too obvious to warrant explicit mention. If this (and considering \"equality\" as an abstract relation) is granted, a charitable reading of Common Notion 1 credits Euclid with being the first to conceive of equivalence relations and their importance in deductive systems.\r\n[edit]See also\r\n\r\nDirected set\r\nEquivalence\r\ngroup action\r\nPartial equivalence relation\r\nPartial order\r\nPartition of a set\r\nPermutation group\r\nPermutation\r\nSetoid\r\nTotal order"
+description: ''
+detach: 0
+groupo: 100
+id: 13
+karma: 0
+keywords: Eq
+name: Equivalence Relation
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ~
+type: article
+--- 
+active: 1
+changed: 2007-03-31 22:58:29
+created: 2007-03-31 22:58:29
+data: ''
+description: ''
+detach: 0
+groupo: 100
+id: 16
+karma: 0
+keywords: ''
+name: Mp3
+owner: 1
+parent: 1
+revised_by: 1
+sort: 10
+template: ''
+type: directory
+--- 
+active: 1
+changed: 2007-03-31 23:03:58
+created: 2007-03-31 23:00:19
+data: ''
+description: ''
+detach: 1
+groupo: 100
+id: 17
+karma: 0
+keywords: ''
+name: Mac OS X
+owner: 1
+parent: 1
+revised_by: 1
+sort: 10
+template: ~
+type: directory
+--- 
+active: 1
+changed: 2007-04-02 17:00:22
+created: 2007-04-02 12:15:06
+data: "il Crow, Josh McAdams, Steven Schubiger, chromatic | Pages: 1, 2, 3, 4\r\n\r\nScriptify Your Module\r\n\r\nJosh McAdams\r\n\r\nRecently during an MJD talk at Chicago.pm, I saw a little Perl trick that was so amazingly simple and yet so useful that it was hard to believe that more mongers in the crowd hadn't heard of it. The trick involved taking your module and adding a driver routine to it so the module could run as a script.\r\n\r\nTo illustrate, start with an example module that contains two utility subroutines that convert weights between pounds and kilograms. The subroutines accept some number and multiplies it by a conversion factor.\r\n\r\n  package WeightConverter;\r\n  \r\n  use strict;\r\n  use warnings;\r\n  use constant LB_PER_KG => 2.20462262;\r\n  use constant KG_PER_LB => 1/LB_PER_KG;\r\n  \r\n  sub kilograms_to_pounds { $_[0] * LB_PER_KG; }\r\n  \r\n  sub pounds_to_kilograms { $_[0] * KG_PER_LB; }\r\nAssuming that the real module has a little error checking and POD, this module would serve you just fine. However, what if you decided that we needed to be able to easily do weight conversions from the command line? One option would be to write a Perl script that used WeightConverter. If that seems like too much effort, there is a one-liner that would do conversions.\r\n\r\n  perl -MWeightConverter -e 'print WeightConverter::kilograms_to_pounds(1),\"\\n\"'\r\nThis would do the trick, but it is a lot to remember and isn't very fun to type. There is a lot of benefit available from saving some form of script, and believe it or not, the module can hold that script. All that you have to do is write some driver subroutine and then call that subroutine if the module is not being used by another script. Here is an example driver for WeightConverter.\r\n\r\nThis example driver script just loops through the command-line arguments and tries to find instances where the argument contains either a k or p equal to some value. Based on whether or not you are starting with pounds or kilograms, it calls the appropriate subroutine and prints the results.\r\n\r\n  sub run {\r\n    for (@ARGV) {\r\n      if(/^[-]{0,2}(k|p)\\w*=(.+)$/) {\r\n        $1 eq 'k' ?\r\n          print \"$2 kilograms is \", kilograms_to_pounds($2), \" pounds\\n\" :\r\n          print \"$2 pounds is \", pounds_to_kilograms($2), \" kilograms\\n\" ;\r\n      }\r\n    }\r\n  }\r\nNow all that is left is to tell the module to run the run subroutine if someone has run the module on its own. This is as easy as adding one line somewhere in the main body of the module.\r\n\r\n  run unless caller;\r\nAll this statement does is execute the run subroutine unless the caller function returns a value. caller will only return true if WeightConverter is being used in another script. Now, this module is usable in other scripts as well as on the command line.\r\n\r\n  $> perl WeightConverter.pm -kilos=2 -pounds=145 -k=.345\r\n  2 kilograms is 4.40924524 pounds\r\n  145 pounds is 65.7708937051548 kilograms\r\n  .345 kilograms is 0.7605948039 pounds\r\nMocks in Your Test Fixtures\r\n\r\nby chromatic\r\n\r\nSince writing Test::MockObject, I've used it in nearly every complex test file I've written. It makes my life much easier to be able to control only what I need for the current group of tests.\r\n\r\nI wish I'd written Test::MockObject::Extends earlier than I did; that module allows you to decorate an existing object with a mockable wrapper. It works just as the wrapped object does, but if you add any mocked methods, it will work like a regular mock object.\r\n\r\nThis is very useful when you don't want to go through all of the overhead of setting up your own mock object but do want to override one or two methods. (It's almost always the right thing to do instead of using Test::MockObject..)\r\n\r\nAnother very useful test module is Test::Class. It takes more work to understand and to use than Test::More, but it pays back that investment by allowing you to group, reuse, and organize tests in the same way you would group, reuse, and organize objects in your code. Instead of writing your tests procedurally, from the start to the end of a test file, you organize them into classes.\r\n\r\nThis is most useful when you've organized your code along similar lines. If you have a base class with a lot of behavior and a handful of subclasses that add and override a little bit of behavior, write a Test::Class-based test for the base class and smaller tests that inherit from the base test for the subclasses.\r\n\r\nGoodbye, duplicate code.\r\n\r\nFixtures\r\nTest::Class encourages you to group related tests into test methods. This allows you to override and extend those groups of tests in test subclasses. (Good OO design principles apply here; tests are still just code, after all.) One of the benefits of grouping tests in this way is that you can use test fixtures.\r\n\r\nA test fixture is another method that runs before every test method. You can use them to set up the test environment--creating a new object to test, resetting test data, and generally making sure that tests don't interfere with each other.\r\n\r\nA standard test fixture might resemble:\r\n\r\n  sub make_fixture :Test( setup )\r\n  {\r\n      my $self        = shift;\r\n      $self->{object} = $self->test_class()->new();\r\n  }\r\nAssuming that there's a test_class() method that returns the name of the class being tested, this fixture creates a new instance before every test method and stores it as the object attribute. The test methods can then fetch this as normal.\r\n\r\nPutting Them Together\r\nI recently built some tests for a large system using Test::Class. Some of the tests had mockable features--they dealt with file or database errors, for example. I found myself creating a lot of little Test::MockObject::Extends instances within most of the tests.\r\n\r\nThen inspiration struck. Duplication is bad. Repetition is bad. Factor it out into one place.\r\n\r\nThe insight was quick and sudden. If Test::MockObject::Extends is transparent (and if it isn't, please file a bug--I'll fix it), I can use it in the test fixture all the time and then be able to mock whenever I want without doing any setup. I changed my fixture to:\r\n\r\n  sub make_fixture :Test( setup )\r\n  {\r\n      my $self        = shift;\r\n          my $object      = $self->test_class()->new();\r\n      $self->{object} = Test::MockObject::Extends->new( $object );\r\n  }\r\nThe rest of my code remained unchanged, except that now I could delete several identical lines from several test methods.\r\n\r\nDo note that, for this to work, you must adhere to good OO design principles in the code being tested. Don't assume that ref is always what you think it should be (and use the isa() method instead).\r\n\r\nSure, this is a one-line trick, but it removed a lot of busy work from my life and it illustrates two interesting techniques for managing tests. If you need simpler, more precise mocks, use Test::MockObject::Extends. If you need better organization and less duplication in your test files, use Test::Class. Like all good test modules, they work together almost flawlessly."
+description: ''
+detach: ~
+groupo: 100
+id: 18
+karma: 0
+keywords: ''
+name: Scriptify Your Modules
+owner: 1
+parent: 17
+revised_by: 3
+sort: 10
+template: ~
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:15:52
+created: 2007-04-02 12:15:52
+data: "It's back! That's right, the occasional browser wars poll has returned! I usually try to ask twice a year, but it's been over 12 months since we last ran the survey. And so, just what is your favorite browser of the moment? I added two new choices this time -- IE for Windows under Parallels and Other Windows Browser via Parallels -- for any of you Intel-Mac-using folks who might find a Windows browser to be your current favorite. \r\n\r\nThese polls are always interesting; the last time around, Safari won with 57% of the votes, followed not so closely by Firefox (22%) and Camino (11%). Safari's numbers were actually down from the poll before that, where it received 64% of the votes, Firefox was about the same, and Camino was at 6%. Will Safari's share be down again this time? If so, which alternative browser is gaining the most? Vote now and help determine how things shake out."
+description: ''
+detach: ~
+groupo: 100
+id: 19
+karma: 0
+keywords: ''
+name: Favourite browser poll
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:16:15
+created: 2007-04-02 12:16:15
+data: "I was looking for a way to reduce the amount of clutter in my menu bar and decided the Bluetooth icon was a suitable target. I wanted two things:\r\nThe current Bluetooth status displayed on my Desktop\r\nAn easy way to toggle Bluetooth on and off\r\nAn older hint suggested using blueutil for controlling the Bluetooth daemon in OS X. This nifty little program can both show and set the status of the Bluetooth radio receiver. To display the current Bluetooth status on the Desktop, I use GeekTool with the following shell command:\r\n/usr/local/bin/blueutil status | awk '{print \"BT: \" $2}'\r\nTo toggle Bluetooth on and off, and show a Growl notification, I created this AppleScript. This script is then placed in a directory that is scanned by Quicksilver; I used ~/Library/Scripts. It can then be quickly called with a few keystrokes. \r\n\r\n[robg adds: This hint doesn't require Quicksilver; you could use another launcher, or even just keep the script in your dock, toolbar, or sidebar.]"
+description: ''
+detach: ~
+groupo: 100
+id: 20
+karma: 0
+keywords: ''
+name: Toggle Bluetooth using Quicksilver and AppleScript
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:16:39
+created: 2007-04-02 12:16:39
+data: "If you want to create a file of any type in any folder you can do it with Quicksilver. This works great if you find yourself creating the same file type with some data over and over again, i.e. copy a file then rename it). I have been using it a lot lately for data processing by having many Excel templates all ready to paste my raw data into, and for basic HTML pages. \r\n\r\nI read about this in this post on Lifehacker this week, so check out the original article for the full details. But here's a short summary: \r\n\r\nFirst put whatever type of file you want to create (Word, Excel, TextEdit, etc.; they can have text in them, too) into ~Library \xBB Application Support \xBB Quicksilver \xBB Templates (create the Templates folder if necessary). Then Select a folder for the new file, and use Quicksilver's Make New \xBB Select Template, and choose the file type you want to create. If you are in a folder and have no files highlighted, you can execute Command Window with Selection (Option-Escape on my machine), and the current folder is selected. After all this you have your new file in the folder of your choice. The initial setup can take sometime, especially if you have lots of templates, but is very handy. \r\n\r\n[robg adds: As mentioned in this recent hint, you can also use NuFile or DocumentPalette to do the same if you're not a Quicksilver user.]"
+description: ''
+detach: ~
+groupo: 100
+id: 21
+karma: 0
+keywords: ''
+name: Create a new blank file of any kind with Quicksilver
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:16:58
+created: 2007-04-02 12:16:58
+data: "So I was creating a new Flickr group and had a ton of people to invite via email -- how to best export a large number of email addresses from 10.4's Address Book? I couldn't find a script, so I thought about using the freeware AddressWeb as found in the comments to this hint. \r\n\r\nOn a whim, though, I tried entering some of those names in Mail.app, selecting all, copying, then pasting into Firefox's input field on the Flickr page. Voila, email addresses, nicely formatted with commas and everything. You can even drag and drop the completed name from Mail into a text entry field and have it populate the email address."
+description: ''
+detach: ~
+groupo: 100
+id: 22
+karma: 0
+keywords: ''
+name: Easily place Address Book email addresses in web forms
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:17:22
+created: 2007-04-02 12:17:22
+data: "OK, this one is in the 'painfully obvious' category now that I know about it ... but just in case I wasn't the only one... \r\n\r\nWhen you are viewing movies in QuickTime's full screen mode, you can move the controls box just by clicking and dragging it. I just never thought of a transparent overlay as a window, so I hadn't ever tried it. \r\n\r\nFor those of you that don't have Quicktime Pro (I do), there is also this hint (and associated comments) on how to watch movies in full screen mode even if you haven't bought QuickTime Pro."
+description: ''
+detach: ~
+groupo: 100
+id: 23
+karma: 0
+keywords: ''
+name: Move QuickTime full screen controller overlay
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:17:41
+created: 2007-04-02 12:17:41
+data: "The following Automator workflow will simplify compacting a sparse disk image. You need to occasionally compact sparse disk images, because while they will grow automatically as you add files, they won't shrink when you delete files. Open Automator in Applications Folder, and create this workflow:\r\nFinder Library \xBB Get Specified Finder Items Action\r\nFinder Library \xBB Filter Finder Items, and select Name Extension is equal to sparseimage.\r\nAutomator Library \xBB Run Shell Script and select Pass input as arguments and replace the sample script with hdiutil compact $@.\r\nSave as Plugin for Finder (name it Compact Sparse Disk Image). In the Finder, select a sparse disk image and ctrl-click, go to the Automator entry, and select Compact Sparse Disk Image. That's it!"
+description: ''
+detach: ~
+groupo: 100
+id: 24
+karma: 0
+keywords: ''
+name: "10.4: Compact sparse disk images via contextual menu"
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:18:02
+created: 2007-04-02 12:18:02
+data: "I have always wanted to have the ability to remove files from the trash which were deleted a long time ago. I have just written an AppleScript which renames files and/or folders after they have been put into the Trash to help with this task. Date and time are added to the original filename. So for example, if the file XYZ.txt has been deleted, then the script renames it to _@_YYYYMMDD-HHMMSS_XYZ.txt. This gives me the possibility to sort those files and folder by date and time. \r\n\r\nI had to put an identification string (_@_) at the beginning because the Repeat loop takes the newly renamed files into account, which produces a never-ending loop. Maybe somebody can find a better solution. \r\n\r\nI used Folder Actions (implemented on OS X 10.3 and newer) on the Trash folder (~/.Trash) to let this script run as soon as a file or folder has been put inside. Copy/paste the script into the Script Editor and save it as and Application under the name ToTrash into ~/Library -> Scripts -> Folder Action Scripts to use it in this manner. \r\n\r\nTo accompany this script, I have written another that then checks the renamed files and deletes those older than a specified age. The number of days (which is presently set to 15) can be changed in the perl part of the script (localtime(time - 15 * 86400);). The path Macintosh HD:Users:user:.Trash: must be customized to match your machine. "
+description: ''
+detach: ~
+groupo: 100
+id: 25
+karma: 0
+keywords: ''
+name: A set of scripts to erase deleted files based on age
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:18:21
+created: 2007-04-02 12:18:21
+data: "It seems like every time I backup my home folder and then do an erase and install, I forget a bunch of system files: my hosts file, apache, mysql, and php config files. So I've come up with a handy solution. I've created a folder in my home folder, ~/.system. In that folder, I've created hard links to a bunch of system files:\r\nhosts -> /etc/hosts\r\nhttpd.conf -> /etc/httpd/httpd.conf\r\nmy.cnf -> /etc/my.conf\r\nsites.conf -> /etc/httt/sites.conf\r\nYou create a hard link in Terminal using this syntax, assuming you're in the directory where you'd like the link to be created:\r\n$ cd ~/.system\r\n$ ln /etc/hosts .\r\nA hard link creates two directory entries pointing to the same file on the disk. Deleting one directory entry doesn't delete the file. Now when I back up my home folder, I also back up these personalized system files."
+description: ''
+detach: ~
+groupo: 100
+id: 26
+karma: 0
+keywords: ''
+name: One way to help back up personalized system files
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:18:41
+created: 2007-04-02 12:18:41
+data: "Rumoured for Leopard, Bluetooth PAN is now in 10.4.9. I've just set up my W810i with my PowerBook, and I have a new network port: Ethernet Adaptor (en2), which is configured with a default name of Bluetooth PAN. \r\n\r\nNote that it's now easier to connect to the internet via the Bluetooth menu using \"Join Network on [your device]\". \r\n\r\n[robg adds: I can't confirm this one here, but would appreciate any confirmations -- it sounds quite useful for those with capable Bluetooth devices.]"
+description: ''
+detach: ~
+groupo: 100
+id: 27
+karma: 0
+keywords: ''
+name: "10.4: Use a Bluetooth personal area network (PAN)"
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 20:38:24
+created: 2007-04-02 12:20:03
+data: "bring my iBook everywhere, and I store on its drive 80% of my important data, since I use it for studying, working, scripting, doing projects for university, listening to music, downloading stuff, browsing, printing nice articles found on the Web to PDFs, etc. Scared by the fact that hard drives fail when you least expect it -- and trust me, they still fail if you (like me) love your hardware more than your girlfriend. So I spent some days thinking about and coding a little script-based backup system with the following features:\r\nlow memory usage\r\nfast!\r\ncapable of backing up several directories in a single .iso image, ready to be burned.\r\nMy files-to-backup and my backup files must be stored on the same hard disk (the 40GB one inside my iBook), at least until I burn them on CDs every weekend. So, to prevent useless duplicates floating in my laptop, and my confusion during my several daily Spotlight searches, I chose to back up to a disc image (i.e. a single explorable file), instead of a \"normal\" method of back up (with duplicate files/folders, usually on another drive). \r\n\r\nI chose the ISO format instead of a disk image, because the first one is a more standard kind of disc image compared to the second one. It can be mounted and explored or burned on both Mac and on Windows machines (using the nice freeware tool called Daemon Tools, for example). Why did I code a script instead of using one of the tons of backup apps out there? Because the ones I tested don't do exactly what I need, and because doing the things I need myself and watching them work wonderfully makes me happy like a child who has finally received its most-wanted toy from Santa Claus! And by the way, scripting on Mac OS X is so easy that you can't really stop doing it once you get started.\r\n\r\nPre-requisites to run the script: as\r\n\r\nMy script uses the great commandline utility called mkisofs that for Mac OS X is only distributed as source files, at least officially (on the website of the Author). But if you ignore what words like \"source file\" or \"compile\" mean, or if you (like me) can't or don't want to install the 1GB+ of XCode just for compiling the sources of mkisofs (that is a few KB utility), you can get the binary distribution in four easy steps:\r\nDownload and mount the DMG image of the freeware software called DVD Imager.\r\nWhen it appears on the desktop, open it, control-click on the DVD Imager application, pick Show Package Contents from the pop-up menu, and navigate to Contents -> Resources.\r\nCopy mkisofs to your /bin folder using the Terminal and a command like the following: sudo mv /Users/eldino/Downloads/mkisofs /bin/. You need Admin priviliges to do this, so you have to logout from your daily-use limited account (you don't work daily as Admin user, right?) and log in as Admin (or ask the Admin of your machine to do it for you) to accomplish that mv job.\r\nAfter you do all this, type mkisofs -h: if all has gone well, you have succesfully placed mkisofs in your system binaries folder, and so it should be available from every path (exactly like mv, cp, uptime, etc.). \r\n\r\nHow the bashbackup script works:\r\nIt creates a destination folder (ex. /Users/YourName/Backup).\r\nIt creates a temp subfolder in the destination folder named following this scheme Backup_todaydate (ex. /Users \xBB YourName \xBB Backup \xBB Backup_2007-12-30).\r\nIt copies all your files and folders to back up to the temp subfolder.\r\nIt creates a textual index of the content of your temp subfolder (i.e. Backup_2007-12-30_index.txt) in the destination folder (thanks to the author of this hint for the inspiration!).\r\nIt creates the ISO disc image of the temp subfolder (i.e. Backup_2007-12-30.iso).\r\nIt deletes the temp subfolder.\r\nHow to install the script:\r\nDownload it (1.5KB) and expand the archive.\r\nCopy eldino's_bashbackup.sh to a folder of your choice.\r\nFire up Terminal, go to the folder where you saved the script and type chmod 755 eldino's_bashbackup.sh then press Enter.\r\nCongrats! The script is now installed and executable! \r\n\r\nObviously, you can easily customize every key aspect of the script, like changing the destination folder or the ISO image naming scheme, adding/removing folders to the folders to back up list etc. For the script-editing part, I personally use the freeware developer-oriented text editor called Smultron, that colour your syntax and open multiple files in the same sidebar, but of course any other textual editor would be fine. To get the file paths of your folders to back up in a simple way, I suggest you to get the nice contextual menu plugin called FilePathCM; it's free and works great! \r\n\r\nHow to use the script: \r\n\r\nI suggest you to run this script at least weekly, using a cron job. Then you can burn several ISO images on a single 700MB/4.3GB disc, or you can burn one image per disc. I personally like to burn seven or eight ISO images on one CD-R, because the personal data I back up don't take so much space (my ISO images are about 90MB to 100MB each). You can also call my script from inside an Automator workflow or an AppleScript, or use it with the nice app DoSomethingWhen (that permits you to, for example, run the script when you plug in your external drive). The possibilities are endless! \r\n\r\nThe possible usages of the textual index file include:\r\nIf the text indexes reside on a volume indexed by Spotlight, you might be able to figure out in what image or images a specified file is placed in just typing its name or part of its name into the Spotlight search field.\r\nIf the text indexes resides on a read-only media, like a CD/DVD, you can load them into a text editor and do a search for the file you need: if the search is positive, then you can mount the disc image, otherwise you can go forward with the next disc.\r\nPossible variants:\r\nInstead of creating an ISO image, you could create a single zip (or gzip, tar, or bz2) file, but you will lose the capacity (at least using the native Mac OS X tools) to explore the result without first expanding it.\r\nInstead of burning backup images on CD/DVDs, you could save them on an external drive and keep them there until the next Ice Age.\r\nAs usual, for questions, problems, suggests, insults, congrats or whatever else, don't hesitate to write me an email or post a comment."
+description: ''
+detach: ~
+groupo: 100
+id: 28
+karma: 0
+keywords: ''
+name: A script to back up files to a single ISO image
+owner: 1
+parent: 17
+revised_by: 3
+sort: 10
+template: ~
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:20:30
+created: 2007-04-02 12:20:30
+data: "Whenever I open TextEdit (rarely), I am dismayed to find out that when I save the file, it only gives me four choices: RTF, HTML, Word, and Word XML. But what happens when I don't care about the formatting, and all I want is plain old txt? For a while I found myself opening a blank text file on my desktop downloaded from a website and then doing File \xBB Save As, or even opening up Terminal and typing in touch Desktop/file.txt. \r\n\r\nWell, today I got off my lazy butt and wrote a script (two lines of code). I then put it into Automator and saved it as a plug-in in the Finder's contextual menu. Here's the script:\r\ndo shell script \"touch ~/Desktop/file.txt\"\r\ndo shell script \"open ~/Desktop/file.txt\"\r\nWhat the script does is first create a file named file.txt and puts it on the desktop, then opens it in TextEdit. I suppose someone could save the script as an application and have it open on a keyboard shortcut through Butler or Quicksilver as well. Just copy the code into Script Editor or Automator in a Do Shell Script action. \r\n\r\n[robg adds: There are third-party tools that make this process pretty simple, too. DocumentPalette and NuFile are two that come to mind.]"
+description: ''
+detach: ~
+groupo: 100
+id: 29
+karma: 0
+keywords: ''
+name: "10.4: Create new blank text files via contextual menu"
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:20:57
+created: 2007-04-02 12:20:57
+data: "There is no equation editor available in Keynote or Pages, but it is possible to creat nice equations in the Grapher application (in /Applications \xBB Utilities) included in OS X, and then copy/paste the equation(s) into Pages or Keynote. \r\n\r\nHowever, I don't know how to select a font color to match Keynote's master. Perhaps there's a better/free way to create nice equations to use in Keynote and Pages?"
+description: ''
+detach: ~
+groupo: 100
+id: 30
+karma: 0
+keywords: ''
+name: Use Grapher to embed equations in Pages and Keynote
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:21:17
+created: 2007-04-02 12:21:17
+data: "I was thinking of all the private information that I never have time to secure delete from my trash because I'm too impatient, and I thought it would be a good idea just to run Disk Utility's Erase Free Space (35-Pass) feature overnight just for good measure. Unfortunately, it was not done in the morning, so I hit Skip, and I was in a rush, so against better judgement, I then used Force Quit. However, Disk Utility erases free disk space by simply making a giant file that is nothing but zeros or random data. It left that huge file, leaving me with 268Kb of free space, instead of 70Gb. What's worse is that I had no idea where it left that file! A reboot didn't clear it out, and I couldn't find any help on the usual Mac sites ... so I started messing around. \r\n\r\nIt turns out that the fix is simple: just throw some file away and empty the trash, and you'll get the space back. If for some reason you can't find a file to throw away, open Terminal and type touch ~/Desktop/throw_me_away. This will create an empty file on your desktop you can then delete."
+description: ''
+detach: ~
+groupo: 100
+id: 31
+karma: 0
+keywords: ''
+name: Recover from an incomplete Erase Free Space process
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:21:43
+created: 2007-04-02 12:21:43
+data: "There are several applications out there that allow you to rip your own DVDs in a QuickTime format compatible with Apple TV. However, as of today, only Cinematize Pro is able to add the DVD chapter markers to the QuickTime file. The problem is that Cinematize Pro is quite expensive, and the quality is not as satisfactory as the one achieved with Mediafork (nee HandBrake). \r\n\r\nWith the help of MetaData Hootenanny, however, you can add the original DVD chapters to your QuickTime file quickly and for free:\r\nRip your DVD disc with MediaFork (or any other application of your choice).\r\nOpen Metadata Hootenanny and drag the QuickTime movie onto the Library.\r\nClick on the book icon (it's on the bottom right corner of Hootenanny's main window).\r\nClick on the button 'READ FROM DVD,' select the VIDEO_TS folder that you just ripped, and choose the title. Metadata Hootenanny will import the chapter times in the main window.\r\nSave (File \xBB Save) the file in the location of your choice.\r\nNow you can enjoy movies on Apple TV and skip through the main tracks as if you were playing a DVD!"
+description: ''
+detach: ~
+groupo: 100
+id: 32
+karma: 0
+keywords: ''
+name: " Add chapter markers to ripped DVDs for Apple TV"
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-02 12:23:08
+created: 2007-04-02 12:22:31
+data: "[file:2] One detail that I'm actually missing from Windows is a Finder toolbar button to jump one folder up in the hierarchy, ie to the parent folder. So I came up with the following ugly but still functionally work-around. First create an AppleScript app with just this line of code:\r\ntell application \"Finder\" to set target of window 1 to the container \xAC\r\nof target of window 1\r\nThen save it as an application, and quit Script Editor. Now show the contents of the application package you just created by control-clicking on the folder and then choosing Show Package Contents from the pop-up menu. Open the Contents folder and edit the info.plist file in your editor of choice. Adding the following will make the program faceless, so that it does not appear in the Dock when launched:\r\n<key>NSUIElement</key>\r\n<string>1</string>\r\nFinally create a nice icon (I made one in Photoshop that looks similar to the navigation buttons, as seen above right), paste it onto the app (in its Get Info window) and drag the app to the Finder toolbar. Done! It looks a little strange when the window is inactive (the icon gets dimmed, differently from the other buttons), but it does work."
+description: ''
+detach: ~
+groupo: 100
+id: 33
+karma: 0
+keywords: ''
+name: Add a 'Go to Parent Folder' button to the toolbar
+owner: 1
+parent: 17
+revised_by: 1
+sort: 10
+template: ~
+type: article
+--- 
+active: 1
+changed: 2007-04-02 20:44:35
+created: 2007-04-02 20:43:24
+data: ''
+description: ''
+detach: 0
+groupo: 100
+id: 34
+karma: 0
+keywords: ''
+name: monkey
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ~
+type: directory
+--- 
+active: 1
+changed: 2007-04-07 16:18:34
+created: 2007-04-07 16:05:40
+data: ''
+description: http://admin.localhost/scriptaculous/rtef/images/print.gif
+detach: ~
+groupo: 100
+id: 37
+karma: 0
+keywords: http://admin.localhost/scriptaculous/rtef/images/pasteword.gif
+name: Empty
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ~
+type: article
+--- 
+active: 1
+changed: 2007-04-07 16:12:18
+created: 2007-04-07 16:05:40
+data: ''
+description: asasda
+detach: ~
+groupo: 100
+id: 38
+karma: 0
+keywords: ''
+name: Empty
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ~
+type: article
+--- 
+active: 1
+changed: 2007-04-12 02:27:28
+created: 2007-04-12 02:27:28
+data: ''
+description: What is this? The PG-13 version of SAW?
+detach: ~
+groupo: 100
+id: 39
+karma: 0
+keywords: movie, serial killer, thriller
+name: Thr3e
+owner: 3
+parent: 1
+revised_by: 0
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-12 03:22:40
+created: 2007-04-12 03:22:40
+data: ''
+description: ''
+detach: ~
+groupo: 100
+id: 40
+karma: 0
+keywords: ''
+name: fisk og atter fisk
+owner: 3
+parent: 1
+revised_by: 0
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-12 03:26:36
+created: 2007-04-12 03:26:36
+data: ''
+description: ''
+detach: ~
+groupo: 100
+id: 41
+karma: 0
+keywords: ''
+name: det beste som kan hende er AAAAAAAA
+owner: 3
+parent: 1
+revised_by: 0
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-17 00:56:02
+created: 2007-04-17 00:56:02
+data: ''
+description: ''
+detach: 0
+groupo: 100
+id: 42
+karma: 0
+keywords: ''
+name: Asdasdasdasdasd
+owner: 3
+parent: 34
+revised_by: 0
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-18 17:40:19
+created: 2007-04-18 17:38:57
+data: "Marsipan er KONGE til jul, p\xE5ske og fest!"
+description: ''
+detach: 0
+groupo: 100
+id: 43
+karma: 0
+keywords: "nidar bergene, jul, p\xE5ske og fest"
+name: Marsipan
+owner: 3
+parent: 1
+revised_by: 3
+sort: 10
+template: ''
+type: article
+--- 
+active: 1
+changed: 2007-04-22 05:27:34
+created: 2007-04-22 05:27:34
+data: ~
+description: Welcome to Modwheel.
+detach: 0
+groupo: 1
+id: 1
+karma: 0
+keywords: ~
+name: root
+owner: 1
+parent: 0
+revised_by: 1
+sort: 0
+template: ~
+type: directory

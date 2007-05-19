@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS repository
     PRIMARY KEY(id),
     FULLTEXT KEY name(name)
 )
-ENGINE = MYISAM;
+ENGINE = MYISAM ROW_FORMAT = DYNAMIC AVG_ROW_LENGTH = 255 MAX_ROWS = 250000;
 
 CREATE INDEX repository_parentobj_idx ON repository(parentobj);
 CREATE INDEX repository_type_idx ON repository(mimetype);

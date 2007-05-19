@@ -8,19 +8,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Base.pm,v 1.8 2007/04/28 13:13:04 ask Exp $
+# $Id: Base.pm,v 1.13 2007/05/18 23:42:38 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/DB/Base.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.8 $
-# $Date: 2007/04/28 13:13:04 $
+# $Revision: 1.13 $
+# $Date: 2007/05/18 23:42:38 $
 #####
 package Modwheel::DB::Base;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base 'Modwheel::Instance';
-use version; our $VERSION = qv('0.2.3');
+use version; our $VERSION = qv('0.3.1');
 {
     use DBI;
     use Carp         qw(confess carp croak cluck longmess shortmess);
@@ -31,10 +31,11 @@ use version; our $VERSION = qv('0.2.3');
     #                     -- OBJECT ATTRIBUTES --
     #========================================================================
 
-    public dbh          => my %dbh_for,         {is => 'rw'};
-    public raise_error  => my %raise_error_for, {is => 'rw'};
-    public print_error  => my %print_error_for, {is => 'rw'};
-    public connected    => my %connected_for,   {is => 'ro'};
+    public dbh           => my %dbh_for,           {is => 'rw'};
+    public raise_error   => my %raise_error_for,   {is => 'rw'};
+    public print_error   => my %print_error_for,   {is => 'rw'};
+    public prepare_cache => my %prepare_cache_for, {is => 'rw'};
+    public connected     => my %connected_for,     {is => 'ro'};
 
     #========================================================================
     #                     -- PUBLIC INSTANCE METHODS --
@@ -59,6 +60,10 @@ use version; our $VERSION = qv('0.2.3');
         my $raise_error = $arg_ref->{RaiseError} || $self->RaiseError;
         my $print_error = $arg_ref->{PrintError} || $self->PrintError;
 
+        if ($arg_ref->{prepare_cache}) {
+            $self->prepare_cache(1);
+        }
+
         my @dbh_config = (
             $dsn, $username, $password,
             {
@@ -76,12 +81,10 @@ use version; our $VERSION = qv('0.2.3');
         # should always check the return of connect, so we don't continue
         # without a database handle.
         if (!blessed $dbh) {
-            $self->modwheel->throw('db-connection-error');
-            $self->modwheel->logerror(
-                "Couldn't connect to database '$dbconfig->{name}'\@'$dbconfig->{host}': ",
+            return $self->modwheel->throw('db-connection-error',
+                $dbconfig->{name},
                 $self->errstr
             );
-            return;
         }
 
         $self->_set_dbh($dbh);
@@ -93,6 +96,7 @@ use version; our $VERSION = qv('0.2.3');
 
         return 1;
     }
+
 
     #------------------------------------------------------------------------
     # ->connect_cached( \%arg )
@@ -114,7 +118,7 @@ use version; our $VERSION = qv('0.2.3');
     sub create_dsn {
         my ($self) = @_;
         my $modwheel = $self->modwheel;
-        $modwheel->logwarn('No database driver selected.');
+        $modwheel->logwarn( $modwheel->get_l10n_string('db-no-driver') );
         return 1;
     }
 
@@ -273,13 +277,12 @@ use version; our $VERSION = qv('0.2.3');
         }
 
         # prepare the query...
-        my $sth = $dbh->prepare($query);
+        my $sth = $self->prepare_cache ?  $dbh->prepare_cached($query)
+                                       :  $dbh->prepare($query);
 
         # and catch errors if there is any.
         if (!$sth) {
-            $modwheel->throw('db-query-error');
-            $modwheel->logerror("Couldn't prepare query '$query':",
-                $self->errstr);
+            $modwheel->throw('db-prepare-query-error', $query, $self->errstr);
             $sth->finish();
             return;
         }
@@ -319,12 +322,8 @@ use version; our $VERSION = qv('0.2.3');
 
         my $sth = $self->prepare($query);
         my $ret = $self->execute($sth, @bind_vars);
-        if (!$ret) {
-            $modwheel->throw('db-query-error');
-            $modwheel->logerror("Couldn't execute query: $query:",
-                $self->errstr);
-            return;
-        }
+        return $modwheel->throw('db-execute-query-error', $query, $self->errstr)
+            if !$ret;
 
         return $sth;
     }
@@ -467,6 +466,7 @@ use version; our $VERSION = qv('0.2.3');
 
         my $next_id = $self->fetch_singlevar(
             "SELECT MAX($primary_key) + 1 FROM $table");
+        $next_id ||= 1;
 
         return $next_id;
     }
@@ -504,14 +504,8 @@ use version; our $VERSION = qv('0.2.3');
         my $fields_str   .= join q{, }, map {"$_=?"} @{$fields_ref};
 
         my $where_clause = $self->_build_where_clause($where_ref);
-        if (!$where_clause) {
-            $self->modwheel->throw('db-build-query-missing-where');
-            $self->modwheel->logerror(
-                'Build Database Update Query:',
-                'Not having a where clause is probably not what you want...'
-            );
-            return;
-        }
+        return $self->modwheel->throw('db-build-query-missing-where')
+            if !$where_clause;
 
         my $query = qq{
             UPDATE $table SET $fields_str WHERE $where_clause
@@ -613,6 +607,43 @@ use version; our $VERSION = qv('0.2.3');
     #------------------------------------------------------------------------
     sub maintainance {
         return 1;
+    }
+    #------------------------------------------------------------------------
+    # ->insert($table, \[@%$]fields, @bindvars)
+    #
+    # my $ret = $self->insert('tags', ['name'], $tag_name);
+    #------------------------------------------------------------------------
+    sub insert {
+        my ($self, $table, $fields_poly, @bindvars) = @_;
+        
+        my $q = $self->build_insert_q($table, $fields_poly);
+        return if ! $q;
+
+        return $self->exec_query($q, @bindvars);
+    }
+
+    #------------------------------------------------------------------------
+    # ->update($table, \[@%$]fields, \[@%$]where, @bindvars)
+    #------------------------------------------------------------------------
+    sub update {
+        my ($self, $table, $fields_poly, $where_poly, @bindvars) = @_;
+        
+        my $q = $self->build_update_q($table, $fields_poly, $where_poly);
+        return if ! $q;
+        
+        return $self->exec_query($q, @bindvars);
+    }
+
+    #------------------------------------------------------------------------
+    # ->delete($table, \[@%$]where, @bindvars)
+    #------------------------------------------------------------------------
+    sub delete {
+        my ($self, $table, $where_poly, @bindvars) = @_;
+
+        my $q = $self->build_delete_q($table, $where_poly);
+        return if ! $q;
+
+        return $self->exec_query($q, @bindvars);
     }
 
     #========================================================================
@@ -779,8 +810,7 @@ use version; our $VERSION = qv('0.2.3');
         }
 
         if ($command eq 'DELETE' && !$where) {
-            $modwheel->logerror('Delete without where.');
-            return;
+            return $modwheel->throw('db-build-delete-query-missing-where');
         }
 
         my %option_statements = (
@@ -1290,7 +1320,7 @@ The Modwheel website: L<http://www.0x61736b.net/Modwheel/>
 
 =head1 VERSION
 
-v0.2.3
+v0.3.1
 
 =head1 AUTHOR
 

@@ -1,4 +1,21 @@
-0.2.3 Sat Apr 28 15:06:31 PM 2007 [ASKSH@cpan.org]
+0.3.0 Sat May 19 01:26:32 AM 2007 [ASKSH@cpan.org]
+    - Makefile.PL does not work properly at the moment. You need Module::Build.
+    - FCGI in development.
+    - New configuration method. (Modwheel::Configure, modstrap configure, Modwheel::REPL::Prompt).
+    - New installation method.
+       (bin/modstrap, inc/Module/Build/M.pm, inc/M/Bootstrap.pm, inc/M/InstallerBuilder.pm)
+    - mod, a modwheel REPL. (Modwheel::REPL).
+    - Class::InsideOut::Policy::Modwheel has isa => 'Class::Name' support for attributes to automaticly
+      create objects if they don't exist.
+    - Started work on user sessions.
+    - More documentation.
+    - Added support for SQLite and SQLite2.
+
+0.2.4 Sun Apr 29 00:56:00 AM 2007 [ASKSH@cpan.org]
+    - Object serialiation and diff now uses JSON::Syck instead of YAML::Syck.
+    - Added karma to objects.
+
+0.2.3 Sat Apr 28 03:06:31 PM 2007 [ASKSH@cpan.org]
     - > From: chris
       > Date: April 27, 2007 19:39
       > Subject: FAIL Modwheel-0.2.2 i386-freebsd-thread-multi-64int 5.3-release
@@ -13,7 +30,7 @@
 0.2.3 Fri Apr 27 01:03:23 AM 2007 [ASKSH@cpan.org]
     - Revision database table introduced.
  
-0.2.2 Fri Apr 27 21:41:51 PM 2007 [ASKSH@cpan.org]
+0.2.2 Fri Apr 27 09:41:51 PM 2007 [ASKSH@cpan.org]
     - > From: Josts Smokehouse
       > Date: April 27, 2007 08:02
       > Subject: FAIL Modwheel-0.2.1 sun4-solaris-thread-multi 2.9
@@ -22,7 +39,7 @@
 
       Have to find out why my signature failes. in the mean time the dist is
       not signed.
-0.2.2 Fri Apr 27 21:35:23 PM 2007 [ASKSH@cpan.org]
+0.2.2 Fri Apr 27 09:35:23 PM 2007 [ASKSH@cpan.org]
     - > From: chris
       > Date: April 26, 2007 20:41
       > Subject: FAIL Modwheel-0.2.1 i386-freebsd-thread-multi-64int 5.3-release
@@ -44,12 +61,12 @@
     - Object compare differences. ($object->diff( ) ).
     - New module requirement: Digest::SHA1
 
-0.2.1 Tue Apr 26 16:13:03 PM 2007 [ASKSH@cpan.org]
+0.2.1 Tue Apr 26 04:13:03 PM 2007 [ASKSH@cpan.org]
     - Object prototypes
     - Coheres to Perl::Critic
     - A lot more tests (Now 70% Devel::Cover'age)
     - Now using inside-out objects (Using the helper class
       Class::InsideOut::Policy::Modwheel)
 
-0.1 Mon Apr 2 18:51:00 2007 [ASKSH@cpan.org]
+0.1 Mon Apr 2 06:51:00 PM 2007 [ASKSH@cpan.org]
     - Initial version

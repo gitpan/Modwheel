@@ -138,8 +138,7 @@ is( $s->parse('[cpanauthor:ASKSH!!$&*!$&*!$  |ASKSH]'),
 );
 
 is( $s->parse('[test:The quick brown fox|jumps over the lazy frog]'),
-'test:<<test>test<quick%20brown%20fox%7Cjumps%20over%20the%20lazy%20frog<quick '.
-'brown fox|jumps over the lazy frog>The<The>>'
+'<<test>test<quick%20brown%20fox%7Cjumps%20over%20the%20lazy%20frog<quick brown fox|jumps over the lazy frog>The<The>>'
 );
 
 is( $s->parse('[cpanauthor]'), '<a href="http://search.cpan.org/~"></a>');

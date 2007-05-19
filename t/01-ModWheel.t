@@ -136,7 +136,6 @@ non-existing exception') );
         'Install new log handler with ->install_loghandler()'
     );
 
-
     $modwheel->set_logmode('tlg');
     is( $modwheel->logmode, 'tlg',
         'Set log handler to the log handler we installed'
@@ -227,16 +226,21 @@ exception') );
     is( $modwheel->siteconfig->{uniqueidfortest}, 'SITEID0001' );
     my $dumped_config = $modwheel->dumpconfig;
     ok( $dumped_config, 'Modwheel::dumpconfig' );
+    #print $dumped_config, "\n";
     ok( YAML::Syck::Load($dumped_config),
         'YAML::Syck::Load can parse our dumped config'
     );
 
+   
+    # Change this to modwheel test 2 
     ok( my $mw2 = Modwheel->new({
         prefix             => $TEST_PREFIX,
         configfile         => $TEST_CONFIGFILE,
-        site               => 'modwheeltest2',
+        site               => 'modwheeltest',
         logmode            => '',
     }), 'Create another Modwheel root object instance, without locale. is this ok?');
+
+
 
     #my $pwd = $ENV{PWD};
     #ok( my $mwX = Modwheel->new({
@@ -246,7 +250,7 @@ exception') );
     #    logmode            => '',
     #}), 'Create another Modwheel object without any locale in either args or
 #config.');
-    is( $mw2->siteconfig->{uniqueidfortest}, 'SITEID0002' );
+    is( $mw2->siteconfig->{uniqueidfortest}, 'SITEID0001' );
     ok( my $mwA = Modwheel->new({
         prefix             => "$TEST_PREFIX/t",
     }), 'Create another Modwheel root object instance, without configfile specified.');

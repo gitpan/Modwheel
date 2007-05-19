@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More tests => 194;
+use Test::More tests => 196;
 use strict;
 use warnings;
 
@@ -347,6 +347,10 @@ SKIP:
 
     # ### Test Serialization.
     my $textual = $o_root->serialize;
+
+    #print "-" x 72, "\n";
+    #print $textual, "\n";
+    #print "-" x 72, "\n";
     
     ok( $o_root->serialize );
     ok( $o_root->serialize( $o_root ) );
@@ -676,7 +680,7 @@ SKIP:
     # Do not save when parent is itself.
     $savetest->set_parent($savetest_id);
     ok( !$savetest->save, 'Do not save if has itself as parent' );
-    ok( $modwheel->catch('object-parent-loop') );
+    ok( $modwheel->catch('object-save-parent-loop') );
     $savetest->set_parent(Modwheel::Object::MW_TREE_ROOT);
 
     my $update_id = $savetest->save;
