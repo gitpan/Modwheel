@@ -1,10 +1,10 @@
 package inc::M::Bootstrap;
-# $Id: Bootstrap.pm,v 1.3 2007/05/18 23:42:33 ask Exp $
+# $Id: Bootstrap.pm,v 1.4 2007/05/19 13:02:47 ask Exp $
 # $Source: /opt/CVS/Modwheel/inc/M/Bootstrap.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.3 $
-# $Date: 2007/05/18 23:42:33 $
+# $Revision: 1.4 $
+# $Date: 2007/05/19 13:02:47 $
 use strict;
 use warnings;
 use Carp;
@@ -87,6 +87,7 @@ sub default_prefix {
 
 sub write_buildconfig {
     my ($self, $config_class, $config_data) = @_;
+    return if $ENV{TEST_COVERAGE};
     my $file_path = inc::M::InstallerBuilder::class_to_class_path($config_class);
     my $dump      = Data::Dumper->new([$config_data], ['config_data'])->Dump( );
     
@@ -103,6 +104,65 @@ sub write_buildconfig {
         }
 
         1;
+=pod
+
+=head1 NAME
+
+Modwheel::BuildConfig Access to build-time configuration.
+
+=head1 SYNOPSIS
+
+    use Modwheel::BuildConfig;
+    my \$prefix = Modwheel::BuildConfig->get_value('prefix');
+
+=head1 DESCRIPTION
+
+This module gives access to variables that are stored when Modwheel is built using
+Makefile.PL or Build.PL
+
+=head1 SUBROUTINES/METHODS
+
+=head2 CLASS METHODS
+
+=head2 C<Modwheel::BuildConfig-E<gt>get_value(\$key)>
+
+Get the value of a build-time configuration variable.
+
+=head1 AUTHOR
+
+Ask Solem, C<< ask\@0x61736b.net >>.
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (c), 2007 Ask Solem C<< ask\@0x61736b.net >>.
+
+All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.6 or,
+at your option, any later version of Perl 5 you may have available.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE
+SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE
+STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE
+SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED,
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND
+PERFORMANCE OF THE SOFTWARE IS WITH YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE,
+YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL ANY
+COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THE
+SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE LIABLE TO YOU FOR DAMAGES,
+INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING
+OUT OF THE USE OR INABILITY TO USE THE SOFTWARE (INCLUDING BUT NOT LIMITED TO
+LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR
+THIRD PARTIES OR A FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER
+SOFTWARE), EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGES.
+
 ENDMODULE
     ;
 
@@ -124,6 +184,7 @@ ENDMODULE
 #------------------------------------------------------------------------
 sub strap_it {
     my ($self) = @_;
+    return if $ENV{TEST_COVERAGE};
 
     my @everything;
     while (my ($class, $arg_ref) = each %STRAP) {

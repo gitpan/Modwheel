@@ -1,14 +1,14 @@
-# $Id: REPL.pm,v 1.2 2007/05/18 23:42:37 ask Exp $
+# $Id: REPL.pm,v 1.3 2007/05/19 13:02:50 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/REPL.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.2 $
-# $Date: 2007/05/18 23:42:37 $
+# $Revision: 1.3 $
+# $Date: 2007/05/19 13:02:50 $
 package Modwheel::REPL;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 {
     use English             qw( -no_match_vars );
     use Readonly;

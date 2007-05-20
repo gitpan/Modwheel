@@ -6,18 +6,18 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: User.pm,v 1.12 2007/05/18 23:42:37 ask Exp $
+# $Id: User.pm,v 1.14 2007/05/19 18:46:48 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/User.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.12 $
-# $Date: 2007/05/18 23:42:37 $
+# $Revision: 1.14 $
+# $Date: 2007/05/19 18:46:48 $
 #####
 package Modwheel::User;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 use base 'Modwheel::Instance';
 {
     use Carp;
@@ -25,20 +25,11 @@ use base 'Modwheel::Instance';
     use Scalar::Util qw(blessed looks_like_number);
     use Params::Util ('_HASH', '_ARRAY', '_INSTANCE', '_CODELIKE');
     use Modwheel::User::Session;
-    use Crypt::Eksblowfish::Bcrypt;
+    use Modwheel::Crypt;
     use namespace::clean;
 
     public uname => my %uname_for, {is   => 'rw'};
     public uid   => my %uid_for,   {is   => 'rw'};
-
-    Readonly my $BLOWFISH_SALT_SIZE     => 0x10;
-    Readonly my $BLOWFISH_KEY_SIZE      => 0x48;
-    Readonly my $BLOWFISH_BLOCK_SIZE    => 0x08;
-    Readonly my $BLOWFISH_OW_SALT_SIZE  => 0x10;
-    Readonly my $BLOWFISH_OW_COST       => 0x08;
-    Readonly my $BLOWFISH_OW_KEY_NUL    => 0x01;
-    Readonly my $BLOWFISH_MAX_PW_LEN    => 0x08;
-    Readonly my $BLOWFISH_PADDING_CHAR  => q{~}; # (tilde)
 
     sub uidbyname {
         my ($self, $user) = @_;
@@ -105,7 +96,10 @@ use base 'Modwheel::Instance';
             return 0;
         }
 
-        if (hashcookie_compare($cryptpw, $password)) {
+        my $crypt = Modwheel::Crypt->new({
+            require_type    => 'One-way',
+        });
+        if ($crypt->compare($cryptpw, $password)) {
             if ($ip) {
                 my $uid   = $self->uidbyname($username);
                 #  Update users set last_ip to $uid.
@@ -137,7 +131,10 @@ use base 'Modwheel::Instance';
         my $db       = $self->db;
 
         if ($bool_encrypt && $arg_ref->{password}) {
-            $arg_ref->{password} = hashcookie_encipher( $arg_ref->{password} );
+            my $crypt = Modwheel::Crypt->new({
+                require_type => 'One-way',
+            });
+            $arg_ref->{password} = $crypt->encipher( $arg_ref->{password} );
         }
 
         if  (!$arg_ref->{username} && !$arg_ref->{id}) {
@@ -173,7 +170,10 @@ use base 'Modwheel::Instance';
             );
         }
 
-        $argv{password} = hashcookie_encipher( $argv{password} );
+        my $crypt       = Modwheel::Crypt->new({
+            require_type    => 'One-way',
+        });
+        $argv{password} = $crypt->encipher( $argv{password} );
         $argv{id}       = $db->fetch_next_id('users');
         my $query       = $db->build_insert_q('users', \%argv);
         my @values      = map { $argv{$_} } sort keys %argv;
@@ -254,61 +254,6 @@ use base 'Modwheel::Instance';
         }
 
         return $passwd;
-    }
-
-    sub hashcookie_encipher {
-        my $password = shift;
-
-        # Enforce blowfish password length limitation.
-        $password   = substr $password, 0, $BLOWFISH_MAX_PW_LEN;
-
-        # Pad with '~' (tilde) if password is less than the limit.
-        while (length $password < $BLOWFISH_MAX_PW_LEN) {
-            $password  .= $BLOWFISH_PADDING_CHAR;
-        }
-        my $salt    = Modwheel::User::mkpasswd($BLOWFISH_OW_SALT_SIZE);
-        my $hash    = Crypt::Eksblowfish::Bcrypt::bcrypt_hash(
-            {
-                key_nul => $BLOWFISH_OW_KEY_NUL,
-                cost    => $BLOWFISH_OW_COST,
-                salt    => $salt,
-            },
-            $password
-        );
-
-        my $hashb64    = Crypt::Eksblowfish::Bcrypt::en_base64($hash);
-        my $hashcookie = $salt . $hashb64;
-
-        return $hashcookie;
-    }
-
-    sub hashcookie_compare {
-        my ($hashcookie, $password) = @_;
-
-        # Enforce blowfish password length limitation. 
-        $password   = substr $password, 0, $BLOWFISH_MAX_PW_LEN;
-
-        # Pad with '~' (tilde) if password is less than the limit.
-        while (length $password < $BLOWFISH_MAX_PW_LEN) {
-            $password .= $BLOWFISH_PADDING_CHAR;
-        }
-
-        my $salt    = substr $hashcookie, 0, $BLOWFISH_OW_SALT_SIZE;
-        my $hashb64 = substr $hashcookie, $BLOWFISH_OW_SALT_SIZE,
-            length $hashcookie;
-
-        my $cmphash = Crypt::Eksblowfish::Bcrypt::bcrypt_hash(
-            {
-                key_nul => $BLOWFISH_OW_KEY_NUL,
-                cost    => $BLOWFISH_OW_COST,
-                salt    => $salt,
-            },
-            $password
-        );
-
-        my $cmphashb64 = Crypt::Eksblowfish::Bcrypt::en_base64($cmphash);
-
-        return $hashb64 eq $cmphashb64 ? 1 : 0;
     }
 
 }

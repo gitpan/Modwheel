@@ -1,15 +1,15 @@
-# $Id: Prompt.pm,v 1.3 2007/05/18 23:42:40 ask Exp $
+# $Id: Prompt.pm,v 1.4 2007/05/19 13:02:56 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/REPL/Prompt.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.3 $
-# $Date: 2007/05/18 23:42:40 $
+# $Revision: 1.4 $
+# $Date: 2007/05/19 13:02:56 $
 
 package Modwheel::REPL::Prompt;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw( :std );
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 {
     use Term::ReadKey;
     use Term::Complete;
@@ -261,7 +261,7 @@ Modwheel::REPL::Prompt - User interaction from the console.
 
 =head1 VERSION
 
-This document describes Modwheel version v0.3.2
+This document describes Modwheel version v0.3.3
 
 =head1 SYNOPSIS
 
@@ -416,7 +416,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.3.2
+v0.3.3
 
 =head1 AUTHOR
 

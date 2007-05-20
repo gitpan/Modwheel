@@ -7,18 +7,18 @@
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #####
-# $Id: DB.pm,v 1.10 2007/05/18 23:42:37 ask Exp $
+# $Id: DB.pm,v 1.11 2007/05/19 13:02:50 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/DB.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.10 $
-# $Date: 2007/05/18 23:42:37 $
+# $Revision: 1.11 $
+# $Date: 2007/05/19 13:02:50 $
 #####
 package Modwheel::DB;
 use strict;
 use warnings;
 use Params::Util ('_CLASS');
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 {
 
     #------------------------------------------------------------------------
@@ -82,7 +82,7 @@ Modwheel::DB - Abstract factory class for Modwheel database drivers.
 
 =head1 VERSION
 
-v0.3.2
+v0.3.3
 
 =head1 SYNOPSIS
 

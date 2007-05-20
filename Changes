@@ -1,3 +1,24 @@
+0.3.3 Sat May 19 08:42:31 PM 2007 [ASKSH@cpan.org]
+    - Modwheel::Crypt::PLAINTEXT now gives a warning upon use.
+    - Moved FCGI stuff outside this dist. To be added to a new separate dist.
+      it's not finished yet anyway.
+    - Cleaned up requirements. Reviewed required versions ++.
+    - New requirement: UNIVERSAL::require.
+    - No longer requires Crypt::Eksblowfish, but it's highly recommended to install atleast one
+      one-crypt cryptography support module. (this is what PLAINTEXT's warning is about).
+    - Fixed some bugs with the SQLite2 support.
+    - Added the user_session.sql file for SQLite2.
+
+0.3.3 Sat May 19 08:41:52 PM 2007 [ASKSH@cpan.org]
+    - Modwheel/Crypt.pm             - New interface for cryptography support.
+    - Modwheel/Crypt/Base.pm        - Base class for cryptography support modules.
+    - Modwheel/Crypt/Eksblowfish.pm - Crypt::Eksblowfish support.
+    - Modwheel/Crypt/UnixCrypt.pm   - Crypt::UnixCrypt support.
+    - Modwheel/Crypt/PLAINTEXT.pm   - Fallback module if no other alternatives available.
+
+0.3.3 Sat May 19 04:03:32 PM 2007 [ASKSH@cpan.org]
+    - Modwheel.pm: Changed =item for method list to =head3.
+
 0.3.2 Sat May 19 02:26:16 PM 2007 [Alexandr Ciornii CHORNY@cpan.org]
     - Digest::SHA1 did not changed anything important from 2.07 to 2.11. So
       minimum required version should be 2.07.

@@ -1,9 +1,9 @@
-# $Id: Modwheel.pm,v 1.14 2007/05/19 01:32:18 ask Exp $
+# $Id: Modwheel.pm,v 1.16 2007/05/19 18:46:46 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.14 $
-# $Date: 2007/05/19 01:32:18 $
+# $Revision: 1.16 $
+# $Date: 2007/05/19 18:46:46 $
 #
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 # Modwheel.pm - Web framework.
@@ -19,7 +19,7 @@ package Modwheel;
 use strict;
 use warnings;
 use 5.00800;
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
 
@@ -544,7 +544,7 @@ Modwheel - Tree-based Web framework.
 
 =head1 VERSION
 
-This document describes Modwheel version 0.3.2
+This document describes Modwheel version 0.3.3
 
 =head1 DESCRIPTION
 
@@ -606,9 +606,7 @@ minutes).
 
 =head2 CONSTRUCTOR
 
-=over 4
-
-=item C<Modwheel-E<gt>new()>
+=head3 C<Modwheel-E<gt>new()>
 
 Creates a new Modwheel object.
 
@@ -630,57 +628,54 @@ Returns:
 
 A new Modwheel object if everything was OK. Returns no value if there was an error.
 
-=back
 
 =head2 ATTRIBUTES
 
-=over 4
+=head3 C<$modwheel-E<gt>debug()>
 
-=item C<$modwheel-E<gt>debug()>
-
-=item C<$modwheel-E<gt>set_debug()>
+=head3 C<$modwheel-E<gt>set_debug()>
 
 If this is on (set to a true value), the modwheel components
 will print various debugging messages. Turn this off for production
 environments as it can reveal sensitive information.
 
-=item C<$modwheel-E<gt>logmode()>
+=head3 C<$modwheel-E<gt>logmode()>
 
 How to log errors and warnings.
 
-=item C<$modwheel-E<gt>set_logmode($mode)>
+=head3 C<$modwheel-E<gt>set_logmode($mode)>
 
 Sets the current logmode.
 Default log modes are: stderr and off.
 Modwheel-Apache installs the log mode: apache2
 If logmode is off no logging will happen, but error() will still be set on error.
 
-=item C<$modwheel-E<gt>prefix()>
+=head3 C<$modwheel-E<gt>prefix()>
 
-=item C<$modwheel-E<gt>set_prefix($prefix)>
+=head3 C<$modwheel-E<gt>set_prefix($prefix)>
 
 The path to search for relative files.
 
-=item %{C<$modwheel-E<gt>config()>}
+=head3 %{C<$modwheel-E<gt>config()>}
 
 The configuration data structure returned by YAML.
 Returns hash reference.
 
-=item C<$modwheel-E<gt>set_config($href)>
+=head3 C<$modwheel-E<gt>set_config($href)>
 
 Save the configuration data structure.
 You rarely want to use this.
 
-=item C<$modwheel-E<gt>configfile()>
+=head3 C<$modwheel-E<gt>configfile()>
 
-=item C<$modwheel-E<gt>set_configfile($filename)>
+=head3 C<$modwheel-E<gt>set_configfile($filename)>
 
 The L<YAML> configuration file to use.
 For more information about YAML please see: L<http://www.yaml.org>.
 
-=item C<$modwheel-E<gt>site()>
+=head3 C<$modwheel-E<gt>site()>
 
-=item C<$modwheel-E<gt>set_site($site)>
+=head3 C<$modwheel-E<gt>set_site($site)>
 
 The name of the current site to use. This is the name
 used when getting site configuration with siteconfig().
@@ -688,42 +683,40 @@ If no site is specified, it uses the defaultsite specified
 in the global section of the configuration.
 
 
-=item C<$modwheel-E<gt>logobject()>
-=item C<$modwheel-E<gt>set_logobject($your_object)>
+=head3 C<$modwheel-E<gt>logobject()>
+
+=head3 C<$modwheel-E<gt>set_logobject($your_object)>
 
 If you install a log handler with C<$modwheel-E<gt>install_loghandler()> you
 save a object here for use within your log handler.
 
-=item C<$modwheel-E<gt>error()>
+=head3 C<$modwheel-E<gt>error()>
 
 Holds the last error string passed to log().
 
 
-=item C<$modwheel-E<gt>locale()>
+=head3 C<$modwheel-E<gt>locale()>
 
 Current locale in use.
 
-=back
 
 =head2 INSTANCE METHODS
 
-=over 4
-
-=item C<$modwheel-E<gt>locale_setup_with_locale($locale)>
+=head3 C<$modwheel-E<gt>locale_setup_with_locale($locale)>
 
 Sets the current locale using POSIX::setlocale.
 
-=item C<$modwheel-E<gt>locale_setup_from_config()>
+=head3 C<$modwheel-E<gt>locale_setup_from_config()>
 
 If no custom locale is passed when creating a Modwheel object,
 it sets up the locale using either the locale specified in the current siteconfig
 or the locale specified in the global section of the configuration file.
 
-=item C<$modwheel-E<gt>siteconfig()>
+=head3 C<$modwheel-E<gt>siteconfig()>
 
 Returns the current siteconfig using the site name in C<$self->site>.
 
-=item C<$modwheel-E<gt>install_loghandler($name, $code_ref)>
+=head3 C<$modwheel-E<gt>install_loghandler($name, $code_ref)>
 
 Installs new log handler, $code_ref must be an anonymous subroutine.
 
@@ -751,11 +744,11 @@ Or to install the handlers when calling C<Modwheel-E<gt>new>
         logmode         => 'apache2',
         # [....]
 
-=item C<$modwheel-E<gt>remove_loghandler($name)>
+=head3 C<$modwheel-E<gt>remove_loghandler($name)>
 
 Remove a log handler previously installed with C<-E<gt>install_loghandler()>.
 
-=item C<$modwheel-E<gt>parseconfig()>
+=head3 C<$modwheel-E<gt>parseconfig()>
 
 Example: 
 
@@ -767,68 +760,63 @@ We use YAML for parsing our configuration file specified in configfile().
 Exits if the configuration file does not exist.
 Returns: Hashref to the data structure returned by YAML::LoadFile.
 
-=item C<$modwheel-E<gt>dumpconfig()>
+=head3 C<$modwheel-E<gt>dumpconfig()>
 
 Dumps a scalar string representation of the configurations YAML data structure.
 
-=item C<$modwheel-E<gt>logerror(@strings)>
+=head3 C<$modwheel-E<gt>logerror(@strings)>
 
 Log an error.
 
-=item C<$modwheel-E<gt>logwarn(@strings)>
+=head3 C<$modwheel-E<gt>logwarn(@strings)>
 
 Log a warning.
 
-=item C<$modwheel-E<gt>loginform(@strings)>
+=head3 C<$modwheel-E<gt>loginform(@strings)>
 
 Log some informative text.
 
-=item C<$modwheel-E<gt>log(string facility, string logstr)>
+=head3 C<$modwheel-E<gt>log(string facility, string logstr)>
 
 The private logging function, shouldn’t be used directly.
 Use the logerror/logwarn/loginform functions instead.
 
-=item C<$modwheel-E<gt>throw($exception)>
+=head3 C<$modwheel-E<gt>throw($exception)>
 
 Throw an exception.
 Adds the exception to the exceptions array.
 
-=item C<$modwheel-E<gt>exception()>
+=head3 C<$modwheel-E<gt>exception()>
 
 Pop a exception off the exceptions array.
 
-=item C<$modwheel-E<gt>catch($exception)>
+=head3 C<$modwheel-E<gt>catch($exception)>
 
 Search the exceptions array for an exception.
 Returns 1 if found and 0 if not found.
 
-=item C<$modwheel-E<gt>catch_like($regex)>
+=head3 C<$modwheel-E<gt>catch_like($regex)>
 
 Like catch() but searches the exceptions array by using regular expression.
 
-=back
 
 =head2 PRIVATE ATTRIBUTES AND METHODS
 
-=over 4
-
-=item C<$modwheel-E<gt>set_error()>
+=head3 C<$modwheel-E<gt>set_error()>
 
 Set the error message.
 This is a private function, use the C<log*> methods instead.
 
-=item @{ C<$modwheel-E<gt>exceptions()> }
+=head3 @{ C<$modwheel-E<gt>exceptions()> }
 
 This is the internal array used by the exceptions system.
 Use C<$modwheel-E<gt>throw()>, C<$modwheel-E<gt>catch()>,
 C<$modwheel-E<gt>catch_like()> and C<$modwheel-E<gt>exception()> instead.
 
-=item C<$modwheel-E<gt>_setlocale($locale)>
+=head3 C<$modwheel-E<gt>_setlocale($locale)>
 
 Internal method for setting locale. C<Use locale_setup_with_locale($locale)>
 instead.
-
-=back
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -884,33 +872,33 @@ The modwheel test suite.
 
 =over 4
 
-=item Perl >= 5.8
+=item * Perl >= 5.8
 
-=item version
+=item * version
 
-=item namespace::clean
+=item * namespace::clean
 
-=item Params::Util
+=item * Params::Util
 
-=item List::MoreUtils
+=item * List::MoreUtils
 
-=item Readonly
+=item * Readonly
 
-=item Perl6::Export::Attrs
+=item * Perl6::Export::Attrs
 
-=item YAML::Syck
+=item * YAML::Syck
 
-=item DBI
+=item * DBI
 
-=item Crypt::Eksblowfish
+=item * Crypt::Eksblowfish
 
-=item HTML::Tagset
+=item * HTML::Tagset
 
-=item HTML::Parser
+=item * HTML::Parser
 
-=item URI::Escape
+=item * URI::Escape
 
-=item Template
+=item * Template
 
 =back
 
@@ -924,11 +912,11 @@ None known at the moment.
 
 =head1 DSLIP
 
-b   - Beta testing
-d   - Developer: asksh@cpan.org
-p   - Perl-only
-O   - Object oriented
-p   - Standard-Perl: user may choose between GPL and Artistic.
+    b   - Beta testing
+    d   - Developer: asksh@cpan.org
+    p   - Perl-only
+    O   - Object oriented
+    p   - Standard-Perl: user may choose between GPL and Artistic.
 
 
 =head1 COVERAGE

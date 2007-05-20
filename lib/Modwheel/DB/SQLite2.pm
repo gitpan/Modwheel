@@ -6,19 +6,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: SQLite2.pm,v 1.2 2007/05/18 23:42:38 ask Exp $
+# $Id: SQLite2.pm,v 1.3 2007/05/19 13:02:52 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/DB/SQLite2.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.2 $
-# $Date: 2007/05/18 23:42:38 $
+# $Revision: 1.3 $
+# $Date: 2007/05/19 13:02:52 $
 #####
 package Modwheel::DB::SQLite2;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw( :std );
 use base 'Modwheel::DB::Base';
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 {
 
     use Readonly;

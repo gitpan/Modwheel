@@ -1,9 +1,9 @@
-# $Id: Repository.pm,v 1.10 2007/05/18 23:42:37 ask Exp $
+# $Id: Repository.pm,v 1.11 2007/05/19 13:02:50 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Repository.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.10 $
-# $Date: 2007/05/18 23:42:37 $
+# $Revision: 1.11 $
+# $Date: 2007/05/19 13:02:50 $
 #####
 package Modwheel::Repository;
 use strict;
@@ -11,7 +11,7 @@ use warnings;
 use utf8;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base 'Modwheel::Instance';
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 {
 
     use English      qw( -no_match_vars );

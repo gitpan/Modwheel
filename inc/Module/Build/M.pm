@@ -1,9 +1,9 @@
-# $Id: M.pm,v 1.2 2007/05/18 22:40:27 ask Exp $
+# $Id: M.pm,v 1.3 2007/05/19 13:02:48 ask Exp $
 # $Source: /opt/CVS/Modwheel/inc/Module/Build/M.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.2 $
-# $Date: 2007/05/18 22:40:27 $
+# $Revision: 1.3 $
+# $Date: 2007/05/19 13:02:48 $
 package inc::Module::Build::M;
 use strict;
 use warnings;
@@ -100,5 +100,15 @@ sub ACTION_build {
 
     return;
 }
+
+sub ACTION_testcover {
+    my $self = shift;
+
+    $ENV{TEST_COVERAGE} = 1;
+    $self->SUPER::ACTION_testcover(@_);
+
+    return;
+}
+    
 
 1;

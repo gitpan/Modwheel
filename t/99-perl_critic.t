@@ -4,6 +4,10 @@ use File::Spec;
 use Test::More;
 use English qw(-no_match_vars);
 
+if ($ENV{TEST_COVERAGE}) {
+    plan( skip_all => 'Disabled when testing coverage.' );
+}
+
 if ( not $ENV{MODWHEEL_AUTHOR} ) {
     my $msg = 'Author test.  Set $ENV{MODWHEEL_AUTHOR} to a true value to run.';
     plan( skip_all => $msg );

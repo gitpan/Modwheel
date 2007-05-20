@@ -1,11 +1,12 @@
 use strict;
 use warnings;
-use Test::More tests => 68;
+use Test::More tests => 69;
 use FindBin qw($Bin);
 
 BEGIN {
     use lib $Bin;
     use_ok('Modwheel::User');
+    use_ok('Modwheel::Crypt');
 }
 
 use Modwheel::Session;
@@ -59,57 +60,61 @@ foreach my $method (qw(uid uname)) {
     ok( $user->can($set_method), "Modwheel::Object->can: set_$method()" );
 }
 
+my $crypt = Modwheel::Crypt->new({
+    require_type => 'One-way',
+});
+
 my $new_password = Modwheel::User::mkpasswd(8);
-my $hashcookie = Modwheel::User::hashcookie_encipher($new_password);
-ok( Modwheel::User::hashcookie_compare($hashcookie, $new_password),
+my $hashcookie = $crypt->encipher($new_password);
+ok( $crypt->compare($hashcookie, $new_password),
     'hashcookie_compare() with correct key 8 chars'
 );
-ok(!Modwheel::User::hashcookie_compare($hashcookie, 'B' x 8), 
+ok(!$crypt->compare($hashcookie, 'B' x 8), 
     'hashcookie_compare() with incorrect key 8 chars'
 );
-ok(!Modwheel::User::hashcookie_compare($hashcookie, 'B' x 0xffff ), 
+ok(!$crypt->compare($hashcookie, 'B' x 0xffff ), 
     'hashcookie_compare() with incorrect key (overflow)'
 );
-ok(!Modwheel::User::hashcookie_compare($hashcookie, 'B' x 0), 
+ok(!$crypt->compare($hashcookie, 'B' x 0), 
     'hashcookie_compare() with incorrect key (nothing)'
 );
-ok(!Modwheel::User::hashcookie_compare($hashcookie, 'B' x 1), 
+ok(!$crypt->compare($hashcookie, 'B' x 1), 
     'hashcookie_compare() with incorrect key (less)'
 );
 
 my $large_pwd = 'A' x 0xff;
-my $large = Modwheel::User::hashcookie_encipher($large_pwd);
-ok( Modwheel::User::hashcookie_compare($large, 'A' x 0xff),
+my $large = $crypt->encipher($large_pwd);
+ok( $crypt->compare($large, 'A' x 0xff),
     'hashcookie_compare() with correct key 0xff chars'
 );
-ok(!Modwheel::User::hashcookie_compare($large, 'B' x 0xff), 
+ok(!$crypt->compare($large, 'B' x 0xff), 
     'hashcookie_compare() with incorrect key 8 chars'
 );
-ok(!Modwheel::User::hashcookie_compare($large, 'B' x 0xffff ), 
+ok(!$crypt->compare($large, 'B' x 0xffff ), 
     'hashcookie_compare() with incorrect key (overflow)'
 );
-ok(!Modwheel::User::hashcookie_compare($large, 'B' x 0), 
+ok(!$crypt->compare($large, 'B' x 0), 
     'hashcookie_compare() with incorrect key (nothing)'
 );
-ok(!Modwheel::User::hashcookie_compare($large, 'B' x 1), 
+ok(!$crypt->compare($large, 'B' x 1), 
     'hashcookie_compare() with incorrect key (less)'
 );
 
 my $small_pwd = 'A' x 1;
-my $small = Modwheel::User::hashcookie_encipher($small_pwd);
-ok( Modwheel::User::hashcookie_compare($small, 'A' x 1),
+my $small = $crypt->encipher($small_pwd);
+ok( $crypt->compare($small, 'A' x 1),
     'hashcookie_compare() with correct key 0x1 chars'
 );
-ok(!Modwheel::User::hashcookie_compare($small, 'B' x 0xff), 
+ok(!$crypt->compare($small, 'B' x 0xff), 
     'hashcookie_compare() with incorrect key 8 chars'
 );
-ok(!Modwheel::User::hashcookie_compare($small, 'B' x 0xffff ), 
+ok(!$crypt->compare($small, 'B' x 0xffff ), 
     'hashcookie_compare() with incorrect key (overflow)'
 );
-ok(!Modwheel::User::hashcookie_compare($small, 'B' x 0), 
+ok(!$crypt->compare($small, 'B' x 0), 
     'hashcookie_compare() with incorrect key (nothing)'
 );
-ok(!Modwheel::User::hashcookie_compare($small, 'B' x 1), 
+ok(!$crypt->compare($small, 'B' x 1), 
     'hashcookie_compare() with incorrect key (less)'
 );
 

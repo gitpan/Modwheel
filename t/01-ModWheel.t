@@ -1,10 +1,11 @@
 # TESTS FOR Modwheel.pm
-use Test::More tests => 114;
+use Test::More tests => 117;
 use FindBin qw($Bin);
 
 BEGIN {
     use lib $Bin;
     use_ok('Modwheel');
+    use_ok('Modwheel::BuildConfig');
 };
 
 #########################
@@ -22,6 +23,9 @@ use English         qw( -no_match_vars );
 our $THIS_BLOCK_HAS_TESTS;
 
 our $TMP_NULL = File::Spec->catfile($Bin, 'cache', '.devnull');
+
+ok(  Modwheel::BuildConfig->get_value('prefix') );
+ok(! Modwheel::BuildConfig->get_value('!!!!NONEXISTANTVALUE') );
 
 
 Readonly my $TEST_PREFIX     => $Bin;

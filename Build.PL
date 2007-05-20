@@ -1,9 +1,9 @@
-# $Id: RCS.stub,v 1.1 2007/04/23 19:28:42 ask Exp $
-# $Source: /opt/CVS/Modwheel/devel/RCS.stub,v $
+# $Id: Build.PL,v 1.13 2007/05/19 13:02:43 ask Exp $
+# $Source: /opt/CVS/Modwheel/Build.PL,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.1 $
-# $Date: 2007/04/23 19:28:42 $
+# $Revision: 1.13 $
+# $Date: 2007/05/19 13:02:43 $
 use strict;
 use warnings;
 use inc::Module::Build::M;

@@ -1,11 +1,11 @@
 #!/usr/local/bin/perl
 # ########################################
-# $Id: modstrap,v 1.2 2007/05/18 23:42:25 ask Exp $
+# $Id: modstrap,v 1.3 2007/05/19 13:02:45 ask Exp $
 # $Source: /opt/CVS/Modwheel/utils/modstrap,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.2 $
-# $Date: 2007/05/18 23:42:25 $
+# $Revision: 1.3 $
+# $Date: 2007/05/19 13:02:45 $
 #################################################
 
 use strict;
@@ -14,7 +14,7 @@ use Modwheel::REPL;
 use Modwheel::Install::Everything;
 use Modwheel::Configure;
 use Readonly;
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 
 Readonly my $DEFAULT_PROMPT => q{modstrap > };
 
@@ -95,7 +95,7 @@ modstrap - Modwheel installation and configuration utility.
 
 =head1 VERSION
 
-This document refers to Modwheel version 0.3.2.
+This document refers to Modwheel version 0.3.3.
 
 =head1 USAGE
 

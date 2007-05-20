@@ -1,9 +1,9 @@
-# $Id: Tagset.pm,v 1.6 2007/05/18 23:42:39 ask Exp $
+# $Id: Tagset.pm,v 1.7 2007/05/19 13:02:53 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/HTML/Tagset.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.6 $
-# $Date: 2007/05/18 23:42:39 $
+# $Revision: 1.7 $
+# $Date: 2007/05/19 13:02:53 $
 #####
 package Modwheel::HTML::Tagset;
 use strict;
@@ -247,7 +247,7 @@ Modwheel::HTML::Tagset - Allow basic tags in strings.
 
 =head1 VERSION
 
-This document describes version 0.3.2
+This document describes version 0.3.3
 
 =head1 SYNOPSIS
 

@@ -7,17 +7,17 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Object.pm,v 1.12 2007/05/18 23:42:37 ask Exp $
+# $Id: Object.pm,v 1.13 2007/05/19 13:02:50 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Object.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.12 $
-# $Date: 2007/05/18 23:42:37 $
+# $Revision: 1.13 $
+# $Date: 2007/05/19 13:02:50 $
 #####
 package Modwheel::Object;
 use strict;
 use warnings;
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 use base 'Modwheel::Instance';
 use Class::InsideOut::Policy::Modwheel qw(:std);
 {
@@ -1278,7 +1278,7 @@ The Modwheel website.
 
 =head1 VERSION
 
-v0.3.2
+v0.3.3
 
 
 =head1 AUTHOR

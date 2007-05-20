@@ -7,19 +7,19 @@
 # licensing information. If this file is not present you are *not*
 # allowed to view, run, copy or change this software or it's sourcecode.
 # -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# $Id: Plugin.pm,v 1.11 2007/05/18 23:42:43 ask Exp $
+# $Id: Plugin.pm,v 1.12 2007/05/19 13:02:59 ask Exp $
 # $Source: /opt/CVS/Modwheel/lib/Modwheel/Template/TT/Plugin.pm,v $
 # $Author: ask $
 # $HeadURL$
-# $Revision: 1.11 $
-# $Date: 2007/05/18 23:42:43 $
+# $Revision: 1.12 $
+# $Date: 2007/05/19 13:02:59 $
 #####
 package Modwheel::Template::TT::Plugin;
 use strict;
 use warnings;
 use Class::InsideOut::Policy::Modwheel qw(:std);
 use base qw(Template::Plugin Modwheel::Instance);
-use version; our $VERSION = qv('0.3.2');
+use version; our $VERSION = qv('0.3.3');
 {
     use Modwheel::Template::ObjectProxy;
     use Modwheel::HTML::Tagset;
